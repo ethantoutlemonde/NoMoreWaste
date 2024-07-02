@@ -1,23 +1,47 @@
+/node_modules/
 /vendor/
-node_modules/
-npm-debug.log
-yarn-error.log
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
-
-# Laravel 5 & Lumen specific
-public/storage
-public/hot
-
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
-
-storage/*.key
+# Laravel specific
 .env
-Homestead.yaml
-Homestead.json
-/.vagrant
+.env.backup
+.env.testing
 .phpunit.result.cache
+public/build
+public/hot
+public/storage
+public/mix-manifest.json
+storage/*.key
+bootstrap/cache/
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/testing/*
+storage/framework/views/*.php
+storage/logs/*.log
+!storage/framework/cache/data/.gitignore
+!storage/framework/sessions/.gitignore
+!storage/framework/testing/.gitignore
+!storage/framework/views/.gitignore
+!storage/logs/.gitignore
+package-lock.json
+resources\js\Pages\Tests\Test.jsx
+
+
+# BOOTSRAP SSR
+bootstrap/SSR/*
+.vite
+
+
+# Docker specific
+openaid_db_data/*
+!openaid_db_data/.gitkeep
+
+
+# python
+__pycache__/
+*.pyc
+
+
+# IDE and editor directories
+.idea/
+.vscode/
+

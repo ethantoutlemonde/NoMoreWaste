@@ -1,19 +1,24 @@
 import { Outlet } from "react-router-dom";
-import { useStateContext } from "../contexts/ContextProvider";
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useAuth } from "../hooks/auth";
 
 export default function DefaultLayout() {
-    const {user, token} = useStateContext();
+    const { user } = useAuth({ middleware: 'auth' })
+    const { logout } = useAuth({
+        middleware: 'auth',
+        redirectIfAuthenticated: '/login'
+    })
 
-    if(!token) {
+    if(!user) {
         return <Navigate to='/login' />
     }
 
     const onLogout = (ev) => {
         ev.preventDefault();
         console.log('Logout');
-        // setToken(null);
+        logout()
+
     }
 
     return (
@@ -36,11 +41,11 @@ export default function DefaultLayout() {
                         Dashboard
                         </div>
                     </Link>
-                    <Link to='/logout'>
+                    {/* <Link to='/logout'>
                         <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
                         Logout
                         </div>
-                    </Link>
+                    </Link> */}
                     
                     
                     

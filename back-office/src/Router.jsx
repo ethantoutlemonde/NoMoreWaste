@@ -3,9 +3,11 @@ import Login from './Views/Login';
 import NotFound from './Views/NotFound';
 import DefaultLayout from './components/DefaultLayout';
 import GuestLayout from './components/GuestLayout';
-import Users from './Views/Users';
+import Users from './Views/users/Users';
 import Dashboard from './Views/Dashboard';
 import Register from './Views/Register';
+import UpdateUser from './Views/users/UpdateUser';
+import CreateUser from './Views/users/CreateUser';
 
 const router = createBrowserRouter([
     {
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
             {
                 path: '/users',
                 element: <Users />,
+            },
+            {
+                path: '/users/:id',
+                element: <UpdateUser />,
+            },
+            {
+                path: '/users/create',
+                element: <CreateUser />,
             },
             {
                 path: '/dashboard',

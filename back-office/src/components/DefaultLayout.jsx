@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from "../hooks/auth";
+import { HiChevronDown, HiChevronRight } from "react-icons/hi2";
 
 export default function DefaultLayout() {
     const { user } = useAuth({ middleware: 'auth' })
@@ -21,6 +22,16 @@ export default function DefaultLayout() {
 
     }
 
+    const dropdownUser = () => {
+        console.log('dropdown')
+        var element = document.getElementById("users");
+        element.classList.toggle("hidden");
+        var down = document.getElementById("arrrow-down-users");
+        down.classList.toggle("hidden");
+        var right = document.getElementById("arrrow-right-users");
+        right.classList.toggle("hidden");
+    }
+
     return (
         <div>
             <aside className="fixed top-0 left-0 z-40 w-64 h-screen bg-slate-900 shadow-xl text-gray-200 p-6"> 
@@ -31,11 +42,32 @@ export default function DefaultLayout() {
                             Home
                         </div>
                     </Link>
-                    <Link to='/users'>
-                        <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
-                        Users
+                    <button onClick={dropdownUser} className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white text-left flex justify-between items-center">
+                        <div className="">
+                            Users
                         </div>
-                    </Link>
+                        <HiChevronDown id="arrrow-down-users" className="items-center hidden"/>
+                        <HiChevronRight id="arrrow-right-users" className="items-center"/>
+                        
+                    </button>
+                    <div  id="users" className="hidden pl-4">
+                        <Link to='/users/admin'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Admins
+                            </div>
+                        </Link>
+                        <Link to='/users/beneficiary'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Beneficiary
+                            </div>
+                        </Link>
+                        <Link to='/users/volunteer'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Volunteer
+                            </div>
+                        </Link>
+                    </div>
+                    
                     <Link to='/dashboard'>
                         <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
                         Dashboard

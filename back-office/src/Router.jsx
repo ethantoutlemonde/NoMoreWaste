@@ -3,11 +3,14 @@ import Login from './Views/Login';
 import NotFound from './Views/NotFound';
 import DefaultLayout from './components/DefaultLayout';
 import GuestLayout from './components/GuestLayout';
-import Users from './Views/users/Users';
+// import Users from './Views/users/Users';
 import Dashboard from './Views/Dashboard';
 import Register from './Views/Register';
-import UpdateUser from './Views/users/UpdateUser';
-import CreateUser from './Views/users/CreateUser';
+// import UpdateUser from './Views/users/UpdateUser';
+// import CreateUser from './Views/users/CreateUser';
+import Admin from './Views/users/Admin';
+import Beneficiary from './Views/users/Beneficiary';
+import Volunteer from './Views/users/Volunteer';
 
 const router = createBrowserRouter([
     {
@@ -16,20 +19,28 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Navigate to='/users' />,
+                element: <Navigate to='/users/admin' />,
             },
             {
-                path: '/users',
-                element: <Users />,
+                path: '/users/admin',
+                element: <Admin />,
             },
             {
-                path: '/users/:id',
-                element: <UpdateUser />,
+                path: '/users/beneficiary',
+                element: <Beneficiary />,
             },
             {
-                path: '/users/create',
-                element: <CreateUser />,
+                path: '/users/volunteer',
+                element: <Volunteer />,
             },
+            // {
+            //     path: '/users/:id',
+            //     element: <UpdateUser />,
+            // },
+            // {
+            //     path: '/users/create',
+            //     element: <CreateUser />,
+            // },
             {
                 path: '/dashboard',
                 element: <Dashboard />,

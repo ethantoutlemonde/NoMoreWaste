@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\adminController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -9,9 +9,9 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\beneficiaryController;
+use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\volunteerController;
+use App\Http\Controllers\VolunteerController;
 
 // ---------------- Auth routes 
 
@@ -53,6 +53,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 // Route::get('/users', 'UserController@index');
 
-Route::middleware(['auth:sanctum'])->resource('admin', adminController::class);
-Route::middleware(['auth:sanctum'])->resource('beneficiary', beneficiaryController::class);
-Route::middleware(['auth:sanctum'])->resource('volunteer', volunteerController::class);
+Route::middleware(['auth:sanctum'])->resource('admin', AdminController::class);
+Route::middleware(['auth:sanctum'])->resource('beneficiary', BeneficiaryController::class);
+Route::middleware(['auth:sanctum'])->resource('volunteer', VolunteerController::class);
+Route::middleware(['auth:sanctum'])->resource('users', UserController::class);

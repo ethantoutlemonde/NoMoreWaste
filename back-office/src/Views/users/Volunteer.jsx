@@ -1,7 +1,7 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import axiosClient from '../../axios-client';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const columns = [
     { field: 'name', headerName: 'Name', width: 150 },
@@ -11,6 +11,7 @@ const columns = [
 export default function Volunteer() {
 
     const [data , setData] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         axiosClient.get('/api/volunteer')
@@ -24,6 +25,13 @@ export default function Volunteer() {
 
         console.log(data)
     }, [])
+
+    const onClickHandle = (id) => {
+        console.log('coucou')
+        console.log(id)
+        navigate(`/users/volunteer/${id}`)
+
+    }
     
     return (
         <>
@@ -31,6 +39,7 @@ export default function Volunteer() {
             <DataGrid
                 columns={columns}
                 rows={data}
+                onRowClick={(params) => onClickHandle(params.id)}
              />
             <Link to={'create'} className='fixed bottom-4 right-4 rounded bg-blue-600 text-white p-2 hover:bg-blue-500'>add Volunteer</Link>
 

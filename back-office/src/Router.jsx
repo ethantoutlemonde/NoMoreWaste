@@ -18,6 +18,8 @@ import DetailAdmin from './Views/users/DetailAdmin';
 import UpdateAdmin from './Views/users/UpdateAdmin';
 import DetailBeneficiary from './Views/users/DetailBeneficiary';
 import UpdateBeneficiary from './Views/users/UpdateBeneficiary';
+import DetailVolunteer from './Views/users/DetailVolunteer';
+import UpdateVolunteer from './Views/users/UpdateVolunteer';
 
 const router = createBrowserRouter([
     {
@@ -63,6 +65,14 @@ const router = createBrowserRouter([
             {
                 path: '/users/volunteer',
                 element: <Volunteer />,
+            },
+            {
+                path: '/users/volunteer/:id',
+                element: <DetailVolunteer />,
+            },
+            {
+                path: '/users/volunteer/:id/update',
+                element: <UpdateVolunteer />,
             },
             
             {

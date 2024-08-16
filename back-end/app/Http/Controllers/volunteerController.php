@@ -58,7 +58,33 @@ class VolunteerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->all();
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        $validator = Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8',
+        ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->messages()], 400);
+        }
+        
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+
+        // Mettre à jour le mot de passe uniquement s'il est fourni
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+        $user->save();
+
+        return response()->json(['success' => 'Volunteer succesfully updated'], 200);
     }
 
     /**

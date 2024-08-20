@@ -10,8 +10,11 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BeneficiaryController;
+use App\Http\Controllers\FoodCollectionController;
+use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
+use App\Models\FoodAid;
 
 // ---------------- Auth routes 
 
@@ -53,7 +56,15 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 // Route::get('/users', 'UserController@index');
 
+// Users Routes
+
 Route::middleware(['auth:sanctum'])->resource('admin', AdminController::class);
 Route::middleware(['auth:sanctum'])->resource('beneficiary', BeneficiaryController::class);
 Route::middleware(['auth:sanctum'])->resource('volunteer', VolunteerController::class);
 Route::middleware(['auth:sanctum'])->resource('users', UserController::class);
+
+
+// Food Aid Routes
+
+Route::middleware(['auth:sanctum'])->resource('supermarket', SupermarketController::class);
+Route::middleware(['auth:sanctum'])->resource('foodAid', FoodCollectionController::class);

@@ -20,6 +20,12 @@ import DetailBeneficiary from './Views/users/DetailBeneficiary';
 import UpdateBeneficiary from './Views/users/UpdateBeneficiary';
 import DetailVolunteer from './Views/users/DetailVolunteer';
 import UpdateVolunteer from './Views/users/UpdateVolunteer';
+import Outreach from './Views/food_aid/outreach/Outreach';
+import PartnerSupermarket from './Views/food_aid/partner_supermarket/PartnerSupermarker';
+import AddSupermarket from './Views/food_aid/partner_supermarket/AddSupermarket';
+import FoodCollectionsLayout from './components/FoodCollectionsLayout';
+import FoodCollections from './Views/food_aid/food_collections/FoodCollections';
+import NewFoodCollection from './Views/food_aid/food_collections/NewFoodCollection';
 
 const router = createBrowserRouter([
     {
@@ -30,6 +36,10 @@ const router = createBrowserRouter([
                 path: '/',
                 element: <Navigate to='/users/admin' />,
             },
+
+            // -------------- USER MANAGEMENT -------------- //
+
+            // Admin
             {
                 path: '/users/admin',
                 element: <Admin />,
@@ -46,6 +56,10 @@ const router = createBrowserRouter([
                 path: '/users/admin/create',
                 element: <CreateAdmin />,
             },
+
+
+            // Beneficiary
+
             {
                 path: '/users/beneficiary',
                 element: <Beneficiary />,
@@ -62,6 +76,10 @@ const router = createBrowserRouter([
                 path: '/users/beneficiary/create',
                 element: <CreateBeneficiary />,
             },
+
+
+            // Volunteer
+            
             {
                 path: '/users/volunteer',
                 element: <Volunteer />,
@@ -74,15 +92,55 @@ const router = createBrowserRouter([
                 path: '/users/volunteer/:id/update',
                 element: <UpdateVolunteer />,
             },
-            
-            {
-                path: '/users/beneficiary/create',
-                element: <CreateBeneficiary />,
-            },
             {
                 path: '/users/volunteer/create',
                 element: <CreateVolunteer />,
             },
+
+
+
+            // ---------------- FOOD AID ------------------- //
+
+            // Food Collections
+
+            {
+                path: '/food_aid/food_collections',
+                element: <FoodCollectionsLayout />,
+                children: [
+                    {
+                        path: '/food_aid/food_collections',
+                        element: <FoodCollections />,
+                    },
+                    {
+                        path: '/food_aid/food_collections/new',
+                        element: <NewFoodCollection />
+                    }
+                ]
+            },
+
+
+            // Outreach
+
+            {
+                path: '/food_aid/outreach',
+                element: <Outreach />,
+            },
+
+
+            // Partner Supermarket
+
+            {
+                path: '/food_aid/partner_supermarket',
+                element: <PartnerSupermarket />
+            },
+            {
+                path: '/food_aid/partner_supermarket/add',
+                element: <AddSupermarket />
+            },
+
+
+            // DASHBOARD
+
             {
                 path: '/dashboard',
                 element: <Dashboard />,

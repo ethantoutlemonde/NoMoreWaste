@@ -22,13 +22,13 @@ export default function DefaultLayout() {
 
     }
 
-    const dropdownUser = () => {
+    const dropdownHandler = (type) => {
         console.log('dropdown')
-        var element = document.getElementById("users");
+        var element = document.getElementById(`${type}`);
         element.classList.toggle("hidden");
-        var down = document.getElementById("arrrow-down-users");
+        var down = document.getElementById(`arrrow-down-${type}`);
         down.classList.toggle("hidden");
-        var right = document.getElementById("arrrow-right-users");
+        var right = document.getElementById(`arrrow-right-${type}`);
         right.classList.toggle("hidden");
     }
 
@@ -42,7 +42,7 @@ export default function DefaultLayout() {
                             Home
                         </div>
                     </Link>
-                    <button onClick={dropdownUser} className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white text-left flex justify-between items-center">
+                    <button onClick={() => dropdownHandler('users')} className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white text-left flex justify-between items-center">
                         <div className="">
                             Users
                         </div>
@@ -64,6 +64,31 @@ export default function DefaultLayout() {
                         <Link to='/users/volunteer'>
                             <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
                             Volunteer
+                            </div>
+                        </Link>
+                    </div>
+                    <button onClick={() => dropdownHandler('food_aid')} className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white text-left flex justify-between items-center">
+                        <div className="">
+                            Food Aid
+                        </div>
+                        <HiChevronDown id="arrrow-down-food_aid" className="items-center hidden"/>
+                        <HiChevronRight id="arrrow-right-food_aid" className="items-center"/>
+                        
+                    </button>
+                    <div  id="food_aid" className="hidden pl-4">
+                        <Link to='/food_aid/food_collections'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Food Collections
+                            </div>
+                        </Link>
+                        <Link to='/food_aid/outreach'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Outreach
+                            </div>
+                        </Link>
+                        <Link to='/food_aid/partner_supermarket'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Partner Supermarkets
                             </div>
                         </Link>
                     </div>

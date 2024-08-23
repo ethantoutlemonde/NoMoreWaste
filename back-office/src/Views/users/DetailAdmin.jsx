@@ -36,11 +36,12 @@ export default function DetailAdmin() {
         <Link className="bg-slate-50 rounded py-1 px-2 hover:bg-slate-100 border-slate-100 border" to={'./..'}>Return</Link>
         <Link to={'update'}><HiOutlinePencilSquare /></Link>
         <button onClick={onDelete}><HiOutlineTrash /></button>
-        <div className='flex flex-col'>
-            <h2>Name</h2>
-            <p>{data?.name}</p>
-            <h2>Email</h2>
-            <p>{data?.email}</p>
+        <div className="flex flex-col w-80 bg-slate-50 p-10 rounded-xl">
+            <h1 className='text-xl font-bold'>Detail :</h1>
+            <h2 className='text-lg font-semibold'>Name</h2>
+            <p className='mb-4'>{data?.name}</p>
+            <h2 className='text-lg font-semibold'>Email</h2>
+            <p className='mb-4'>{data?.email}</p>
         </div>
         </>
     )

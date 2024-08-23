@@ -102,6 +102,10 @@ const router = createBrowserRouter([
             // ---------------- FOOD AID ------------------- //
 
             // Food Collections
+            {
+                path: '/food_aid',
+                element: <Navigate to='/food_aid/food_collections'/>
+            },
 
             {
                 path: '/food_aid/food_collections',

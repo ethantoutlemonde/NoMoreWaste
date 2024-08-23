@@ -67,4 +67,4 @@ Route::middleware(['auth:sanctum'])->resource('users', UserController::class);
 // Food Aid Routes
 
 Route::middleware(['auth:sanctum'])->resource('supermarket', SupermarketController::class);
-Route::middleware(['auth:sanctum'])->resource('foodAid', FoodCollectionController::class);
+Route::middleware(['auth:sanctum'])->resource('foodCollection', FoodCollectionController::class);

@@ -41,6 +41,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'auchan@example.com',
             'phone' => '0139847387'
         ]);
+        Supermarket::factory()->create([
+            'name' => 'Carrefour',
+            'address' => '2 rue du paradis, 89000',
+            'email' => 'carrefour@example.com',
+            'phone' => '0139847387'
+        ]);
+
+        SupermarketDisponibility::factory(2)->create([
+            'date' => '2024-08-22'
+        ]);
 
         SupermarketDisponibility::factory(2)->create();
 

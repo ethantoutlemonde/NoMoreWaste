@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Supermarket;
+use App\Models\SupermarketDisponibility;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -32,6 +34,25 @@ class DatabaseSeeder extends Seeder
             'email' => 'volunteer@example.com',
             'type' => 3
         ]);
+
+        Supermarket::factory()->create([
+            'name' => 'Auchan',
+            'address' => '23 rue longchamp, 75012, Paris',
+            'email' => 'auchan@example.com',
+            'phone' => '0139847387'
+        ]);
+        Supermarket::factory()->create([
+            'name' => 'Carrefour',
+            'address' => '2 rue du paradis, 89000',
+            'email' => 'carrefour@example.com',
+            'phone' => '0139847387'
+        ]);
+
+        SupermarketDisponibility::factory(2)->create([
+            'date' => '2024-08-24'
+        ]);
+
+        SupermarketDisponibility::factory(2)->create();
 
     }
 }

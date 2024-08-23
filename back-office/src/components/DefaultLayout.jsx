@@ -118,8 +118,20 @@ export default function DefaultLayout() {
                     <h1 className="text-3xl">Header</h1>
                 </div>
                 <div>
-                    {user.name}
-                    <button className="logout-btn" onClick={onLogout}>Logout</button>
+                    <button onClick={() => dropdownHandler('login')} className="flex justify-between items-center hover:border-gray-500 p-2 rounded border border-gray-400">
+                        <div className="mr-2">
+                            {user.name}
+                        </div>
+                        <HiChevronDown id="arrrow-down-login" className="items-center hidden"/>
+                        <HiChevronRight id="arrrow-right-login" className="items-center"/>
+                        
+                    </button>
+                    
+                    <div  id="login" className="hidden pl-4 absolute mt-2 bg-white p-3 rounded shadow flex flex-col gap-2">
+                        <Link to={`/users/admin/${user.id}`} className="hover:underline">Profil</Link>
+                        <button className="logout-btn hover:underline" onClick={onLogout}>Logout</button>
+                    </div>
+                    
                 </div>
                 
             </header>

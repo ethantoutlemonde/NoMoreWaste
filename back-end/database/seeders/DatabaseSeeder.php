@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         SupermarketDisponibility::factory(2)->create([
-            'date' => '2024-08-22'
+            'date' => '2024-08-24'
         ]);
 
         SupermarketDisponibility::factory(2)->create();

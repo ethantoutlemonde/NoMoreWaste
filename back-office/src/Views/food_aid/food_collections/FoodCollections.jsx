@@ -1,56 +1,61 @@
-import { useState, useEffect } from 'react';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { PickersDay } from '@mui/x-date-pickers/PickersDay';
-import axiosClient from '../../../axios-client';
-import dayjs from 'dayjs';
+// import React, { useState, useEffect } from 'react';
+// import Badge from '@mui/material/Badge';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { PickersDay } from '@mui/x-date-pickers/PickersDay';
+// import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+// import axiosClient from '../../../axios-client';
+// import dayjs, { Dayjs } from 'dayjs';
+
+import FoodCollectionCalendar from "../../../components/FoodCollectionCalendar";
 
 export default function FoodCollections() {
-    const [selectedDate, setSelectedDate] = useState(dayjs());
-    const [foodCollections, setFoodCollections] = useState([]);
+    // const [selectedDate, setSelectedDate] = useState(dayjs());
+    // const [foodCollections, setFoodCollections] = useState([]);
 
-    useEffect(() => {
-        console.log("Fetching food collections...");
-        axiosClient.get('/api/foodCollection')
-            .then(response => {
-                console.log("API response:", response.data);
-                const collections = response.data.map(collection => ({
-                    ...collection,
-                    date: dayjs(collection.date)
-                }));
-                setFoodCollections(collections);
-            })
-            .catch(error => {
-                console.error("Error fetching food collections:", error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axiosClient.get('/api/foodCollection')
+    //         .then(response => {
+    //             const collections = response.data.map(collection => dayjs(collection.date));
+    //             setFoodCollections(collections);
+    //             console.log("Fetched food collections:", response);
+    //         })
+    //         .catch(error => {
+    //             console.error("Error fetching food collections:", error);
+    //         });
+    // }, []);
 
-    // Convert data to MUI's required format
-    foodCollections.map(item => (console.log(item.date)));
-    const events = foodCollections.map(item => ({
-        id: item.id,
-        title: 'Food Collection',
-        start: dayjs(item.date).toDate(),
-        end: dayjs(item.date).add(1, 'day').toDate(), // Example: Adjust as needed
-    }));
+    // const FoodCollectionDay = (props) => {
+    //     const { day, outsideCurrentMonth, ...other } = props;
 
-    const renderDay = (date) => {
-        const dateString = date.format('YYYY-MM-DD');
-        const hasEvents = events.some(event => dayjs(event.start).format('YYYY-MM-DD') === dateString);
-        return (
-            <div style={{ position: 'relative' }}>
-                {date.date()}
-                {hasEvents && <div style={{ position: 'absolute', top: 0, right: 0, backgroundColor: 'red', width: '5px', height: '5px', borderRadius: '50%' }} />}
+    //     const isFoodCollectionDay = foodCollections.some(collectionDate => 
+    //         collectionDate.isSame(day, 'day')
+    //     );
+
+    //     return (
+    //         <Badge
+    //             key={day.toString()}
+    //             overlap="circular"
+    //             badgeContent={isFoodCollectionDay ? '🌟' : undefined}
+    //         >
+    //             <PickersDay {...other} day={day} outsideCurrentMonth={outsideCurrentMonth} />
+    //         </Badge>
+    //     );
+    // };
+
+    return (
+
+            // <DateCalendar
+            //     value={selectedDate}
+            //     onChange={(newDate) => setSelectedDate(newDate)}
+            //     slots={{
+            //         day: FoodCollectionDay,
+            //     }}
+            // />
+            <div className="flex flex-col w-96 bg-white p-10 rounded-lg mt-4 m-auto shadow">
+                <FoodCollectionCalendar />
             </div>
-        );
-    };
-    return(
-        <>
-        Food Collections
-        <DateCalendar
-                value={selectedDate}
-                onChange={(newDate) => setSelectedDate(newDate)}
-                renderDay={renderDay}
-            />
-        </>
-    )
+
+            
+    );
 }

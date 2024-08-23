@@ -14,7 +14,7 @@ export default function NewFoodCollection() {
             date: date
         }
 
-        axiosClient.post('/api/foodAid',foodColection)
+        axiosClient.post('/api/foodCollection',foodColection)
         .then((response) => {
             setSuccess(response.data)
         })
@@ -28,7 +28,7 @@ export default function NewFoodCollection() {
 
     return(
         <>
-        <form className="flex flex-col w-96 bg-white p-10 rounded-lg mt-4" onSubmit={submit}>
+        <form className="flex flex-col w-96 bg-white p-10 rounded-lg mt-4 m-auto shadow" onSubmit={submit}>
             <h1 className="text-2xl mb-4">Create a new Food Collection</h1>
             <input type="date" className="mb-2 bg-slate-50 p-2 rounded" value={date} onChange={e => setDate(e.target.value)}/>
             {errors.date && <p className="text-red-500">{errors.date}</p>}

@@ -23,7 +23,6 @@ export default function DefaultLayout() {
     }
 
     const dropdownHandler = (type) => {
-        console.log('dropdown')
         var element = document.getElementById(`${type}`);
         element.classList.toggle("hidden");
         var down = document.getElementById(`arrrow-down-${type}`);
@@ -96,6 +95,11 @@ export default function DefaultLayout() {
                     <Link to='/dashboard'>
                         <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
                         Dashboard
+                        </div>
+                    </Link>
+                    <Link to='/stock'>
+                        <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                        Stock
                         </div>
                     </Link>
                     {/* <Link to='/logout'>

@@ -26,6 +26,7 @@ import AddSupermarket from './Views/food_aid/partner_supermarket/AddSupermarket'
 import FoodCollectionsLayout from './components/FoodCollectionsLayout';
 import FoodCollections from './Views/food_aid/food_collections/FoodCollections';
 import NewFoodCollection from './Views/food_aid/food_collections/NewFoodCollection';
+import Stock from './Views/stock/Stock';
 
 const router = createBrowserRouter([
     {
@@ -113,6 +114,10 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: '/food_aid/food_collections',
+                        element: <Navigate to='/food_aid/food_collections/index'/>
+                    },
+                    {
+                        path: '/food_aid/food_collections/index',
                         element: <FoodCollections />,
                     },
                     {
@@ -148,6 +153,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <Dashboard />,
+            },
+            {
+                path: '/stock',
+                element: <Stock />,
             },
         ]
     },

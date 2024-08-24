@@ -52,19 +52,20 @@ export default function DetailVolunteer() {
     return (
         <>
         <Link className="bg-slate-50 rounded py-1 px-2 hover:bg-slate-100 border-slate-100 border " to={'./..'}>Return</Link>
-        <div className='mt-4'>
+        <div className='mt-4 flex flex-row gap-6'>
 
         
         {loading ? <CircularProgress />
             :
-            
+            <>
             <div className="flex flex-col w-80 bg-slate-50 p-10 rounded-xl">
+                
+                
+                <h1 className='text-2xl font-semibold mb-6'>Detail :</h1>
                 <div className='flex justify-between mb-2'>
                     <Link className='text-2xl hover:text-gray-700' to={'update'}><HiOutlinePencilSquare /></Link>
                     <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
                 </div>
-                
-                <h1 className='text-xl font-bold'>Detail :</h1>
                 <h2 className='text-lg font-semibold'>Name</h2>
                 <p className='mb-4'>{data?.name}</p>
                 <h2 className='text-lg font-semibold'>Email</h2>
@@ -74,6 +75,10 @@ export default function DetailVolunteer() {
                     {loadingBan && <CircularProgress />}
                 </div>
             </div>
+            <div className="flex flex-col w-80 bg-slate-50 p-10 rounded-xl">
+                <h1 className='text-2xl font-semibold mb-6'>Documents :</h1>
+            </div>
+            </>
         }
         </div>
         </>

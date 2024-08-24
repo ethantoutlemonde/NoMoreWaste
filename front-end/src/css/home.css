@@ -1,0 +1,200 @@
+.homePageBody{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.homepageFirstImage{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.LogoSectionHome{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.LogoSectionHome{
+    width: 100%;
+    height: 100%;
+}
+
+
+.DevenezBenevoleSection{
+    background-color: #0071E3;
+    display: flex;
+    flex-direction: row;
+    margin-top: 4px;
+}
+
+.DevenezBenevoleSectionRight{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
+.DevenezBenevoleSectionLeft{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding-left: 4%;
+}
+
+.DevenezBenevoleSectionLeft h1{
+    color: white;
+    font-size: 14vh;
+    font-family: "chillax-Bold";
+    line-height: 18vh;
+    flex-grow: 40px;
+    padding: 40px 0px;
+}
+
+.DevenezBenevoleButton{
+    background-color: white;
+    color: #0071E3;
+    padding: 24px 90px;
+    border: none;
+    border-radius: 15px;
+    font-size: 24px;
+    font-family: "chillax-Bold";
+    cursor: pointer;
+}
+
+.BenevoleCentreInteret{
+    background-color: #FF5A5A;
+    height: auto;
+    margin-top: 4px;
+}
+
+.BenevoleCentreInteret h1{
+    color: white;
+    font-size: 8vh;
+    font-family: "chillax-Bold";
+    line-height: 8vh;
+    padding: 40px 5vw;
+}
+
+.BenevoleCentreInteret h2{
+    color: white;
+    font-size: 4vh;
+    font-family: "chillax-Semibold";
+    line-height: 4vh;
+    padding: 80px 5vw;
+}
+
+.BenevoleCentreInteretText{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.BenevoleCentreInteretButtonSection{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 40px 0px;
+}
+
+.BenevoleCentreInteretButton{
+    background-color: white;
+    color: #000000;
+    padding: 16px 40px;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    font-family: "chillax-Bold";
+    cursor: pointer;
+    margin: 30px 4vw;
+}
+
+.HomePageAvisSection{
+    background-color: #6A6AF4;
+}
+
+@media screen and (max-width: 768px){
+
+    .DevenezBenevoleSection{
+        flex-direction: column-reverse;
+    }
+    
+    .DevenezBenevoleSectionLeft{
+        padding-left: 0%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .DevenezBenevoleSectionLeft h1{
+        padding: 20px 0px;
+        text-align: center;
+    }
+
+    .DevenezBenevoleButton{
+        padding: 16px 56px;
+        border-radius: 15px;
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+
+    .BenevoleCentreInteretText{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .BenevoleCentreInteret h1{
+        color: white;
+        font-size: 8vh;
+        font-family: "chillax-Bold";
+        line-height: 10vh;
+        padding: 30px 5vw 0px 5vw;
+        text-align: center;
+        margin: 10px;
+    }
+    
+    .BenevoleCentreInteret h2{
+        color: white;
+        font-size: 4vh;
+        font-family: "chillax-Semibold";
+        line-height: 4vh;
+        padding: 0px 5vw;
+        padding-top: 10px;
+        margin: 0px;
+        text-align: center;
+    }
+
+    .DevenezBenevoleSectionRight{
+        align-items: center;
+        justify-content: center;
+    }
+
+    .DevenezBenevoleImg{
+        width: 100%;
+        height: 100%;
+        margin-left: 7px;
+        margin-right: 7px;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .DevenezBenevoleSectionLeft h1{
+        font-size: 10vh;
+        line-height: 10vh;
+        padding: 30px 0px;
+    }
+
+    .DevenezBenevoleButton{
+        padding: 16px 64px;
+        border-radius: 14px;
+        font-size: 22px;
+    }
+}

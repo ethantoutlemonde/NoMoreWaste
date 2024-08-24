@@ -169,10 +169,25 @@ const router = createBrowserRouter([
                 path: '/dashboard',
                 element: <Dashboard />,
             },
-            {
-                path: '/stock',
-                element: <Stock />,
-            },
+            // {
+            //     path: '/stock',
+            //     element: <Stock />,
+            // },
+
+
+            // Stock
+            // {
+            //     path: '/stock/Product',
+            //     element: <Product/>,
+            // },
+            // {
+            //     path: '/stock/Warehouse',
+            //     element: <Warehouse />,
+            // },
+            // {
+            //     path: '/stock/ProductType',
+            //     element: <ProductType />,
+            // },
         ]
     },
     {

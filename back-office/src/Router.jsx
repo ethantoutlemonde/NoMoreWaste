@@ -163,18 +163,18 @@ const router = createBrowserRouter([
 
 
             // Stock
-            {
-                path: '/stock/Product',
-                element: <Product/>,
-            },
-            {
-                path: '/stock/Warehouse',
-                element: <Warehouse />,
-            },
-            {
-                path: '/stock/ProductType',
-                element: <ProductType />,
-            },
+            // {
+            //     path: '/stock/Product',
+            //     element: <Product/>,
+            // },
+            // {
+            //     path: '/stock/Warehouse',
+            //     element: <Warehouse />,
+            // },
+            // {
+            //     path: '/stock/ProductType',
+            //     element: <ProductType />,
+            // },
         ]
     },
     {

@@ -46,7 +46,7 @@ export default function SupermarketConv({supermarket_id}) {
     return (
         <>
         <h1 className='text-2xl font-semibold'>Chat :</h1>
-        <div ref={chatDiv} className="w-full h-full max-h-96 bg-white rounded-md overflow-y-scroll p-4 overflow-x-hidden">
+        <div ref={chatDiv} className="w-full h-full max-h-96 bg-white rounded-t-lg overflow-y-scroll p-4 overflow-x-hidden scroll-smooth">
             {loading &&  <CircularProgress />}
             <div className="h-full flex flex-col gap-2">
                 {messages.map((message, index) => (
@@ -64,7 +64,7 @@ export default function SupermarketConv({supermarket_id}) {
                 ))}
             </div>
         </div>
-        <form onSubmit={send} className="bg-blue-100 w-full flex gap-2 p-2 rounded-md">
+        <form onSubmit={send} className="bg-blue-100 w-full flex gap-2 p-2 rounded-b-lg">
             <textarea ref={inputMessage} type="text" className="w-full bg-white rounded p-1" />
             <button type="submit" className="bg-blue-500 p-1 text-white rounded hover:bg-blue-400">Send</button>
         </form>

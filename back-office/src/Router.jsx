@@ -162,19 +162,19 @@ const router = createBrowserRouter([
             // },
 
 
-            //Stock
-            // {
-            //     path: '/stock/Product',
-            //     element: <Product/>,
-            // },
-            // {
-            //     path: '/stock/Warehouse',
-            //     element: <Warehouse />,
-            // },
-            // {
-            //     path: '/stock/ProductType',
-            //     element: <ProductType />,
-            // },
+            // Stock
+            {
+                path: '/stock/Product',
+                element: <Product/>,
+            },
+            {
+                path: '/stock/Warehouse',
+                element: <Warehouse />,
+            },
+            {
+                path: '/stock/ProductType',
+                element: <ProductType />,
+            },
         ]
     },
     {

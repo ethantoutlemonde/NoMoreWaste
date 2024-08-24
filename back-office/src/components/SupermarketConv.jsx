@@ -1,18 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import axiosClient from "../axios-client";
 import { useAuth } from "../hooks/auth";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function SupermarketConv({supermarket_id}) {
     const chatDiv = useRef(null);
     const [messages, setMessages] = useState([]);
     const inputMessage = useRef(null);
     const { user } = useAuth({ middleware: 'auth' })
+    const [loading, setLoading] = useState(true)
     
     useEffect(() => {
         axiosClient.get(`/api/supermarket/${supermarket_id}/messages`)
         .then(response => {
             console.log(response.data)
             setMessages(response.data)
+            setLoading(false)
         })
         if (chatDiv.current) {
             const div = chatDiv.current;
@@ -44,6 +47,7 @@ export default function SupermarketConv({supermarket_id}) {
         <>
         <h1 className='text-2xl font-semibold'>Chat :</h1>
         <div ref={chatDiv} className="w-full h-full max-h-96 bg-white rounded-md overflow-y-scroll p-4 overflow-x-hidden">
+            {loading &&  <CircularProgress />}
             <div className="h-full flex flex-col gap-2">
                 {messages.map((message, index) => (
                     message.admin_id === null ? (

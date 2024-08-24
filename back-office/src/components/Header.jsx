@@ -65,7 +65,7 @@ export default function Header() {
                     <div className="relative">
                         <button onClick={langDropdownHandler} className="flex justify-between items-center hover:border-gray-500 p-2 rounded border border-gray-400 w-full">
                             <div className="mr-2">
-                                Language
+                                {t("Language")}
                             </div>
                             {isLangDropdownOpen ? (
                                 <HiChevronDown className="items-center"/>
@@ -75,20 +75,14 @@ export default function Header() {
                         </button>
 
                         {isLangDropdownOpen && (
-                            <div className="absolute mt-2 bg-white p-3 rounded shadow w-full">
-                                <div
-                                    onClick={() => changeLanguage('en')}
-                                    className="flex items-center gap-2 cursor-pointer p-1 hover:bg-gray-200"
-                                >
-                                    <Flag code="US" style={{ width: 24, height: 16 }} />
-                                    <span>English</span>
+                            <div className="absolute mt-2 bg-white p-3 rounded shadow w-auto min-w-fit z-50">
+                                <div onClick={() => changeLanguage('en')} className="flex items-center gap-2 cursor-pointer p-1 hover:bg-gray-200 rounded px-2">
+                                    <Flag code="GB" className='w-6'/>
+                                    <span className='pr-6'>English</span>
                                 </div>
-                                <div
-                                    onClick={() => changeLanguage('fr')}
-                                    className="flex items-center gap-2 cursor-pointer p-1 hover:bg-gray-200"
-                                >
-                                    <Flag code="FR" style={{ width: 24, height: 16 }} />
-                                    <span>Français</span>
+                                <div onClick={() => changeLanguage('fr')} className="flex items-center gap-2 cursor-pointer p-1 hover:bg-gray-200 rounded px-2">
+                                    <Flag code="FR" className='w-6'/>
+                                    <span className='pr-6'>Françaissssssssssssss</span>
                                 </div>
                             </div>
                         )}

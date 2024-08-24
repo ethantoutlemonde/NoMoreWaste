@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\FoodCollectionController;
+use App\Http\Controllers\MessageSupermarketController;
 use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
@@ -71,3 +72,8 @@ Route::middleware(AdminMiddleware::class)->resource('users', UserController::cla
 Route::middleware(AdminMiddleware::class)->resource('supermarket', SupermarketController::class);
 Route::patch('supermarket/{supermarket}/ban', [SupermarketController::class, 'ban'])->name('supermarkets.ban');
 Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollectionController::class);
+
+// Message Routes
+//Route::middleware(AdminMiddleware::class)->resource('messageSupermarket', MessageSupermarketController::class);
+Route::get('supermarket/{supermarket}/messages', [MessageSupermarketController::class, 'allMessages'])->name('supermarket.messages');
+Route::post('supermarket/{supermarket}/messages', [MessageSupermarketController::class, 'store'])->name('supermarket.messages.store');

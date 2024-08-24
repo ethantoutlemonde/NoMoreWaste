@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MessageSupermarket;
 use App\Models\Supermarket;
 use App\Models\SupermarketDisponibility;
 use App\Models\User;
@@ -60,6 +61,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         SupermarketDisponibility::factory(2)->create();
+
+        MessageSupermarket::factory(10)->create();
+
+        MessageSupermarket::factory(10)->create([
+            'admin_id' => null
+        ]);
+
 
     }
 }

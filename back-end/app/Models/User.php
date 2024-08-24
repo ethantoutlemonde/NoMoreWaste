@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Document::class, 'user_id');
     }
+
+    public function messages()
+    {
+        return $this->hasMany(MessageSupermarket::class, 'admin_id');
+    }
 }

@@ -24,4 +24,8 @@ class Supermarket extends Model
     public function foodColletions() {
         return $this->belongsToMany(FoodCollection::class);
     }
+
+    public function messages() {
+        return $this->hasMany(MessageSupermarket::class, 'supermarket_id');
+    }
 }

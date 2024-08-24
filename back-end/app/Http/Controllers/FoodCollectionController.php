@@ -61,7 +61,8 @@ class FoodCollectionController extends Controller
      */
     public function show(FoodCollection $foodCollection)
     {
-        //
+        // return the food collection with the supermarkets
+        return $foodCollection->with('supermarkets')->first();
     }
 
     /**

@@ -50,7 +50,7 @@ class SupermarketController extends Controller
      */
     public function show(Supermarket $supermarket)
     {
-        //
+        return $supermarket;
     }
 
     /**
@@ -58,7 +58,31 @@ class SupermarketController extends Controller
      */
     public function update(Request $request, Supermarket $supermarket)
     {
-        //
+        $data = $request->all();
+        $supermarket = $supermarket->first();
+
+        if (!$supermarket) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        $validator = Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255|unique:supermarkets,address,' . $supermarket->id,
+            'email' => 'required|string|email|max:255|unique:supermarkets,email,' . $supermarket->id,
+            'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/', 'unique:supermarkets,phone,' . $supermarket->id],
+        ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->messages()], 400);
+        }
+        
+        $supermarket->name = $request->input('name');
+        $supermarket->email = $request->input('email');
+        $supermarket->phone = $request->input('phone');
+        $supermarket->address = $request->input('address');
+        $supermarket->save();
+
+        return response()->json(['success' => 'Supermarket succesfully updated'], 200);
     }
 
     /**
@@ -66,6 +90,7 @@ class SupermarketController extends Controller
      */
     public function destroy(Supermarket $supermarket)
     {
-        //
+        $supermarket->delete();
+        return response()->json(['success' => 'Supermarket succesfully deleted'], 200);
     }
 }

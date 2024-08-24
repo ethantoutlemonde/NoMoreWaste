@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Link , useNavigate, useParams } from 'react-router-dom';
-import axiosClient from '../../axios-client';
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axiosClient from "../../../axios-client";
 import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import CircularProgress from '@mui/material/CircularProgress';
 
-export default function DetailAdmin() {
+export default function DetailSupermarket() {
     const { id } = useParams();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true)
@@ -12,7 +12,7 @@ export default function DetailAdmin() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axiosClient.get(`/api/users/${id}`)
+        axiosClient.get(`/api/supermarket/${id}`)
         .then(response => {
             console.log(response.data)
             setData(response.data)
@@ -27,7 +27,7 @@ export default function DetailAdmin() {
 
     const onDelete = () => {
         console.log('delete', id)
-        axiosClient.delete(`/api/users/${id}`)
+        axiosClient.delete(`/api/supermarket/${id}`)
         .then(() => {
             navigate('./..')
         })
@@ -48,14 +48,18 @@ export default function DetailAdmin() {
                     <Link className='text-2xl hover:text-gray-700' to={'update'}><HiOutlinePencilSquare /></Link>
                     <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
                 </div>
-                
                 <h1 className='text-xl font-bold'>Detail :</h1>
                 <h2 className='text-lg font-semibold'>Name</h2>
                 <p className='mb-4'>{data?.name}</p>
+                <h2 className='text-lg font-semibold'>Address</h2>
+                <p className='mb-4'>{data?.address}</p>
                 <h2 className='text-lg font-semibold'>Email</h2>
                 <p className='mb-4'>{data?.email}</p>
+                <h2 className='text-lg font-semibold'>Phone</h2>
+                <p className='mb-4'>{data?.phone}</p>
             </div>
         }
+            
         </div>
         </>
     )

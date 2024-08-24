@@ -27,6 +27,9 @@ import FoodCollectionsLayout from './components/FoodCollectionsLayout';
 import FoodCollections from './Views/food_aid/food_collections/FoodCollections';
 import NewFoodCollection from './Views/food_aid/food_collections/NewFoodCollection';
 import Stock from './Views/stock/Stock';
+import DetailFoodCollection from './Views/food_aid/food_collections/DetailFoodCollection';
+import DetailSupermarket from './Views/food_aid/partner_supermarket/DetailSupermarket';
+import UpdateSupermarket from './Views/food_aid/partner_supermarket/UpdateSupermarket';
 
 const router = createBrowserRouter([
     {
@@ -123,7 +126,11 @@ const router = createBrowserRouter([
                     {
                         path: '/food_aid/food_collections/new',
                         element: <NewFoodCollection />
-                    }
+                    },
+                    {
+                        path: '/food_aid/food_collections/:id',
+                        element: <DetailFoodCollection />
+                    },
                 ]
             },
 
@@ -145,6 +152,14 @@ const router = createBrowserRouter([
             {
                 path: '/food_aid/partner_supermarket/add',
                 element: <AddSupermarket />
+            },
+            {
+                path: '/food_aid/partner_supermarket/:id',
+                element: <DetailSupermarket />
+            },
+            {
+                path: '/food_aid/partner_supermarket/:id/update',
+                element: <UpdateSupermarket />
             },
 
 

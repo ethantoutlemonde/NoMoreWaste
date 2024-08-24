@@ -81,6 +81,7 @@ class FoodCollectionController extends Controller
      */
     public function destroy(FoodCollection $foodCollection)
     {
-        //
+        $foodCollection->delete();
+        return response()->json(['success' => 'Food Collection succesfully deleted'], 200);
     }
 }

@@ -9,7 +9,7 @@ class SupermarketDisponibility extends Model
 {
     use HasFactory;
 
-    public function supermaket() {
+    public function supermarket() {
         return $this->belongsTo(Supermarket::class);
     }
 }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('food_collection_supermarket', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('supermarket_id');
-            $table->unsignedBigInteger('food_collection_id');
+            $table->foreignId('supermarket_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('food_collection_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

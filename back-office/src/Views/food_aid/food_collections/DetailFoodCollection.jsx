@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../../axios-client";
 import CircularProgress from '@mui/material/CircularProgress';
+import { HiOutlineTrash } from "react-icons/hi";
 
 export default function DetailFoodCollection() {
     const { id } = useParams();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
+
+    const navigate = useNavigate();
 
     // get the food collection with the given id using the API with axiosClient and useEffect hook
     // display the food collection data in the component
@@ -23,6 +26,15 @@ export default function DetailFoodCollection() {
             
     }
     , [id]);
+
+    // delete the food collection with the given id using the API with axiosClient
+    const onDelete = () => {
+        console.log('delete', id);
+        axiosClient.delete(`/api/foodCollection/${id}`)
+            .then(() => {
+                navigate('./..');
+            });
+    };
     return (
         <div className="mt-4">
             <Link className="bg-white rounded py-1 px-2 hover:bg-slate-50 border-gray-100 border " to={'./..'}>Return</Link>
@@ -30,7 +42,11 @@ export default function DetailFoodCollection() {
             {loading ? <CircularProgress />
             :
             <div>
-                <h1 className="text-xl mb-2 font-semibold">Detail of the FoodCollection of the {data?.date}</h1>
+                <div className="flex justify-between mb-2">
+                    <h1 className="text-xl  font-semibold">Detail of the FoodCollection of the {data?.date}</h1>
+                    <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
+                </div>
+                
                 <p>Date : {data?.date}</p>
                 <h2 className="text-lg mb-4 mt-4">List of collected supermarkets : </h2>
                 <div className="flex flex-row flex-wrap gap-4">

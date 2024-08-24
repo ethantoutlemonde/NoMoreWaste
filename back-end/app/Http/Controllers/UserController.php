@@ -37,7 +37,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->update($request->all());
+        return response()->json(['success' => 'User succesfully updated'], 200);
     }
 
     /**
@@ -48,4 +49,13 @@ class UserController extends Controller
         $user->delete();
         return response()->json(['success' => 'User succesfully deleted'], 200);
     }
+
+    // public function ban(User $user)
+    // {
+    //     // Logique pour bannir l'utilisateur
+    //     // Par exemple, marquer l'utilisateur comme banni dans la base de données
+    //     $user->update(['banned' => true]);
+    
+    //     return response()->json(['message' => 'User banned successfully.']);
+    // }
 }

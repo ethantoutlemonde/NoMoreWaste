@@ -92,4 +92,13 @@ class SupermarketController extends Controller
         $supermarket->delete();
         return response()->json(['success' => 'Supermarket succesfully deleted'], 200);
     }
+
+    public function ban(Request $request, Supermarket $supermarket)
+    {
+        // Logique pour bannir l'utilisateur
+        // Par exemple, marquer l'utilisateur comme banni dans la base de données
+        $supermarket->update($request->all());
+    
+        return response()->json(['message' => 'Supermarket banned successfully.']);
+    }
 }

@@ -8,6 +8,7 @@ export default function DetailSupermarket() {
     const { id } = useParams();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true)
+    const [loadingBan, setLoadingBan] = useState(false)
 
     const navigate = useNavigate()
 
@@ -31,6 +32,20 @@ export default function DetailSupermarket() {
         .then(() => {
             navigate('./..')
         })
+    }
+
+    const onBanned = (bool) => {
+        setLoadingBan(true)
+        console.log('ban', id)
+        axiosClient.patch(`/api/supermarket/${id}/ban`, {banned: bool})
+        .then(() => {
+            setData(prevData => ({
+                ...prevData,
+                banned: bool
+            }));
+            setLoadingBan(false)
+        }
+        )
     }
 
 
@@ -57,6 +72,10 @@ export default function DetailSupermarket() {
                 <p className='mb-4'>{data?.email}</p>
                 <h2 className='text-lg font-semibold'>Phone</h2>
                 <p className='mb-4'>{data?.phone}</p>
+                <div className='flex'>
+                    {data?.banned ?  <button className='bg-green-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(false)}>Unban</button> : <button className='bg-red-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(true)}>Ban</button>}
+                    {loadingBan && <CircularProgress />}
+                </div>
             </div>
         }
             

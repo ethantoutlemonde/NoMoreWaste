@@ -32,6 +32,9 @@ class FoodCollectionController extends Controller
         }
 
         $supermarkets = SupermarketDisponibility::where('date', $request->date)
+        ->whereHas('supermarket', function ($query) {
+            $query->where('banned', false); // Supposons que 'banned' est un booléen
+        })
         ->pluck('supermarket_id')
         ->toArray(); // Récupérer seulement les IDs des supermarchés
 

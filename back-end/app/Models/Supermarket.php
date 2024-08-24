@@ -14,6 +14,7 @@ class Supermarket extends Model
         'email',
         'address',
         'phone',
+        'banned'
     ];
 
     public function disponibilities() {

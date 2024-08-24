@@ -63,9 +63,11 @@ Route::middleware(AdminMiddleware::class)->resource('admin', AdminController::cl
 Route::middleware(AdminMiddleware::class)->resource('beneficiary', BeneficiaryController::class);
 Route::middleware(AdminMiddleware::class)->resource('volunteer', VolunteerController::class);
 Route::middleware(AdminMiddleware::class)->resource('users', UserController::class);
+// Route::patch('users/{user}/ban', [UserController::class, 'ban'])->name('users.ban');
 
 
 // Food Aid Routes
 
 Route::middleware(AdminMiddleware::class)->resource('supermarket', SupermarketController::class);
+Route::patch('supermarket/{supermarket}/ban', [SupermarketController::class, 'ban'])->name('supermarkets.ban');
 Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollectionController::class);

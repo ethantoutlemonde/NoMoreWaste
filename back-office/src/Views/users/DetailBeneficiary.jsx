@@ -8,6 +8,7 @@ export default function DetailBeneficiary() {
     const { id } = useParams();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true)
+    const [loadingBan, setLoadingBan] = useState(false)
 
     const navigate = useNavigate()
 
@@ -33,6 +34,20 @@ export default function DetailBeneficiary() {
         })
     }
 
+    const onBanned = (bool) => {
+        setLoadingBan(true)
+        console.log('ban', id)
+        axiosClient.patch(`/api/users/${id}`, {banned: bool})
+        .then(() => {
+            setData(prevData => ({
+                ...prevData,
+                banned: bool
+            }));
+            setLoadingBan(false)
+        }
+        )
+    }
+
 
     return (
         <>
@@ -54,6 +69,10 @@ export default function DetailBeneficiary() {
                 <p className='mb-4'>{data?.name}</p>
                 <h2 className='text-lg font-semibold'>Email</h2>
                 <p className='mb-4'>{data?.email}</p>
+                <div className='flex'>
+                    {data?.banned ?  <button className='bg-green-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(false)}>Unban</button> : <button className='bg-red-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(true)}>Ban</button>}
+                    {loadingBan && <CircularProgress />}
+                </div>
             </div>
         }
         </div>

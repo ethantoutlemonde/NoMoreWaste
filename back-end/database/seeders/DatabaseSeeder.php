@@ -35,6 +35,13 @@ class DatabaseSeeder extends Seeder
             'type' => 3
         ]);
 
+        User::factory()->create([
+            'name' => 'Banned User',
+            'email' => 'banned@example.com',
+            'type' => 1,
+            'banned' => true
+        ]);
+
         Supermarket::factory()->create([
             'name' => 'Auchan',
             'address' => '23 rue longchamp, 75012, Paris',

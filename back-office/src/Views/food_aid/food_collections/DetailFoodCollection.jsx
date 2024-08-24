@@ -33,7 +33,7 @@ export default function DetailFoodCollection() {
                 <h1 className="text-xl mb-2 font-semibold">Detail of the FoodCollection of the {data?.date}</h1>
                 <p>Date : {data?.date}</p>
                 <h2 className="text-lg mb-4 mt-4">List of collected supermarkets : </h2>
-                <div className="flex flex-row flex-wrap gap-2">
+                <div className="flex flex-row flex-wrap gap-4">
                     {data?.supermarkets.map(supermarket => (
                         <Link to={`/food_aid/partner_supermarket/${supermarket.id}`} key={supermarket.id} className="bg-white w-fit p-4 rounded-lg shadow hover:shadow-md duration-100">
                             <p className="font-semibold">{supermarket.name}</p>

@@ -14,6 +14,7 @@ use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Models\FoodAid;
 
 // ---------------- Auth routes 
@@ -50,7 +51,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 // --------------------------------------------------------------------------------------------------------------
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::middleware(AdminMiddleware::class)->get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -58,13 +59,13 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 // Users Routes
 
-Route::middleware(['auth:sanctum'])->resource('admin', AdminController::class);
-Route::middleware(['auth:sanctum'])->resource('beneficiary', BeneficiaryController::class);
-Route::middleware(['auth:sanctum'])->resource('volunteer', VolunteerController::class);
-Route::middleware(['auth:sanctum'])->resource('users', UserController::class);
+Route::middleware(AdminMiddleware::class)->resource('admin', AdminController::class);
+Route::middleware(AdminMiddleware::class)->resource('beneficiary', BeneficiaryController::class);
+Route::middleware(AdminMiddleware::class)->resource('volunteer', VolunteerController::class);
+Route::middleware(AdminMiddleware::class)->resource('users', UserController::class);
 
 
 // Food Aid Routes
 
-Route::middleware(['auth:sanctum'])->resource('supermarket', SupermarketController::class);
-Route::middleware(['auth:sanctum'])->resource('foodCollection', FoodCollectionController::class);
+Route::middleware(AdminMiddleware::class)->resource('supermarket', SupermarketController::class);
+Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollectionController::class);

@@ -59,7 +59,6 @@ class SupermarketController extends Controller
     public function update(Request $request, Supermarket $supermarket)
     {
         $data = $request->all();
-        $supermarket = $supermarket->first();
 
         if (!$supermarket) {
             return response()->json(['error' => 'User not found'], 404);

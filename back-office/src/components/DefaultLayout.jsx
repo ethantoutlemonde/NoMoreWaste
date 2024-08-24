@@ -3,6 +3,10 @@ import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from "../hooks/auth";
 import { HiChevronDown, HiChevronRight } from "react-icons/hi2";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
+import Header from "./Header";
 
 export default function DefaultLayout() {
     const { user } = useAuth({ middleware: 'auth' })
@@ -10,6 +14,9 @@ export default function DefaultLayout() {
         middleware: 'auth',
         redirectIfAuthenticated: '/login'
     })
+    const { t, i18n } = useTranslation("global")
+    const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     if(!user) {
         return <Navigate to='/login' />
@@ -30,6 +37,22 @@ export default function DefaultLayout() {
         var right = document.getElementById(`arrrow-right-${type}`);
         right.classList.toggle("hidden");
     }
+
+    // const changeLanguage = (language) => {
+    //     i18n.changeLanguage(language);
+    //     setSelectedLanguage(language); 
+    //     // setIsDropdownOpen(false); // Ferme le dropdown après la sélection
+    // };
+
+    const langDropdownHandler = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const changeLanguage = (language) => {
+        i18n.changeLanguage(language);
+        setSelectedLanguage(language);
+        setIsDropdownOpen(false);
+    };
 
     return (
         <div>
@@ -134,29 +157,8 @@ export default function DefaultLayout() {
                     
                     
                 </nav>
-            </aside>
-            <header className="fixed left-0 right-0 top-0 h-20 ml-64 bg-gray-100 flex justify-between items-center p-4">
-                <div>
-                    <h1 className="text-3xl">Header</h1>
-                </div>
-                <div>
-                    <button onClick={() => dropdownHandler('login')} className="flex justify-between items-center hover:border-gray-500 p-2 rounded border border-gray-400">
-                        <div className="mr-2">
-                            {user.name}
-                        </div>
-                        <HiChevronDown id="arrrow-down-login" className="items-center hidden"/>
-                        <HiChevronRight id="arrrow-right-login" className="items-center"/>
-                        
-                    </button>
-                    
-                    <div  id="login" className="hidden pl-4 absolute mt-2 bg-white p-3 rounded shadow flex flex-col gap-2">
-                        <Link to={`/users/admin/${user.id}`} className="hover:underline">Profil</Link>
-                        <button className="logout-btn hover:underline" onClick={onLogout}>Logout</button>
-                    </div>
-                    
-                </div>
-                
-            </header>
+                </aside>
+                <Header />
             <main className="ml-64 mt-20 p-6">
                 <Outlet />
             </main>

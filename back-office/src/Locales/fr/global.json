@@ -2,5 +2,7 @@
     "Login to the BO": "Connexion au back-office",
     "Mail": "Mail",
     "Password": "Mot de passe",
-    "Login": "Connexion"
+    "Login": "Connexion",
+    "Logout": "Déconnexion",
+    "Header": "coucou"
 }

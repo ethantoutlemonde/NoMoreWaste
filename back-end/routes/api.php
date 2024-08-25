@@ -16,6 +16,7 @@ use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\UserMiddleware;
 use App\Models\FoodAid;
 
 // ---------------- Auth routes 
@@ -52,7 +53,12 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 // --------------------------------------------------------------------------------------------------------------
 
-Route::middleware(AdminMiddleware::class)->get('/user', function (Request $request) {
+Route::middleware(AdminMiddleware::class)->get('/userAdmin', function (Request $request) {
+    return $request->user();
+});
+
+
+Route::middleware(UserMiddleware::class)->get('/user', function (Request $request) {
     return $request->user();
 });
 

@@ -10,23 +10,10 @@ import Header from "./Header";
 
 export default function DefaultLayout() {
     const { user } = useAuth({ middleware: 'auth' })
-    const { logout } = useAuth({
-        middleware: 'auth',
-        redirectIfAuthenticated: '/login'
-    })
     const { t, i18n } = useTranslation("global")
-    const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     if(!user) {
         return <Navigate to='/login' />
-    }
-
-    const onLogout = (ev) => {
-        ev.preventDefault();
-        console.log('Logout');
-        logout()
-
     }
 
     const dropdownHandler = (type) => {
@@ -37,22 +24,6 @@ export default function DefaultLayout() {
         var right = document.getElementById(`arrrow-right-${type}`);
         right.classList.toggle("hidden");
     }
-
-    // const changeLanguage = (language) => {
-    //     i18n.changeLanguage(language);
-    //     setSelectedLanguage(language); 
-    //     // setIsDropdownOpen(false); // Ferme le dropdown après la sélection
-    // };
-
-    const langDropdownHandler = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
-
-    const changeLanguage = (language) => {
-        i18n.changeLanguage(language);
-        setSelectedLanguage(language);
-        setIsDropdownOpen(false);
-    };
 
     return (
         <div>

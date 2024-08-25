@@ -1,3 +1,80 @@
+@font-face {
+    font-family: 'Chillax-Variable';
+    src: url('../font/chillax/Chillax-Variable.woff2') format('woff2'),
+         url('../font/chillax/Chillax-Variable.woff') format('woff'),
+         url('../font/chillax/Chillax-Variable.ttf') format('truetype');
+         font-weight: 200 700;
+         font-display: swap;
+         font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Chillax-Extralight';
+    src: url('../font/chillax/Chillax-Extralight.woff2') format('woff2'),
+         url('../font/chillax/Chillax-Extralight.woff') format('woff'),
+         url('../font/chillax/Chillax-Extralight.ttf') format('truetype');
+         font-weight: 200;
+         font-display: swap;
+         font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Chillax-Light';
+    src: url('../font/chillax/Chillax-Light.woff2') format('woff2'),
+         url('../font/chillax/Chillax-Light.woff') format('woff'),
+         url('../font/chillax/Chillax-Light.ttf') format('truetype');
+         font-weight: 300;
+         font-display: swap;
+         font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Chillax-Regular';
+    src: url('../font/chillax/Chillax-Regular.woff2') format('woff2'),
+         url('../font/chillax/Chillax-Regular.woff') format('woff'),
+         url('../font/chillax/Chillax-Regular.ttf') format('truetype');
+         font-weight: 400;
+         font-display: swap;
+         font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Chillax-Medium';
+    src: url('../font/chillax/Chillax-Medium.woff2') format('woff2'),
+         url('../font/chillax/Chillax-Medium.woff') format('woff'),
+         url('../font/chillax/Chillax-Medium.ttf') format('truetype');
+         font-weight: 500;
+         font-display: swap;
+         font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Chillax-Semibold';
+    src: url('../font/chillax/Chillax-Semibold.woff2') format('woff2'),
+         url('../font/chillax/Chillax-Semibold.woff') format('woff'),
+         url('../font/chillax/Chillax-Semibold.ttf') format('truetype');
+         font-weight: 600;
+         font-display: swap;
+         font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Chillax-Bold';
+    src: url('../font/chillax/Chillax-Bold.woff2') format('woff2'),
+         url('../font/chillax/Chillax-Bold.woff') format('woff'),
+         url('../font/chillax/Chillax-Bold.ttf') format('truetype');
+         font-weight: 700;
+         font-display: swap;
+         font-style: normal;
+  }
+
+
 .homePageBody{
     display: flex;
     align-items: center;

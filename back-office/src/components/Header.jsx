@@ -90,7 +90,7 @@ export default function Header() {
                     <div className="relative">
                         <button onClick={userDropdownHandler} className="flex justify-between items-center hover:border-gray-500 p-2 rounded border border-gray-400 w-full">
                             <div className="mr-2">
-                                {user.name}
+                                {user.first_name} {user.last_name}
                             </div>
                             {isUserDropdownOpen ? (
                                 <HiChevronDown className="items-center"/>

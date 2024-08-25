@@ -19,7 +19,7 @@ export default function CreateBeneficiary() {
             password: password
         }
 
-        axiosClient.post('/api/beneficiary', beneficiary)
+        axiosClient.post('/api/beneficiaryAdmin', beneficiary)
         .then((response) => {
             // Reset le formulaire et les erreurs si la soumission réussit
             setName('');

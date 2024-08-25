@@ -17,7 +17,7 @@ export default function Beneficiary() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axiosClient.get('/api/beneficiary')
+        axiosClient.get('/api/beneficiaryAdmin')
         .then(response => {
             console.log(response.data)
             setData(response.data)

@@ -19,25 +19,33 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
+            // 'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@example.com',
             'type' => 1
         ]);
 
         User::factory()->create([
-            'name' => 'Test beneficiary',
+            // 'name' => 'Test beneficiary',
+            'first_name' => 'Test',
+            'last_name' => 'Beneficiary',
             'email' => 'beneficiary@example.com',
             'type' => 2
         ]);
 
         User::factory()->create([
-            'name' => 'Test volunteer',
+            // 'name' => 'Test volunteer',
+            'first_name' => 'Test',
+            'last_name' => 'Volunteer',
             'email' => 'volunteer@example.com',
             'type' => 3
         ]);
 
         User::factory()->create([
-            'name' => 'Banned User',
+            // 'name' => 'Banned User',
+            'first_name' => 'Banned',
+            'last_name' => 'User',
             'email' => 'banned@example.com',
             'type' => 1,
             'banned' => true

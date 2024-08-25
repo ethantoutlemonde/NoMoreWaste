@@ -9,11 +9,13 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\BeneficiaryAdminController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\MessageSupermarketController;
 use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VolunteerAdminController;
 use App\Http\Controllers\VolunteerController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
@@ -67,8 +69,8 @@ Route::middleware(UserMiddleware::class)->get('/user', function (Request $reques
 // Users Routes
 
 Route::middleware(AdminMiddleware::class)->resource('admin', AdminController::class);
-Route::middleware(AdminMiddleware::class)->resource('beneficiary', BeneficiaryController::class);
-Route::middleware(AdminMiddleware::class)->resource('volunteer', VolunteerController::class);
+Route::middleware(AdminMiddleware::class)->resource('beneficiaryAdmin', BeneficiaryAdminController::class);
+Route::middleware(AdminMiddleware::class)->resource('volunteerAdmin', VolunteerAdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('users', UserController::class);
 // Route::patch('users/{user}/ban', [UserController::class, 'ban'])->name('users.ban');
 
@@ -83,3 +85,13 @@ Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollec
 //Route::middleware(AdminMiddleware::class)->resource('messageSupermarket', MessageSupermarketController::class);
 Route::get('supermarket/{supermarket}/messages', [MessageSupermarketController::class, 'allMessages'])->name('supermarket.messages');
 Route::post('supermarket/{supermarket}/messages', [MessageSupermarketController::class, 'store'])->name('supermarket.messages.store');
+
+
+
+
+// -------------------------------------- Front end routes ----------------------------------------
+
+Route::middleware(UserMiddleware::class)->resource('volunteer', VolunteerController::class);
+Route::middleware('guest')->post('/volunteer', [VolunteerController::class, 'store']);
+Route::middleware(UserMiddleware::class)->resource('beneficiary', BeneficiaryController::class);
+Route::middleware('guest')->post('/beneficiary', [BeneficiaryController::class, 'store']);

@@ -9,15 +9,38 @@ import LoginChooser from './views/connexion/LoginChooser';
 import RegisterChooser from './views/connexion/RegisterChooser';
 import UserLogin from './views/connexion/UserLogin';
 import PartnerLogin from './views/connexion/PartnerLogin';
+import VolunteerLayout from './components/VolunteerLayout';
+import BeneficiaryLayout from './components/BeneficiaryLayout';
+import RegisterVolunteer from './views/connexion/RegisterVolunteer';
+import RegisterBeneficiary from './views/connexion/RegisterBeneficiary';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <DefaultLayout />,
-        children: [
-
-        ]
+        
     },
+    // {
+    //     path: '/',
+    //     element: <VolunteerLayout />,
+    //     children: [
+    //         {
+    //             path: '/volunteer',
+    //             element: <Home />   
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: '/',
+    //     element: <BeneficiaryLayout />,
+    //     children: [
+    //         {
+    //             path: '/beneficiary',
+    //             element: <Home />   
+    //         }
+    //     ]
+    // },
+
     {
         path: '/',
         element: <GuestLayout />,
@@ -50,6 +73,14 @@ const router = createBrowserRouter([
             {
                 path: '/connexion/register',
                 element: <RegisterChooser />
+            },
+            {
+                path: '/connexion/register/volunteer',
+                element: <RegisterVolunteer />
+            },
+            {
+                path: '/connexion/register/beneficiary',
+                element: <RegisterBeneficiary />
             },
         ]
     },

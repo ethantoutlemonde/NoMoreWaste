@@ -1,10 +1,24 @@
 {
     "Login to the BO": "Connexion au back-office",
-    "Mail": "Mail",
+    "Email": "Email",
     "Password": "Mot de passe",
     "Login": "Connexion",
     "Logout": "Déconnexion",
     "Header": "coucou",
     "Language": "Langue",
-    "coucou": "coucou"
+    "Beneficiary": "Bénéficiaire",
+    "Volunteer": "Bénévole",
+    "Partner": "Partenaire",
+    "Would you want to register as a": "Voulez-vous vous inscrire en tant que",
+    "Actions": "Actionnns",
+    "Register as Volunteer": "Inscription en tant que bénévole",
+    "Register as Beneficiary": "Inscription en tant que bénéficiaire",
+    "Register as Partner": "Inscription en tant que partenaire",
+    "Register": "Inscription",
+    "First Name": "Prénom",
+    "Last Name": "Nom",
+    "Phone": "Téléphone",
+    "Would you want to": "Voulez-vous",
+    "Or": "Ou",
+    "Are you a": "Etes-vous un"
 }

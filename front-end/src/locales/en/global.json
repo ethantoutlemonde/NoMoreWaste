@@ -1,11 +1,25 @@
 {
     "Login to the BO": "Login to the BO",
-    "Mail": "Mail",
+    "Email": "Email",
     "Password": "Password",
     "Login": "Login",
     "Logout": "Logout",
     "Header": "Header",
     "Language": "Language",
-    "coucou": "Hello"
+    "Beneficiary": "Beneficiary",
+    "Volunteer": "Volunteer",
+    "Partner": "Partner",
+    "Would you want to register as a": "Would you want to register as a",
+    "Actions": "Actions",
+    "Register as Volunteer": "Register as Volunteer",
+    "Register as Beneficiary": "Register as Beneficiary",
+    "Register as Partner": "Register as Partner",
+    "Register": "Register",
+    "First Name": "First Name",
+    "Last Name": "Last Name",
+    "Phone": "Phone",
+    "Would you want to": "Would you want to",
+    "Or": "Or",
+    "Are you a": "Are you a"
 
 }

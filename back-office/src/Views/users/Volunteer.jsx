@@ -16,7 +16,7 @@ export default function Volunteer() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axiosClient.get('/api/volunteer')
+        axiosClient.get('/api/volunteerAdmin')
         .then(response => {
             console.log(response.data)
             setData(response.data)

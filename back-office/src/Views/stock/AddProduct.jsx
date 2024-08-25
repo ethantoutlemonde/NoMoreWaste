@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosClient from '../../axios-client'; // Assurez-vous que le chemin est correct
+import axiosClient from '../../axios-client'; 
 import { useTranslation } from 'react-i18next';
 
 export default function AddProduct() {
@@ -23,7 +23,7 @@ export default function AddProduct() {
     useEffect(() => {
         async function fetchProductTypes() {
             try {
-                const response = await axiosClient.get('/productTypes'); // Chemin API correct
+                const response = await axiosClient.get('/api/productType');
                 setProductTypes(response.data.productTypes);
             } catch (error) {
                 setError(t('Product types loading error.'));
@@ -33,7 +33,7 @@ export default function AddProduct() {
 
         async function fetchWarehouses() {
             try {
-                const response = await axiosClient.get('/warehouses'); // Chemin API correct
+                const response = await axiosClient.get('/api/warehouse');
                 setWarehouses(response.data.warehouses);
             } catch (error) {
                 setError(t('Error loading warehouses.'));
@@ -49,11 +49,10 @@ export default function AddProduct() {
         e.preventDefault();
 
         try {
-            const response = await axiosClient.post('/products', data); // Chemin API correct
+            const response = await axiosClient.post('/api/product', data);
 
             if (response.status === 201) {
                 setSuccessMessage(t('Product added successfully!'));
-                // Réinitialiser les champs du formulaire après l'envoi réussi
                 setData({
                     product_name: "",
                     description: "",
@@ -165,13 +164,14 @@ export default function AddProduct() {
                     >
                         <option value="">{t("Warehouse")}</option>
                         {warehouses.map((warehouse) => (
-                            <option key={warehouse.id} value={warehouse.id}>{warehouse.name}</option>
+                            <option key={warehouse.id} value={warehouse.id}>{warehouse.warehouse_name}</option>
                         ))}
                     </select>
                     <label className="peer-focus:font-medium absolute text-sm text-gray-900 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         {t("Warehouse")}
                     </label>
                 </div>
+
                 {/* Expiration Date Input */}
                 <div className="relative z-0 w-full mb-5 group">
                     <input
@@ -201,7 +201,7 @@ export default function AddProduct() {
                 </div>
                 <button
                     type="submit"
-                    className="w-full py-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-500 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     {t("Add Product")}
                 </button>

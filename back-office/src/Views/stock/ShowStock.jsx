@@ -9,25 +9,12 @@ const ProductList = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [editableProductId, setEditableProductId] = useState(null);
   const [modifiedFields, setModifiedFields] = useState({});
-  const [maraudes, setMaraudes] = useState([]);
-  const [selectedMaraude, setSelectedMaraude] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const { t } = useTranslation("global");
 
-  const fetchMaraudes = async () => {
-    try {
-      const response = await axiosClient.get("foodAid.indexNormal");
-      setMaraudes(response.data);
-      console.log('Maraudes fetched:', response.data);
-    } catch (error) {
-      setError(error.response?.data?.message || t('An error occurred'));
-      console.error('Error fetching maraudes:', error);
-    }
-  };
-
   const fetchProducts = async () => {
     try {
-      const response = await axiosClient.get("AdminProducts.index");
+      const response = await axiosClient.get("/api/product");
       setProducts(response.data);
       console.log('Products fetched:', response.data);
     } catch (error) {
@@ -38,7 +25,7 @@ const ProductList = () => {
 
   const handleModifyProduct = async (productId) => {
     try {
-      const response = await axiosClient.put(`/api/AdminProductEdit/${productId}`, modifiedFields);
+      const response = await axiosClient.put(`/api/product/${productId}`, modifiedFields);
       console.log('Product updated:', response.data);
       fetchProducts(); 
       setEditableProductId(null); 
@@ -52,7 +39,7 @@ const ProductList = () => {
   
   const handleDeleteProduct = async (productId) => {
     try {
-      const response = await axiosClient.delete(`/api/AdminProductDelete/${productId}`);
+      const response = await axiosClient.delete(`/api/product/${productId}`);
       console.log('Product deleted:', response.data);
       fetchProducts();
       setSuccessMessage(t('Product deleted successfully'));
@@ -62,23 +49,8 @@ const ProductList = () => {
     }
   };
 
-  const handleFoodAid = async () => {
-    console.log('selectedMaraude:', selectedMaraude);
-    console.log('selectedProducts:', selectedProducts);
-    try {
-      const response = await axiosClient.patch(route("AdminProduct.addMaraude"), { maraude_id: selectedMaraude, product_ids: selectedProducts });
-      console.log('Product added to maraude:', response.data);
-      fetchProducts();
-      setSuccessMessage(t('Product added to maraude successfully'));
-    } catch (error) {
-      setError(error.response?.data?.message || t('An error occurred'));
-      console.error('Error adding product to maraude:', error);
-    }
-  };
-
   useEffect(() => {
     fetchProducts();
-    fetchMaraudes();
   }, []);
 
   const filteredProducts = products.filter(product =>
@@ -116,17 +88,6 @@ const ProductList = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className='flex'>
-          <div className="relative z-0 w-full mb-5 group">
-              <select onChange={(e) => setSelectedMaraude(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                <option value="">{t('Food Aid')}</option>
-                  {maraudes.map((maraude) => (
-                <option key={maraude.id} value={maraude.id}>{maraude.name} - {maraude.start_at}</option>
-                ))}
-              </select>
-          </div>
-          <button onClick={handleFoodAid} className="font-medium text-white bg-green-600 px-4 py-2 rounded-lg dark:text-red-500 hover:bg-green-500 ml-2">{t('Add To Maraude')}</button>
-        </div>
       </div>
       {/* Display filtered products */}
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -155,12 +116,6 @@ const ProductList = () => {
             </th>
             <th scope="col" className="px-6 py-3">
               {t('Warehouse')}
-            </th>
-            <th scope="col" className="px-6 py-3">
-              {t('Food Aid')}
-            </th>
-            <th scope="col" className="px-6 py-3">
-              {t('Food Aid Quantity')}
             </th>
             <th scope="col" className="px-6 py-3">
               {t('Action')}
@@ -235,21 +190,6 @@ const ProductList = () => {
               </td>
               <td className="px-6 py-4">
                 <span>{product.warehouse.warehouse_name}</span>
-              </td>
-              <td className="px-6 py-4">
-                <span>{product?.food_aids?.name}</span>
-              </td>
-              <td className="px-6 py-4">
-                {editableProductId === product.id ? (
-                  <input
-                    type="text"
-                    className="w-full"
-                    value={modifiedFields?.Quantity_Maraude || product?.Quantity_Maraude}
-                    onChange={(e) => setModifiedFields({...modifiedFields, Quantity_Maraude: e?.target?.value})}
-                  />
-                ) : (
-                  <span>{product?.Quantity_Maraude}</span>
-                )}
               </td>
               <td className="px-6 py-4">
                 {editableProductId === product.id ? (

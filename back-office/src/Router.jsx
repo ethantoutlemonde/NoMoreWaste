@@ -33,7 +33,8 @@ import AddWarehouse from './Views/stock/AddWarehouse';
 import ProductType from './components/ProductTypeLayout';
 import AddProductType from './Views/stock/AddProductType';
 import ShowProductType from './Views/stock/ShowProductType';
-
+import ShowStock from './Views/stock/ShowStock';
+import AddProduct from './Views/stock/AddProduct';
 
 const router = createBrowserRouter([
     {
@@ -173,6 +174,24 @@ const router = createBrowserRouter([
                 element: <Product/>,
             },
             {
+                path: '/stock/Product',
+                element: <Product />,
+                children: [
+                    {
+                        path: '/stock/Product',
+                        element: <Navigate to='/stock/Product/show'/>
+                    },
+                    {
+                        path: '/stock/Product/show',
+                        element: <ShowStock/>
+                    },
+                    {
+                        path: '/stock/Product/add',
+                        element: <AddProduct/>
+                    }
+                ]
+            },
+            {
                 path: '/stock/Warehouse',
                 element: <Warehouse />,
                 children: [
@@ -208,10 +227,6 @@ const router = createBrowserRouter([
                     }
                 ]
             },
-            // {
-            //     path: '/stock/ProductType',
-            //     element: <ProductType />,
-            // },
         ]
     },
     {

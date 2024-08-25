@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\FoodCollectionController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
@@ -76,3 +77,4 @@ Route::middleware(['auth:sanctum'])->resource('foodCollection', FoodCollectionCo
 
 Route::middleware(['auth:sanctum'])->resource('warehouse', WarehouseController::class);
 Route::middleware(['auth:sanctum'])->resource('productType', ProductTypeController::class);
+Route::middleware(['auth:sanctum'])->resource('product', ProductController::class);

@@ -26,9 +26,14 @@ import AddSupermarket from './Views/food_aid/partner_supermarket/AddSupermarket'
 import FoodCollectionsLayout from './components/FoodCollectionsLayout';
 import FoodCollections from './Views/food_aid/food_collections/FoodCollections';
 import NewFoodCollection from './Views/food_aid/food_collections/NewFoodCollection';
-// import Product from './Views/stock/Product';
-// import Warehouse from './Views/stock/Warehouse';
-// import ProductType from './Views/stock/ProductType';
+import Product from './components/ProductLayout';
+import Warehouse from './components/WarehouseLayout';
+import WarehouseShow from './Views/stock/WarehouseShow';
+import AddWarehouse from './Views/stock/AddWarehouse';
+import ProductType from './components/ProductTypeLayout';
+import AddProductType from './Views/stock/AddProductType';
+import ShowProductType from './Views/stock/ShowProductType';
+
 
 const router = createBrowserRouter([
     {
@@ -163,14 +168,46 @@ const router = createBrowserRouter([
 
 
             // Stock
-            // {
-            //     path: '/stock/Product',
-            //     element: <Product/>,
-            // },
-            // {
-            //     path: '/stock/Warehouse',
-            //     element: <Warehouse />,
-            // },
+            {
+                path: '/stock/Product',
+                element: <Product/>,
+            },
+            {
+                path: '/stock/Warehouse',
+                element: <Warehouse />,
+                children: [
+                    {
+                        path: '/stock/Warehouse',
+                        element: <Navigate to='/stock/Warehouse/show'/>
+                    },
+                    {
+                        path: '/stock/Warehouse/show',
+                        element: <WarehouseShow/>
+                    },
+                    {
+                        path: '/stock/Warehouse/add',
+                        element: <AddWarehouse/>
+                    }
+                ]
+            },
+            {
+                path: '/stock/ProductType',
+                element: <ProductType />,
+                children: [
+                    {
+                        path: '/stock/ProductType',
+                        element: <Navigate to='/stock/ProductType/show'/>
+                    },
+                    {
+                        path: '/stock/ProductType/show',
+                        element: <ShowProductType/>
+                    },
+                    {
+                        path: '/stock/ProductType/add',
+                        element: <AddProductType/>
+                    }
+                ]
+            },
             // {
             //     path: '/stock/ProductType',
             //     element: <ProductType />,

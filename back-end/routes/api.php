@@ -14,7 +14,11 @@ use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
+use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\ProductTypeController;
 use App\Models\FoodAid;
+use App\Models\ProductType;
+use App\Models\Warehouse;
 
 // ---------------- Auth routes 
 
@@ -68,3 +72,7 @@ Route::middleware(['auth:sanctum'])->resource('users', UserController::class);
 
 Route::middleware(['auth:sanctum'])->resource('supermarket', SupermarketController::class);
 Route::middleware(['auth:sanctum'])->resource('foodCollection', FoodCollectionController::class);
+
+
+Route::middleware(['auth:sanctum'])->resource('warehouse', WarehouseController::class);
+Route::middleware(['auth:sanctum'])->resource('productType', ProductTypeController::class);

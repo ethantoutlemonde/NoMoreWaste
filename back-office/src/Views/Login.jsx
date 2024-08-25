@@ -10,7 +10,7 @@ export default function Login() {
     const passwordRef = useRef();
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
-    const {t} = useTranslation("global")
+    const {t} = useTranslation("global");
 
     const { login } = useAuth({
         middleware: 'guest',

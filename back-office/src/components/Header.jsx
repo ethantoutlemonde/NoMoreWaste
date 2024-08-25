@@ -59,7 +59,7 @@ export default function Header() {
         <>
             <header className="fixed left-0 right-0 top-0 h-20 ml-64 bg-gray-100 flex justify-between items-center p-4">
                 <div>
-                    <h1 className="text-3xl">{t("Header")}</h1>
+                    <h1 className="text-3xl">No More Waste</h1>
                 </div>
                 <div className="flex gap-4">
                     <div className="relative">
@@ -82,7 +82,7 @@ export default function Header() {
                                 </div>
                                 <div onClick={() => changeLanguage('fr')} className="flex items-center gap-2 cursor-pointer p-1 hover:bg-gray-200 rounded px-2">
                                     <Flag code="FR" className='w-6'/>
-                                    <span className='pr-6'>Françaissssssssssssss</span>
+                                    <span className='pr-6'>Français</span>
                                 </div>
                             </div>
                         )}

@@ -19,7 +19,7 @@ export default function PartnerSupermarket() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axiosClient.get('/api/supermarket')
+        axiosClient.get('/api/supermarketAdmin')
         .then(response => {
             console.log(response.data)
             setData(response.data)

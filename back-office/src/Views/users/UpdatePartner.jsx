@@ -1,22 +1,17 @@
 import { useState, useEffect } from "react"
-import axiosClient from "../../../axios-client"
+import axiosClient from "../../axios-client"
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-export default function UpdateSupermarket() {
+export default function UpdatePartner() {
     const [errors, setErrors] = useState({});
-    const [data, setData] = useState({
-        name: '',
-        email: '',
-        password: ''
-    })
+    const [data, setData] = useState({})
     const [success, setSuccess] = useState({});
     const { id } = useParams();
-    const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        axiosClient.get(`/api/supermarketAdmin/${id}`)
+        axiosClient.get(`/api/users/${id}`)
         .then(response => {
             console.log(response.data)
             setData(response.data)
@@ -43,7 +38,7 @@ export default function UpdateSupermarket() {
         console.log('submit')
         console.log(data)
 
-        axiosClient.patch(`/api/supermarketAdmin/${id}`, data)
+        axiosClient.patch(`/api/partnerAdmin/${id}`, data)
         .then((response) => {
             console.log(response)
             setData((prevData) => ({
@@ -65,31 +60,19 @@ export default function UpdateSupermarket() {
         <Link className="bg-slate-50 rounded py-1 px-2 hover:bg-slate-100 border-slate-100 border" to={'./..'}>Return</Link>
         <div className="flex flex-col justify-center items-center">
             <form onSubmit={submit} className="flex flex-col w-80 bg-slate-50 p-10 rounded-xl">
-                <h1 className="text-2xl">Update Supermarket</h1>
-                <label className="mt-2">Name</label>
-                <input name="name" type="text" value={data.name} onChange={handleChange}  className="bg-slate-100 rounded p-1"/>
-                {errors.name && <p className="text-red-500">{errors.name[0]}</p>}
-                <label className="mt-2">Address</label>
-                <input name="address" type="text" value={data.address} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
-                {errors.address && <p className="text-red-500">{errors.address[0]}</p>}
-                <label className="mt-2">City</label>
-                <input name="city" type="text" value={data.city} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
-                {errors.city && <p className="text-red-500">{errors.city[0]}</p>}
-                <label className="mt-2">Postal Code</label>
-                <input name="postal_code" type="text" value={data.postal_code} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
-                {errors.postal_code && <p className="text-red-500">{errors.postal_code[0]}</p>}
-                <label className="mt-2">Country</label>
-                <input name="country" type="text" value={data.country} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
-                {errors.country && <p className="text-red-500">{errors.country[0]}</p>}
-                <label className="mt-2">SIRET number</label>
-                <input name="siret" type="text" value={data.siret} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
-                {errors.siret && <p className="text-red-500">{errors.siret[0]}</p>}
-                <label className="mt-2">Email</label>
-                <input name="email" type="email" value={data.email} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
-                {errors.email && <p className="text-red-500">{errors.email[0]}</p>}
+                <h1 className="text-2xl">Update Partner</h1>
+                <label className="mt-2">First Name</label>
+                <input name="first_name" type="text" value={data.first_name} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
+                {errors.first_name && <p className="text-red-500">{errors.first_name[0]}</p>}
+                <label className="mt-2">Last Name</label>
+                <input name="last_name" type="text" value={data.last_name} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
+                {errors.last_name && <p className="text-red-500">{errors.last_name[0]}</p>}
                 <label className="mt-2">Phone</label>
                 <input name="phone" type="text" value={data.phone} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
                 {errors.phone && <p className="text-red-500">{errors.phone[0]}</p>}
+                <label className="mt-2">Email</label>
+                <input name="email" type="email" value={data.email} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
+                {errors.email && <p className="text-red-500">{errors.email[0]}</p>}
                 <label className="mt-2">Password</label>
                 <input name="password" type="password" value={data.password} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
                 {errors.password && <p className="text-red-500">{errors.password[0]}</p>}

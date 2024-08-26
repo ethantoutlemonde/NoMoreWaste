@@ -13,9 +13,15 @@ class Supermarket extends Model
         'name',
         'email',
         'address',
+        'city',
+        'postal_code',
+        'country',
+        'siret',
         'phone',
         'banned'
     ];
+
+
 
     public function disponibilities() {
         return $this->hasMany(SupermarketDisponibility::class, 'supermarket_id');
@@ -27,5 +33,9 @@ class Supermarket extends Model
 
     public function messages() {
         return $this->hasMany(MessageSupermarket::class, 'supermarket_id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

@@ -28,6 +28,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        // return the user without the password
+        
         return $user;
         // return User::where('id', $id)->get();
     }

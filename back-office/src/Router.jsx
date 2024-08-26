@@ -30,6 +30,10 @@ import NewFoodCollection from './Views/food_aid/food_collections/NewFoodCollecti
 import DetailFoodCollection from './Views/food_aid/food_collections/DetailFoodCollection';
 import DetailSupermarket from './Views/food_aid/partner_supermarket/DetailSupermarket';
 import UpdateSupermarket from './Views/food_aid/partner_supermarket/UpdateSupermarket';
+import Partner from './Views/users/Partner';
+import DetailPartner from './Views/users/DetailPartner';
+import UpdatePartner from './Views/users/UpdatePartner';
+import CreatePartner from './Views/users/CreatePartner';
 
 const router = createBrowserRouter([
     {
@@ -99,6 +103,25 @@ const router = createBrowserRouter([
             {
                 path: '/users/volunteer/create',
                 element: <CreateVolunteer />,
+            },
+
+            // Partner
+
+            {
+                path: '/users/partner',
+                element: <Partner />,
+            },
+            {
+                path: '/users/partner/:id',
+                element: <DetailPartner />,
+            },
+            {
+                path: '/users/partner/:id/update',
+                element: <UpdatePartner />,
+            },
+            {
+                path: '/users/partner/create',
+                element: <CreatePartner />,
             },
 
 

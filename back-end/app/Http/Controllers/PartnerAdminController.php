@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class VolunteerController extends Controller
+class PartnerAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return User::where('type', 4)->get();
     }
 
     /**
@@ -43,7 +43,7 @@ class VolunteerController extends Controller
             'last_name' => $request->last_name,
             'phone' => $request->phone,
             'email' => $request->email,
-            'type' => 3,
+            'type' => 4,
             'password' => Hash::make($request->password),
         ]);
         return response()->json(['success' => 'Volunteer succesfully created' ], 200);
@@ -52,15 +52,16 @@ class VolunteerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $partnerAdmin)
     {
-        //
+        // return $user with his supermarkets
+        return $partnerAdmin->load('supermarkets');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $partnerAdmin)
     {
         //
     }
@@ -68,13 +69,10 @@ class VolunteerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $partnerAdmin)
     {
         //
     }
 
-    public function getVolunteerDocuments(User $user)
-    {
-        return $user->documents;
-    }
+
 }

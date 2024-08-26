@@ -13,33 +13,31 @@ import VolunteerLayout from './components/VolunteerLayout';
 import BeneficiaryLayout from './components/BeneficiaryLayout';
 import RegisterVolunteer from './views/connexion/RegisterVolunteer';
 import RegisterBeneficiary from './views/connexion/RegisterBeneficiary';
+import VolunteerDocumentsLayout from './components/VolunteerDocumentsLayout';
+import DocumentsFoodCollection from './views/volunteer/DocumentsFoodCollection';
+import RegisterPartner from './views/connexion/RegisterPartner';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <DefaultLayout />,
+        children: [
+            {
+                path: '/volunteer',
+            },
+            {
+                path: '/volunteer/documents',
+                element: <VolunteerDocumentsLayout />,
+                children: [
+                    {
+                        path: '/volunteer/documents/food_collection',
+                        element: <DocumentsFoodCollection />
+                    }
+                ]
+            }
+        ]
         
     },
-    // {
-    //     path: '/',
-    //     element: <VolunteerLayout />,
-    //     children: [
-    //         {
-    //             path: '/volunteer',
-    //             element: <Home />   
-    //         }
-    //     ]
-    // },
-    // {
-    //     path: '/',
-    //     element: <BeneficiaryLayout />,
-    //     children: [
-    //         {
-    //             path: '/beneficiary',
-    //             element: <Home />   
-    //         }
-    //     ]
-    // },
 
     {
         path: '/',
@@ -81,6 +79,10 @@ const router = createBrowserRouter([
             {
                 path: '/connexion/register/beneficiary',
                 element: <RegisterBeneficiary />
+            },
+            {
+                path: '/connexion/register/partner',
+                element: <RegisterPartner />
             },
         ]
     },

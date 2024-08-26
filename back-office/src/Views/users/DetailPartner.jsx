@@ -1,22 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import axiosClient from "../../../axios-client";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import axiosClient from '../../axios-client';
 import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import CircularProgress from '@mui/material/CircularProgress';
-import SupermarketConv from "../../../components/SupermarketConv";
 
-export default function DetailSupermarket({ content }) {
+export default function DetailPartner() {
     const { id } = useParams();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true)
     const [loadingBan, setLoadingBan] = useState(false)
-    const chatDiv = useRef(null);
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        
-        axiosClient.get(`/api/supermarketAdmin/${id}`)
+        axiosClient.get(`/api/partnerAdmin/${id}`)
         .then(response => {
             console.log(response.data)
             setData(response.data)
@@ -27,18 +24,11 @@ export default function DetailSupermarket({ content }) {
         })
 
         console.log(data)
-
-        if (chatDiv.current) {
-            
-            const div = chatDiv.current;
-            console.log('scroll',div.scrollHeight)
-            div.scrollTop = div.scrollHeight;
-        }
-    }, [content])
+    }, [])
 
     const onDelete = () => {
         console.log('delete', id)
-        axiosClient.delete(`/api/supermarketAdmin/${id}`)
+        axiosClient.delete(`/api/users/${id}`)
         .then(() => {
             navigate('./..')
         })
@@ -47,7 +37,7 @@ export default function DetailSupermarket({ content }) {
     const onBanned = (bool) => {
         setLoadingBan(true)
         console.log('ban', id)
-        axiosClient.patch(`/api/supermarketAdmin/${id}/ban`, {banned: bool})
+        axiosClient.patch(`/api/users/${id}`, {banned: bool})
         .then(() => {
             setData(prevData => ({
                 ...prevData,
@@ -62,46 +52,52 @@ export default function DetailSupermarket({ content }) {
     return (
         <>
         <Link className="bg-slate-50 rounded py-1 px-2 hover:bg-slate-100 border-slate-100 border " to={'./..'}>Return</Link>
-        <div className='mt-4 grid grid-cols-3 gap-6'>
+        <div className='mt-4 flex flex-row gap-6'>
 
         
         {loading ? <CircularProgress />
             :
             <>
-            <div className="flex flex-col bg-slate-50 p-10 rounded-xl col-span-1">
-                <h1 className='text-2xl font-semibold'>Detail :</h1>
+            <div className="flex flex-col w-80 bg-slate-50 p-10 rounded-xl">
+                
+                
+                <h1 className='text-2xl font-semibold mb-6'>Detail :</h1>
                 <div className='flex justify-between mb-2'>
                     <Link className='text-2xl hover:text-gray-700' to={'update'}><HiOutlinePencilSquare /></Link>
                     <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
                 </div>
-                
-                <h2 className='text-lg font-semibold'>Name</h2>
-                <p className='mb-4'>{data?.name}</p>
-                <h2 className='text-lg font-semibold'>Address</h2>
-                <p className='mb-4'>{data?.address}</p>
-                <h2 className='text-lg font-semibold'>City</h2>
-                <p className='mb-4'>{data?.city}</p>
-                <h2 className='text-lg font-semibold'>Postal Code</h2>
-                <p className='mb-4'>{data?.postal_code}</p>
-                <h2 className='text-lg font-semibold'>Country</h2>
-                <p className='mb-4'>{data?.country}</p>
-                <h2 className='text-lg font-semibold'>SIRET Number</h2>
-                <p className='mb-4'>{data?.siret}</p>
-                <h2 className='text-lg font-semibold'>Email</h2>
-                <p className='mb-4'>{data?.email}</p>
+                <h2 className='text-lg font-semibold'>First Name</h2>
+                <p className='mb-4'>{data?.first_name}</p>
+                <h2 className='text-lg font-semibold'>Last Name</h2>
+                <p className='mb-4'>{data?.last_name}</p>
                 <h2 className='text-lg font-semibold'>Phone</h2>
                 <p className='mb-4'>{data?.phone}</p>
+                <h2 className='text-lg font-semibold'>Email</h2>
+                <p className='mb-4'>{data?.email}</p>
+
                 <div className='flex'>
                     {data?.banned ?  <button className='bg-green-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(false)}>Unban</button> : <button className='bg-red-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(true)}>Ban</button>}
                     {loadingBan && <CircularProgress />}
                 </div>
             </div>
-            <div className="flex flex-col   bg-slate-50 p-10 rounded-xl col-span-2">
-                <SupermarketConv supermarket_id={id} />
+            {data?.supermarkets &&
+            <div className="flex flex-col bg-slate-50 p-10 rounded-xl">
+                <h1 className='text-2xl font-semibold mb-6'>Supermarkets :</h1>
+                <div className='flex flex-row flex-wrap gap-4'>
+                {data?.supermarkets?.map((supermarket) => (
+                    <Link to={`/food_aid/partner_supermarket/${supermarket.id}`} key={supermarket.id} className="bg-white w-fit p-4 rounded-lg shadow hover:shadow-md duration-100">
+                        <p className="font-semibold">{supermarket.name}</p>
+                        <p>{supermarket.address}</p>
+                        <p>{supermarket.email}</p>
+                        <p>{supermarket.phone}</p>
+                    </Link>
+                ))}
+                </div>
+                
             </div>
+            }
             </>
         }
-            
         </div>
         </>
     )

@@ -1,10 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
-import axiosClient from "../../../axios-client";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
+import axiosClient from "../../axios-client";
 
-export default function AddSupermarket() {
-
-    const [errors, setErrors] = useState({});
+export default function RegisterPartner() {
     const [data, setData] = useState({
         name: '',
         address: '',
@@ -18,24 +17,9 @@ export default function AddSupermarket() {
 
     });
     const [success, setSuccess] = useState({});
-    // const { id } = useParams();
-
+    const [errors, setErrors] = useState({});
+    const {t} = useTranslation("global");
     const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     axiosClient.get(`/api/users/${id}`)
-    //     .then(response => {
-    //         console.log(response.data)
-    //         setData(response.data)
-    //     })
-    //     .catch(error => {
-    //         if (error.response && error.response.status === 400) {
-    //             setErrors(error.response.data.error);
-    //         }
-    //     })
-
-        
-    // }, [])
 
     const handleChange = (e) => {
         setData({
@@ -44,13 +28,13 @@ export default function AddSupermarket() {
         });
     };
 
-    const submit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         setErrors({});
         console.log('submit')
         console.log(data)
 
-        axiosClient.post('/api/supermarketAdmin', data)
+        axiosClient.post(`/api/supermarket`, data)
         .then((response) => {
             console.log(response)
             setData((prevData) => ({
@@ -58,7 +42,7 @@ export default function AddSupermarket() {
                 password: ''
             }));
             setSuccess(response.data)
-            navigate('./..')
+            navigate('/connexion/login/user')
         })
         .catch((error) => {
             if (error.response && error.response.status === 400) {
@@ -68,10 +52,10 @@ export default function AddSupermarket() {
 
     }
     return (
-        <>
-        <Link className="bg-slate-50 rounded py-1 px-2 hover:bg-slate-100 border-slate-100 border" to={'./..'}>Return</Link>
-        <div className="flex flex-col justify-center items-center">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-1 mt-6">
+        <div className="container-80 flex justify-center">
+            <div className="bg-gray-50 w-96 p-14 rounded-2xl mt-14 shadow-md">
+                <h1 className="text-2xl font-semibold ">{t('Register as Partner')}</h1>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-1 mt-6">
                     <label className="mt-2">{t("Name")}</label>
                     <input name="name" type="text" value={data.name} onChange={handleChange} className="p-2 rounded-lg border shadow" placeholder={t("Name")} />
                     {errors.name && <p className="text-red-500">{errors.name[0]}</p>}
@@ -113,7 +97,7 @@ export default function AddSupermarket() {
                     </button>
                     {success.success && <p className="text-green-500">{success.success}</p>}
                 </form>
+            </div>
         </div>
-        </>
     )
 }

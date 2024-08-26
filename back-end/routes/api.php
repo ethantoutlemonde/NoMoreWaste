@@ -13,6 +13,8 @@ use App\Http\Controllers\BeneficiaryAdminController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\MessageSupermarketController;
+use App\Http\Controllers\PartnerAdminController;
+use App\Http\Controllers\SupermarketAdminController;
 use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerAdminController;
@@ -71,14 +73,15 @@ Route::middleware(UserMiddleware::class)->get('/user', function (Request $reques
 Route::middleware(AdminMiddleware::class)->resource('admin', AdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('beneficiaryAdmin', BeneficiaryAdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('volunteerAdmin', VolunteerAdminController::class);
+Route::middleware(AdminMiddleware::class)->resource('partnerAdmin', PartnerAdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('users', UserController::class);
 // Route::patch('users/{user}/ban', [UserController::class, 'ban'])->name('users.ban');
 
 
 // Food Aid Routes
 
-Route::middleware(AdminMiddleware::class)->resource('supermarket', SupermarketController::class);
-Route::patch('supermarket/{supermarket}/ban', [SupermarketController::class, 'ban'])->name('supermarkets.ban');
+Route::middleware(AdminMiddleware::class)->resource('supermarketAdmin', SupermarketAdminController::class);
+Route::middleware(AdminMiddleware::class)->patch('supermarketAdmin/{supermarket}/ban', [SupermarketAdminController::class, 'ban'])->name('supermarkets.ban');
 Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollectionController::class);
 
 // Message Routes
@@ -95,3 +98,8 @@ Route::middleware(UserMiddleware::class)->resource('volunteer', VolunteerControl
 Route::middleware('guest')->post('/volunteer', [VolunteerController::class, 'store']);
 Route::middleware(UserMiddleware::class)->resource('beneficiary', BeneficiaryController::class);
 Route::middleware('guest')->post('/beneficiary', [BeneficiaryController::class, 'store']);
+
+Route::middleware(UserMiddleware::class)->get('volunteer/{volunteer}/documents', [VolunteerController::class, 'getVolunteerDocuments']);
+
+Route::middleware(UserMiddleware::class)->resource('supermarket', SupermarketController::class);
+Route::middleware('guest')->post('/supermarket', [SupermarketController::class, 'store']);

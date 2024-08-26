@@ -59,6 +59,11 @@ export default function DefaultLayout() {
                             Volunteer
                             </div>
                         </Link>
+                        <Link to='/users/partner'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Partner
+                            </div>
+                        </Link>
                     </div>
                     <button onClick={() => dropdownHandler('food_aid')} className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white text-left flex justify-between items-center">
                         <div className="">

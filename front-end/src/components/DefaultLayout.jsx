@@ -134,7 +134,7 @@ export default function DefaultLayout() {
             
             
         </header>
-        <main className="mt-24 ">
+        <main className="mt-28 ">
             <Outlet />
         </main>
         </>

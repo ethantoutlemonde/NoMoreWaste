@@ -43,6 +43,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
+            // 'name' => 'Test volunteer',
+            'first_name' => 'Test',
+            'last_name' => 'Partner',
+            'email' => 'partner@example.com',
+            'type' => 4
+        ]);
+
+        User::factory()->create([
             // 'name' => 'Banned User',
             'first_name' => 'Banned',
             'last_name' => 'User',

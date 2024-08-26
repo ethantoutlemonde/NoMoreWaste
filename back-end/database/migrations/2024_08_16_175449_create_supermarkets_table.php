@@ -15,9 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
+            $table->string('city');
+            $table->string('postal_code');
+            $table->string('country');
+            $table->string('siret')->unique()->nullable();
             $table->string('phone');
             $table->string('email');
             $table->boolean('banned')->nullable()->default(false);
+            $table->foreignId('user_id')->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

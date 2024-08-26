@@ -13,7 +13,7 @@ class SupermarketController extends Controller
      */
     public function index()
     {
-        return Supermarket::all();
+        //
     }
 
     /**
@@ -23,26 +23,32 @@ class SupermarketController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
             'address' => 'required|string|max:255|unique:supermarkets',
-            'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
-        ],
-        [
-
-        ]
-        );
-
+            'city' => 'required|string|max:255',
+            'postal_code' => ['required','string','regex:/^\d{5}$/'],
+            'country' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:supermarkets',
+            'phone' => ['required', 'regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
+            'siret' => 'required|string|max:14|min:14|unique:supermarkets',
+        ]);
+    
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->messages()], 400);
         }
-
+    
         $supermarket = Supermarket::create([
             'name' => $request->name,
-            'email' => $request->email,
             'address' => $request->address,
-            'phone' => $request->phone
+            'city' => $request->city,
+            'postal_code' => $request->postal_code,
+            'country' => $request->country,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'siret' => $request->siret,
         ]);
-        return response()->json(['success' => 'Supermarket succesfully added' ], 200);
+    
+        return response()->json(['success' => 'Supermarket successfully added'], 200);
+    
     }
 
     /**
@@ -58,30 +64,7 @@ class SupermarketController extends Controller
      */
     public function update(Request $request, Supermarket $supermarket)
     {
-        $data = $request->all();
-
-        if (!$supermarket) {
-            return response()->json(['error' => 'User not found'], 404);
-        }
-        $validator = Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255|unique:supermarkets,address,' . $supermarket->id,
-            'email' => 'required|string|email|max:255|unique:supermarkets,email,' . $supermarket->id,
-            'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/', 'unique:supermarkets,phone,' . $supermarket->id],
-        ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->messages()], 400);
-        }
-        
-        $supermarket->name = $request->input('name');
-        $supermarket->email = $request->input('email');
-        $supermarket->phone = $request->input('phone');
-        $supermarket->address = $request->input('address');
-        $supermarket->save();
-
-        return response()->json(['success' => 'Supermarket succesfully updated'], 200);
+        //
     }
 
     /**
@@ -89,16 +72,6 @@ class SupermarketController extends Controller
      */
     public function destroy(Supermarket $supermarket)
     {
-        $supermarket->delete();
-        return response()->json(['success' => 'Supermarket succesfully deleted'], 200);
-    }
-
-    public function ban(Request $request, Supermarket $supermarket)
-    {
-        // Logique pour bannir l'utilisateur
-        // Par exemple, marquer l'utilisateur comme banni dans la base de données
-        $supermarket->update($request->all());
-    
-        return response()->json(['message' => 'Supermarket banned successfully.']);
+        //
     }
 }

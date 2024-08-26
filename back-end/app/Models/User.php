@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(MessageSupermarket::class, 'admin_id');
     }
+
+    public function supermarkets()
+    {
+        return $this->hasMany(Supermarket::class, 'user_id');
+    }
 }

@@ -16,8 +16,8 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if the user is authenticated and is an admin
-        if (Auth::check() && (Auth::user()->type === 2 || Auth::user()->type === 3) && Auth::user()->banned === 0) {
+        // Check if the user is authenticated and is not an admin
+        if (Auth::check() && (Auth::user()->type === 2 || Auth::user()->type === 3 || Auth::user()->type === 4) && Auth::user()->banned === 0) {
             return $next($request);
         }
 

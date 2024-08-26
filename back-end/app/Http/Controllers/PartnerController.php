@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class PartnerAdminController extends Controller
+class PartnerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return User::where('type', 4)->get();
+        //
     }
 
     /**
@@ -49,16 +49,15 @@ class PartnerAdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $partnerAdmin)
+    public function show(User $partner)
     {
-        // return $user with his supermarkets
-        return $partnerAdmin->load('supermarkets');
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $partnerAdmin)
+    public function update(Request $request, User $partner)
     {
         //
     }
@@ -66,10 +65,13 @@ class PartnerAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $partnerAdmin)
+    public function destroy(User $partner)
     {
         //
     }
 
-
+    public function mySupermarkets(User $partner)
+    {
+        return $partner->supermarkets;
+    }
 }

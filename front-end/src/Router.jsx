@@ -2,26 +2,29 @@ import {createBrowserRouter, Navigate} from 'react-router-dom';
 import DefaultLayout from './components/DefaultLayout';
 import GuestLayout from './components/GuestLayout'
 import NotFound from './views/NotFound';
-import LoginLayout from './components/LoginLayout';
 import Home from './views/Home';
 import ConnexionChooser from './views/connexion/ConnexionChooser';
-import LoginChooser from './views/connexion/LoginChooser';
 import RegisterChooser from './views/connexion/RegisterChooser';
-import UserLogin from './views/connexion/UserLogin';
-import PartnerLogin from './views/connexion/PartnerLogin';
-import VolunteerLayout from './components/VolunteerLayout';
-import BeneficiaryLayout from './components/BeneficiaryLayout';
 import RegisterVolunteer from './views/connexion/RegisterVolunteer';
 import RegisterBeneficiary from './views/connexion/RegisterBeneficiary';
 import VolunteerDocumentsLayout from './components/VolunteerDocumentsLayout';
 import DocumentsFoodCollection from './views/volunteer/DocumentsFoodCollection';
 import RegisterPartner from './views/connexion/RegisterPartner';
+import Login from './views/connexion/Login';
+import PartnerSupermarkets from './views/partner/PartnerSupermarkets';
+import PartnerSupermarketDetail from './views/partner/PartnerSupermarketDetail';
+import PartnerSupermarketAdd from './views/partner/PartnerSupermarketAdd';
+import PartnerSupermarketUpdate from './views/partner/PartnerSupermarketUpdate';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <DefaultLayout />,
         children: [
+            {
+                path: '/',
+                element: <Home />
+            },
             {
                 path: '/volunteer',
             },
@@ -34,6 +37,30 @@ const router = createBrowserRouter([
                         element: <DocumentsFoodCollection />
                     }
                 ]
+            },
+            {
+                path: '/partner',
+
+            },
+            {
+                path: '/partner/supermarkets',
+                element: <Navigate to={'/partner/supermarkets/show'} />
+            },
+            {
+                path: '/partner/supermarkets/show',
+                element: <PartnerSupermarkets />
+            },
+            {
+                path: '/partner/supermarkets/:id',
+                element: <PartnerSupermarketDetail />
+            },
+            {
+                path: '/partner/supermarkets/:id/update',
+                element: <PartnerSupermarketUpdate />
+            },
+            {
+                path: '/partner/supermarkets/add',
+                element: <PartnerSupermarketAdd />
             }
         ]
         
@@ -58,15 +85,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/connexion/login',
-                element: <LoginChooser />
-            },
-            {
-                path: '/connexion/login/user',
-                element: <UserLogin />
-            },
-            {
-                path: '/connexion/login/partner',
-                element: <PartnerLogin />
+                element: <Login />
             },
             {
                 path: '/connexion/register',

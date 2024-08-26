@@ -7,6 +7,8 @@ import { useState, useRef, useEffect } from 'react';
 import { HiChevronDown, HiChevronRight } from 'react-icons/hi';
 import Flag from 'react-world-flags'
 import { useTranslation } from 'react-i18next';
+import PartnerLayout from "./PartnerLayout";
+import nomorewastePng from '../assets/img/nomorewastePng.png';
 
 
 export default function DefaultLayout() {
@@ -18,7 +20,8 @@ export default function DefaultLayout() {
 
     const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-    const dropdownRef = useRef(null);
+    const dropdownLangRef = useRef(null);
+    const dropdownUserRef = useRef(null);
 
     const langDropdownHandler = () => {
         // console.log('langDropdownHandler');
@@ -33,8 +36,22 @@ export default function DefaultLayout() {
     // Fermer le dropdown si un clic est détecté à l'extérieur
     useEffect(() => {
         function handleClickOutside(event) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            if (dropdownLangRef.current && !dropdownLangRef.current.contains(event.target)) {
                 setIsLangDropdownOpen(false);
+
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownLangRef]);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dropdownUserRef.current && !dropdownUserRef.current.contains(event.target)) {
+
                 setIsUserDropdownOpen(false);
             }
         }
@@ -43,7 +60,7 @@ export default function DefaultLayout() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [dropdownRef]);
+    }, [dropdownUserRef]);
 
     const changeLanguage = (language) => {
         i18n.changeLanguage(language);
@@ -74,15 +91,23 @@ export default function DefaultLayout() {
         <>
         <header className="fixed top-0 w-full h-24 bg-white shadow flex items-center">
             <div className="header_container w-full">
+                <Link to={"/home"}>
+                    <img src={nomorewastePng} className="h-12" alt="" />
+                </Link>
             
                 {user.type === 2 &&
-                <BeneficiaryLayout />
-            }
+                    <BeneficiaryLayout />
+                }
                 {user.type === 3 && 
-                <VolunteerLayout />
-            }
+                    <VolunteerLayout />
+                }
+                {user.type === 4 &&
+                    <PartnerLayout />
+                }
+                 
+
                 <div className="flex items-center gap-4">
-                    <div className="relative"  ref={dropdownRef}>
+                    <div className="relative"  ref={dropdownUserRef}>
                         <button onClick={userDropdownHandler} className="p-2 flex justify-between items-center rounded hover:bg-gray-50 duration-100">
                             <div className="mr-2">
                                 {user.first_name} {user.last_name}
@@ -103,7 +128,7 @@ export default function DefaultLayout() {
                         )}
                     </div>
 
-                    <div className="relative"  ref={dropdownRef}>
+                    <div className="relative"  ref={dropdownLangRef}>
                         <button onClick={langDropdownHandler} className="flex justify-between items-center rounded border border-white p-2 w-full hover:border-gray-300 duration-100">
                             <div className="mr-2">
                                 {/* {t("Language")} */}
@@ -134,7 +159,7 @@ export default function DefaultLayout() {
             
             
         </header>
-        <main className="mt-28 ">
+        <main className="mt-24 ">
             <Outlet />
         </main>
         </>

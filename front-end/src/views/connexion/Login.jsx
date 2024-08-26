@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useAuth } from "../../hooks/auth";
 import { useTranslation } from "react-i18next";
 
-export default function UserLogin() {
+export default function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const [errors, setErrors] = useState([])

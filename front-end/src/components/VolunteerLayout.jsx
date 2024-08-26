@@ -24,10 +24,6 @@ export default function VolunteerLayout() {
 
     return (
         <>
-            <Link to={"/home"}>
-                <img src={nomorewastePng} className="h-12" alt="" />
-            </Link>
-            
             <div>
                 <NavLink to={'/volunteer/documents'} className={({ isActive }) => 
                         isActive 

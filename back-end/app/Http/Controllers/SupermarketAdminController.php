@@ -13,7 +13,7 @@ class SupermarketAdminController extends Controller
      */
     public function index()
     {
-        return Supermarket::all();
+        return Supermarket::all()->load('user');
     }
 
     /**
@@ -30,6 +30,8 @@ class SupermarketAdminController extends Controller
             'email' => 'required|string|email|max:255|unique:supermarkets',
             'phone' => ['required', 'regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
             'siret' => 'required|string|max:14|min:14|unique:supermarkets',
+            // verify that the user id exist and is a user of type 4
+            'user_id' => 'required|exists:users,id,type,4',
         ]);
     
         if ($validator->fails()) {
@@ -45,6 +47,7 @@ class SupermarketAdminController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'siret' => $request->siret,
+            'user_id' => $request->user_id,
         ]);
     
         return response()->json(['success' => 'Supermarket successfully added'], 200);
@@ -55,7 +58,7 @@ class SupermarketAdminController extends Controller
      */
     public function show(Supermarket $supermarketAdmin)
     {
-        return $supermarketAdmin;
+        return $supermarketAdmin->load('user');
     }
 
     /**
@@ -77,6 +80,7 @@ class SupermarketAdminController extends Controller
             'country' => 'required|string|max:255',
             'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/', 'unique:supermarkets,phone,' . $supermarketAdmin->id],
             'siret' => 'required|string|max:14|min:14|unique:supermarkets,siret,' . $supermarketAdmin->id,
+            'user_id' => 'required|exists:users,id,type,4',
         ]
         );
 

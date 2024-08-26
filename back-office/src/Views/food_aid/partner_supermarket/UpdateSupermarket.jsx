@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import axiosClient from "../../../axios-client"
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 export default function UpdateSupermarket() {
     const [errors, setErrors] = useState({});
@@ -9,9 +10,11 @@ export default function UpdateSupermarket() {
         email: '',
         password: ''
     })
+    const [partners, setPartners] = useState([]);
     const [success, setSuccess] = useState({});
     const { id } = useParams();
     const [loading, setLoading] = useState(true)
+    const { t } = useTranslation("global");
 
     const navigate = useNavigate();
 
@@ -20,6 +23,17 @@ export default function UpdateSupermarket() {
         .then(response => {
             console.log(response.data)
             setData(response.data)
+        })
+        .catch(error => {
+            if (error.response && error.response.status === 400) {
+                setErrors(error.response.data.error);
+            }
+        })
+
+        axiosClient.get(`/api/partnerAdmin`)
+        .then(response => {
+            console.log(response.data)
+            setPartners(response.data)
         })
         .catch(error => {
             if (error.response && error.response.status === 400) {
@@ -90,9 +104,15 @@ export default function UpdateSupermarket() {
                 <label className="mt-2">Phone</label>
                 <input name="phone" type="text" value={data.phone} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
                 {errors.phone && <p className="text-red-500">{errors.phone[0]}</p>}
-                <label className="mt-2">Password</label>
-                <input name="password" type="password" value={data.password} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
-                {errors.password && <p className="text-red-500">{errors.password[0]}</p>}
+                <label className="mt-2">{t("Owner")}</label>
+                    <select name="user_id" value={data.user_id} onChange={handleChange} className="bg-slate-100 rounded p-2">
+                        <option value="" defaultChecked disabled>Choose a Partner</option>
+                        {partners.map((partner, index) => (
+                            <option key={index} value={partner.id}>{partner.first_name} {partner.last_name}</option>
+                        ))}
+
+                    </select>
+                    {errors.user_id && <p className="text-red-500">{errors.user_id[0]}</p>}
                 <button type="submit" className='rounded bg-blue-600 text-white p-1 hover:bg-blue-500 mt-4'>Update</button>
                 {success.success && <p className="text-green-500">{success.success}</p>}
             </form>

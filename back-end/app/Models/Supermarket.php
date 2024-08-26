@@ -18,7 +18,8 @@ class Supermarket extends Model
         'country',
         'siret',
         'phone',
-        'banned'
+        'banned',
+        'user_id',
     ];
 
 
@@ -36,6 +37,6 @@ class Supermarket extends Model
     }
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

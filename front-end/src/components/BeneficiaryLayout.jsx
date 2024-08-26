@@ -19,11 +19,6 @@ export default function BeneficiaryLayout() {
 
     return (
         <>
-            
-            <Link to={"/home"}>
-                <img src={nomorewastePng} className="h-12" alt="" />
-            </Link>
-            
             <div>
                 Actions beneficiary
             </div>

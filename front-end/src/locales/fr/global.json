@@ -1,6 +1,7 @@
 {
     "Login to the BO": "Connexion au back-office",
     "Email": "Email",
+    "Name": "Nom",
     "Password": "Mot de passe",
     "Login": "Connexion",
     "Logout": "Déconnexion",
@@ -21,5 +22,14 @@
     "Would you want to": "Voulez-vous",
     "Or": "Ou",
     "Are you a": "Etes-vous un",
-    "Documents": "Documents"
+    "Documents": "Documents",
+    "My Supermarkets": "Mes Supermarchés",
+    "Add": "Ajouter",
+    "Add a Supermarket": "Ajouter un supermarché",
+    "Address": "Adresse",
+    "City": "Ville",
+    "Postal Code": "Code postal",
+    "Country": "Pays",
+    "Supermarket": "Supermarché",
+    "SIRET Number": "Numéro de SIRET"
 }

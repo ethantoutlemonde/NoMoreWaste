@@ -14,6 +14,7 @@ use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\MessageSupermarketController;
 use App\Http\Controllers\PartnerAdminController;
+use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\SupermarketAdminController;
 use App\Http\Controllers\SupermarketController;
 use App\Http\Controllers\UserController;
@@ -98,8 +99,14 @@ Route::middleware(UserMiddleware::class)->resource('volunteer', VolunteerControl
 Route::middleware('guest')->post('/volunteer', [VolunteerController::class, 'store']);
 Route::middleware(UserMiddleware::class)->resource('beneficiary', BeneficiaryController::class);
 Route::middleware('guest')->post('/beneficiary', [BeneficiaryController::class, 'store']);
+Route::middleware(UserMiddleware::class)->resource('partner', PartnerController::class);
+Route::middleware('guest')->post('/partner', [PartnerController::class, 'store']);
+
 
 Route::middleware(UserMiddleware::class)->get('volunteer/{volunteer}/documents', [VolunteerController::class, 'getVolunteerDocuments']);
 
 Route::middleware(UserMiddleware::class)->resource('supermarket', SupermarketController::class);
-Route::middleware('guest')->post('/supermarket', [SupermarketController::class, 'store']);
+// Route::middleware('guest')->post('/supermarket', [SupermarketController::class, 'store']);
+
+
+Route::middleware(UserMiddleware::class)->get('/partner/{partner}/supermarkets', [PartnerController::class, 'mySupermarkets']);

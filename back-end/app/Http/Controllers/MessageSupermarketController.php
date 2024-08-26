@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MessageSupermarket;
 use App\Models\Supermarket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MessageSupermarketController extends Controller
 {
@@ -21,6 +22,16 @@ class MessageSupermarketController extends Controller
      */
     public function store(Request $request , Supermarket $supermarket)
     {
+        // Valider les données
+        $validator = Validator::make($request->all(), [
+            'admin_id' => 'nullable|integer',
+            'message' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->messages()], 400);
+        }
+
         $message = MessageSupermarket::create([
             'supermarket_id' => $supermarket->id,
             'admin_id' => $request->admin_id,

@@ -37,7 +37,7 @@ export default function RegisterBeneficiary() {
                 password: ''
             }));
             setSuccess(response.data)
-            navigate('/connexion/login/user')
+            navigate('/connexion/login')
         })
         .catch((error) => {
             if (error.response && error.response.status === 400) {

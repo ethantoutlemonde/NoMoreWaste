@@ -5,5 +5,21 @@
     "Login": "Connexion",
     "Logout": "Déconnexion",
     "Header": "coucou",
-    "Language": "Langue"
+    "Language": "Langue",
+    "Detail :": "Détail :",
+    "Beneficiary": "Bénéficiaire",
+    "Volunteer": "Bénévole",
+    "Partner": "Partenaire",
+    "Address": "Adresse",
+    "City": "Ville",
+    "Postal Code": "Code postal",
+    "Country": "Pays",
+    "Supermarket": "Supermarché",
+    "SIRET Number": "Numéro de SIRET",
+    "Name": "Nom",
+    "Owner": "Propriétaire",
+    "Phone": "Téléphone",
+    "Ban" : "Bannir",
+    "Unban" : "Débannir",
+    "Send" : "Envoyer"
 }

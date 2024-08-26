@@ -4,6 +4,7 @@ import axiosClient from "../../../axios-client";
 import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import CircularProgress from '@mui/material/CircularProgress';
 import SupermarketConv from "../../../components/SupermarketConv";
+import { useTranslation } from "react-i18next";
 
 export default function DetailSupermarket({ content }) {
     const { id } = useParams();
@@ -11,6 +12,7 @@ export default function DetailSupermarket({ content }) {
     const [loading, setLoading] = useState(true)
     const [loadingBan, setLoadingBan] = useState(false)
     const chatDiv = useRef(null);
+    const { t } = useTranslation("global");
 
     const navigate = useNavigate()
 
@@ -68,35 +70,39 @@ export default function DetailSupermarket({ content }) {
         {loading ? <CircularProgress />
             :
             <>
-            <div className="flex flex-col bg-slate-50 p-10 rounded-xl col-span-1">
-                <h1 className='text-2xl font-semibold'>Detail :</h1>
+            <div className="flex flex-col bg-slate-50 p-10 rounded-xl col-span-1 row-span-1">
+                <h1 className='text-2xl font-semibold'>{t("Detail :")}</h1>
                 <div className='flex justify-between mb-2'>
                     <Link className='text-2xl hover:text-gray-700' to={'update'}><HiOutlinePencilSquare /></Link>
                     <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
                 </div>
                 
-                <h2 className='text-lg font-semibold'>Name</h2>
+                <h2 className='text-lg font-semibold'>{t("Name")}</h2>
                 <p className='mb-4'>{data?.name}</p>
-                <h2 className='text-lg font-semibold'>Address</h2>
+                <h2 className='text-lg font-semibold'>{t("Owner")}</h2>
+                <Link to={`/users/partner/${data?.user.id}`} className='mb-4 text-blue-800 hover:underline'>{data?.user?.first_name} {data?.user?.last_name}</Link>
+                <h2 className='text-lg font-semibold'>{t("Address")}</h2>
                 <p className='mb-4'>{data?.address}</p>
-                <h2 className='text-lg font-semibold'>City</h2>
+                <h2 className='text-lg font-semibold'>{t("City")}</h2>
                 <p className='mb-4'>{data?.city}</p>
-                <h2 className='text-lg font-semibold'>Postal Code</h2>
+                <h2 className='text-lg font-semibold'>{t("Postal Code")}</h2>
                 <p className='mb-4'>{data?.postal_code}</p>
-                <h2 className='text-lg font-semibold'>Country</h2>
+                <h2 className='text-lg font-semibold'>{t("Country")}</h2>
                 <p className='mb-4'>{data?.country}</p>
-                <h2 className='text-lg font-semibold'>SIRET Number</h2>
+                <h2 className='text-lg font-semibold'>{t("SIRET Number")}</h2>
                 <p className='mb-4'>{data?.siret}</p>
-                <h2 className='text-lg font-semibold'>Email</h2>
+                <h2 className='text-lg font-semibold'>{t("Email")}</h2>
                 <p className='mb-4'>{data?.email}</p>
-                <h2 className='text-lg font-semibold'>Phone</h2>
+                <h2 className='text-lg font-semibold'>{t("Phone")}</h2>
                 <p className='mb-4'>{data?.phone}</p>
+                
+                
                 <div className='flex'>
-                    {data?.banned ?  <button className='bg-green-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(false)}>Unban</button> : <button className='bg-red-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(true)}>Ban</button>}
+                    {data?.banned ?  <button className='bg-green-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(false)}>{t("Unban")}</button> : <button className='bg-red-500 rounded-md py-1 px-2 text-white w-fit' onClick={() => onBanned(true)}>{t("Ban")}</button>}
                     {loadingBan && <CircularProgress />}
                 </div>
             </div>
-            <div className="flex flex-col   bg-slate-50 p-10 rounded-xl col-span-2">
+            <div className="flex flex-col   bg-slate-50 p-10 rounded-xl col-span-2 row-span-1">
                 <SupermarketConv supermarket_id={id} />
             </div>
             </>

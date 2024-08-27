@@ -8,6 +8,7 @@ export default function ProductTypeShow() {
     const [successMessage, setSuccessMessage] = useState('');
     const [editingProductType, setEditingProductType] = useState(null); 
     const [formData, setFormData] = useState({}); 
+    const [filter, setFilter] = useState(''); // Filter state
     const { t } = useTranslation('global');
     
     useEffect(() => {
@@ -36,6 +37,9 @@ export default function ProductTypeShow() {
             } catch (error) {
                 setError(error.message || t('An error occurred while deleting the product type.'));
                 console.error('Error:', error);
+                if(error.response.status === 500){
+                    setError(t("This ProductType is used in a stock, you can't delete it"));
+                }
             }
         }
     };
@@ -86,6 +90,11 @@ export default function ProductTypeShow() {
         }
     };
 
+    // Filter product types based on the filter input
+    const filteredProductTypes = productTypes.filter(productType =>
+        productType.product_type.toLowerCase().includes(filter.toLowerCase())
+    );
+
     return (
         <div>
             {error && (
@@ -104,8 +113,19 @@ export default function ProductTypeShow() {
                 {t('Product Type List')}
             </h2>
 
+            {/* Filter bar */}
+            <div className="mb-4">
+                <input 
+                    type="text" 
+                    placeholder={t('Search product type')}
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    className="block w-full p-2 border border-gray-300 rounded"
+                />
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {productTypes.map((productType) => (
+                {filteredProductTypes.map((productType) => (
                     <div key={productType.id} className="bg-white shadow-md rounded-lg p-4">
                         <h3 className="font-semibold text-lg mb-2">{productType.product_type}</h3>
                         <button onClick={() => handleEdit(productType)} className="m-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded mt-2">

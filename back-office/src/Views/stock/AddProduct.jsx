@@ -47,7 +47,8 @@ export default function AddProduct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setError(null);
+        setSuccessMessage(null);
         try {
             const response = await axiosClient.post('/api/product', data);
 

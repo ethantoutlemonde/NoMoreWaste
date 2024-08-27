@@ -10,6 +10,8 @@ const ProductList = () => {
   const [editableProductId, setEditableProductId] = useState(null);
   const [modifiedFields, setModifiedFields] = useState({});
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [productTypes, setProductTypes] = useState([]);
+  const [warehouses, setWarehouses] = useState([]);
   const { t } = useTranslation("global");
 
   const fetchProducts = async () => {
@@ -61,8 +63,30 @@ const ProductList = () => {
   };
 
   useEffect(() => {
+    async function fetchProductTypes() {
+        try {
+            const response = await axiosClient.get('/api/productType');
+            setProductTypes(response.data.productTypes);
+        } catch (error) {
+            setError(t('Product types loading error.'));
+            console.error('Error fetching product types:', error);
+        }
+    }
+
+    async function fetchWarehouses() {
+        try {
+            const response = await axiosClient.get('/api/warehouse');
+            setWarehouses(response.data.warehouses);
+        } catch (error) {
+            setError(t('Error loading warehouses.'));
+            console.error('Error fetching warehouses:', error);
+        }
+    }
+
+    fetchProductTypes();
+    fetchWarehouses();
     fetchProducts();
-  }, []);
+  }, [t]);
 
   const filteredProducts = products.filter(product =>
     product.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -167,9 +191,28 @@ const ProductList = () => {
                   <span>{product.product_name}</span>
                 )}
               </td>
+
+
               <td className="px-6 py-4">
-                <span>{product.product_type.product_type}</span>
+                {editableProductId === product.id ? (
+                  <div className="relative z-0 w-full group">
+                    <select
+                      value={modifiedFields.product_type_id || ''}
+                      onChange={(e) => setModifiedFields({ ...modifiedFields, product_type_id: e.target.value })}
+                      className="w-full"
+                      required
+                    >
+                      <option value="">{product.product_type.product_type}</option>
+                      {productTypes.map((type) => (
+                        <option key={type.id} value={type.id}>{type.product_type}</option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <span>{product.product_type.product_type}</span>
+                )}
               </td>
+
               <td className="px-6 py-4">
                 {editableProductId === product.id ? (
                   <input
@@ -206,20 +249,29 @@ const ProductList = () => {
                   <span>{product.expiration_date}</span>
                 )}
               </td>
-              <td className="px-6 py-4">
-                <span>{product.warehouse?.warehouse_name || t('N/A')}</span>
-              </td>
+              
               <td className="px-6 py-4">
                 {editableProductId === product.id ? (
-                  <input
-                    type="text"
-                    className="w-full"
-                    value={modifiedFields.barcode || ''}
-                    onChange={(e) => setModifiedFields({...modifiedFields, barcode: e.target.value})}
-                  />
+                  <div className="relative z-0 w-full group">
+                  <select
+                      value={modifiedFields.warehouse_id || ''}
+                      onChange={(e) => setModifiedFields({ ...modifiedFields, warehouse_id: e.target.value })}
+                      className="w-full"
+                      required
+                  >
+                      <option value="">{product.warehouse?.warehouse_name || t('N/A')}</option>
+                      {warehouses.map((name) => (
+                          <option key={name.id} value={name.id}>{name.warehouse_name}</option>
+                      ))}
+                  </select>
+              </div>
                 ) : (
-                  <span>{product.barcode}</span>
+                  <span>{product.warehouse?.warehouse_name || t('N/A')}</span>
                 )}
+              </td>
+
+              <td className="px-6 py-4">
+                  <span>{product.barcode}</span>
               </td>
               <td className="px-6 py-4">
                 {editableProductId === product.id ? (

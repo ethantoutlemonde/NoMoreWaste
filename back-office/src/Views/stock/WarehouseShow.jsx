@@ -8,6 +8,7 @@ export default function WarehouseShow() {
     const [successMessage, setSuccessMessage] = useState('');
     const [editingWarehouse, setEditingWarehouse] = useState(null); // État pour l'entrepôt en cours de modification
     const [formData, setFormData] = useState({}); // État pour les données du formulaire de modification
+    const [filter, setFilter] = useState(''); // État pour le filtre
     const { t } = useTranslation("global");
 
     useEffect(() => {
@@ -36,6 +37,9 @@ export default function WarehouseShow() {
             } catch (error) {
                 setError(t("An error occurred while deleting the warehouse"));
                 console.error('Error:', error);
+                if(error.response.status === 500){
+                    setError(t("This warehouse is used in a stock, you can't delete it"));
+                }
             }
         }
     };
@@ -49,7 +53,6 @@ export default function WarehouseShow() {
             setFormData({ ...warehouse });
         }
     };
-    
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value }); // Met à jour les données du formulaire lorsqu'un champ est modifié
@@ -81,6 +84,12 @@ export default function WarehouseShow() {
         }
     };
 
+    // Filter warehouses based on the filter input
+    const filteredWarehouses = warehouses.filter(warehouse =>
+        warehouse.warehouse_name.toLowerCase().includes(filter.toLowerCase()) ||
+        warehouse.location.toLowerCase().includes(filter.toLowerCase())
+    );
+
     return (
         <div>
             {error && (
@@ -101,13 +110,24 @@ export default function WarehouseShow() {
                 {t('Warehouse List')}
             </h2>
 
+            {/* Filter bar */}
+            <div className="mb-4">
+                <input 
+                    type="text" 
+                    placeholder={t('Search warehouse name or location')}
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    className="block w-full p-2 border border-gray-300 rounded"
+                />
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {warehouses.map((warehouse) => (
+                {filteredWarehouses.map((warehouse) => (
                     <div key={warehouse.id} className="bg-white shadow-md rounded-lg p-4">
                         <h3 className="font-semibold text-lg mb-2">{warehouse.warehouse_name}</h3>
                         <p className="text-gray-700">{warehouse.location}</p>
-                        <button onClick={() => handleEdit(warehouse)} className=" m-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded mt-2">{t('Edit')}</button>
-                        <button onClick={() => handleDelete(warehouse.id)} className=" m-2 bg-red-500 text-white px-4 py-2 rounded mt-2">{t('Delete')}</button>
+                        <button onClick={() => handleEdit(warehouse)} className="m-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded mt-2">{t('Edit')}</button>
+                        <button onClick={() => handleDelete(warehouse.id)} className="m-2 bg-red-500 text-white px-4 py-2 rounded mt-2">{t('Delete')}</button>
                     </div>
                 ))}
             </div>

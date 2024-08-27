@@ -47,6 +47,8 @@ const ProductList = () => {
   };
 
   const handleModifyProduct = async (productId) => {
+    error && setError(null);
+    successMessage && setSuccessMessage(null);
     try {
       const response = await axiosClient.put(`/api/product/${productId}`, modifiedFields);
       console.log('Product updated:', response.data);
@@ -61,6 +63,8 @@ const ProductList = () => {
   };
 
   const handleDeleteProduct = async (productId) => {
+    error && setError(null);
+    successMessage && setSuccessMessage(null);
     try {
       const response = await axiosClient.delete(`/api/product/${productId}`);
       console.log('Product deleted:', response.data);

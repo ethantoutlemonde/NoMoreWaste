@@ -93,10 +93,47 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, $id)
+    // {
+    //     $product = Product::findOrFail($id);
+    
+    //     $rules = [
+    //         'product_name' => 'string',
+    //         'description' => 'string',
+    //         'quantity' => 'integer|min:0',
+    //         'product_type_id' => 'integer',
+    //         'warehouse_id' => 'integer',
+    //         'expiration_date' => 'date|after_or_equal:today',
+    //         'barcode' => 'string',
+    //     ];
+    
+    //     $messages = [
+    //         'expiration_date.after_or_equal' => 'Expiration date must be today or later.',
+    //     ];
+    
+    //     $validator = Validator::make($request->all(), $rules, $messages);
+    
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 400);
+    //     }
+    //     $validatedData = $validator->validated();
+    //     if (isset($validatedData['Quantity_Maraude'])) {
+    //         $difference = $validatedData['Quantity_Maraude'] - $product->Quantity_Maraude;
+    //         if ($difference <= $product->quantity) {
+    //             $product->quantity -= $difference;
+    //             $product->Quantity_Maraude = $validatedData['Quantity_Maraude'];
+    //         } else {
+    //             return response()->json(['errors' => ['Quantity_Maraude' => 'Quantity_Maraude cannot exceed quantity.']], 400);
+    //         }
+    //     }
+    //     $product->update($validatedData);
+    //     return response()->json(['message' => 'Product updated successfully', 'product' => $product], 200);
+    // }
+
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-    
+
         $rules = [
             'product_name' => 'string',
             'description' => 'string',
@@ -105,18 +142,21 @@ class ProductController extends Controller
             'warehouse_id' => 'integer',
             'expiration_date' => 'date|after_or_equal:today',
             'barcode' => 'string',
+            'Quantity_Maraude' => 'integer|min:0',
         ];
-    
+
         $messages = [
             'expiration_date.after_or_equal' => 'Expiration date must be today or later.',
         ];
-    
+
         $validator = Validator::make($request->all(), $rules, $messages);
-    
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
+
         $validatedData = $validator->validated();
+
         if (isset($validatedData['Quantity_Maraude'])) {
             $difference = $validatedData['Quantity_Maraude'] - $product->Quantity_Maraude;
             if ($difference <= $product->quantity) {
@@ -126,9 +166,17 @@ class ProductController extends Controller
                 return response()->json(['errors' => ['Quantity_Maraude' => 'Quantity_Maraude cannot exceed quantity.']], 400);
             }
         }
+
         $product->update($validatedData);
+
+        if ($product->quantity <= 0) {
+            $product->delete();
+            return response()->json(['message' => 'Product deleted due to zero quantity.'], 200);
+        }
+
         return response()->json(['message' => 'Product updated successfully', 'product' => $product], 200);
     }
+
     
     
     

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('path');
-            $table->foreignId('type_id')->constrained()->nullOnDelete();
-            $table->foreignId('user_id')->constrained()->nullOnDelete();
+            $table->foreignId('type_id')->constrained('document_types')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

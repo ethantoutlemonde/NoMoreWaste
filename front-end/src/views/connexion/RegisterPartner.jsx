@@ -11,25 +11,61 @@ export default function RegisterPartner() {
         phone: '',
         password: ''
     });
+    const [files, setFiles] = useState({
+        document1: null,
+        document2: null
+    });
     const [success, setSuccess] = useState({});
     const [errors, setErrors] = useState({});
     const {t} = useTranslation("global");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
         setData({
             ...data,
-            [e.target.name]: e.target.value
+            [name]: value
+        });
+    };
+
+    const handleFileChange = (e) => {
+        const { name, files: [file] } = e.target;
+        setFiles({
+            ...files,
+            [name]: file
         });
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         setErrors({});
-        console.log('submit')
-        console.log(data)
+        console.log('submit');
+        console.log(data);
+        console.log(files)
 
-        axiosClient.post(`/api/partner`, data)
+        // FormData to handle file uploads
+        const formData = new FormData();
+        formData.append('first_name', data.first_name);
+        formData.append('last_name', data.last_name);
+        formData.append('email', data.email);
+        formData.append('phone', data.phone);
+        formData.append('password', data.password);
+        formData.append('document1', files.document1);
+        formData.append('document2', files.document2);
+
+
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+        for (let pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]);
+        }
+
+        axiosClient.post(`/api/partner`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
         .then((response) => {
             console.log(response)
             setData((prevData) => ({
@@ -37,7 +73,7 @@ export default function RegisterPartner() {
                 password: ''
             }));
             setSuccess(response.data)
-            navigate('/connexion/login')
+            // navigate('/connexion/login')
         })
         .catch((error) => {
             if (error.response && error.response.status === 400) {
@@ -66,6 +102,14 @@ export default function RegisterPartner() {
                     <label className="mt-2">{t("Password")}</label>
                     <input name="password" type="password" value={data.password} onChange={handleChange} className="p-2 rounded-lg border shadow" placeholder={t("Password")} />
                     {errors.password && <p className="text-red-500">{errors.password[0]}</p>}
+
+                    <label className="mt-2">{t("Document 1")}</label>
+                    <input name="document1" type="file" onChange={handleFileChange} className="p-2 rounded-lg border shadow bg-white" />
+                    {errors.document1 && <p className="text-red-500">{errors.document1[0]}</p>}
+                    
+                    <label className="mt-2">{t("Document 2")}</label>
+                    <input name="document2" type="file" onChange={handleFileChange} className="p-2 rounded-lg border shadow bg-white" />
+                    {errors.document2 && <p className="text-red-500">{errors.document2[0]}</p>}
                     <button className="mt-4 bg-blue-500 text-white p-2 rounded-lg border shadow hover:bg-blue-600 hover:shadow-md duration-100">
                         {t('Register')}
                     </button>

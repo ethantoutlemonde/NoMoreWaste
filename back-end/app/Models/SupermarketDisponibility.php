@@ -9,6 +9,11 @@ class SupermarketDisponibility extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'date',
+        'supermarket_id'
+    ];
+
     public function supermarket() {
         return $this->belongsTo(Supermarket::class);
     }

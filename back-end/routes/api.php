@@ -17,6 +17,7 @@ use App\Http\Controllers\PartnerAdminController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\SupermarketAdminController;
 use App\Http\Controllers\SupermarketController;
+use App\Http\Controllers\SupermarketDisponibilityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerAdminController;
 use App\Http\Controllers\VolunteerController;
@@ -107,6 +108,9 @@ Route::middleware(UserMiddleware::class)->get('volunteer/{volunteer}/documents',
 
 Route::middleware(UserMiddleware::class)->resource('supermarket', SupermarketController::class);
 // Route::middleware('guest')->post('/supermarket', [SupermarketController::class, 'store']);
+Route::middleware(UserMiddleware::class)->get('/supermarket/{supermarket}/disponibilities', [SupermarketController::class, 'disponibilities']);
 
 
 Route::middleware(UserMiddleware::class)->get('/partner/{partner}/supermarkets', [PartnerController::class, 'mySupermarkets']);
+
+Route::middleware(UserMiddleware::class)->resource('supermarket/disponibility', SupermarketDisponibilityController::class);

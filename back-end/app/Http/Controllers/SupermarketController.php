@@ -99,4 +99,9 @@ class SupermarketController extends Controller
         $supermarket->delete();
         return response()->json(['success' => 'Supermarket succesfully deleted'], 200);
     }
+
+    public function disponibilities(Supermarket $supermarket)
+    {
+        return $supermarket->disponibilities;
+    }
 }

@@ -23,6 +23,17 @@ const ProductList = () => {
     }
   };
 
+  const handleEditClick = (product) => {
+    setEditableProductId(product.id);
+    setModifiedFields({
+      product_name: product.product_name,
+      description: product.description,
+      quantity: product.quantity,
+      expiration_date: product.expiration_date,
+      barcode: product.barcode,
+    });
+  };
+
   const handleModifyProduct = async (productId) => {
     try {
       const response = await axiosClient.put(`/api/product/${productId}`, modifiedFields);
@@ -36,7 +47,7 @@ const ProductList = () => {
       console.error('Error modifying product:', error);
     }
   };
-  
+
   const handleDeleteProduct = async (productId) => {
     try {
       const response = await axiosClient.delete(`/api/product/${productId}`);
@@ -54,7 +65,9 @@ const ProductList = () => {
   }, []);
 
   const filteredProducts = products.filter(product =>
-    product.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+    product.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.barcode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.warehouse?.warehouse_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const toggleProductSelection = (productId) => {
@@ -68,8 +81,9 @@ const ProductList = () => {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        {error && <div className="text-red-500">{t(error)}</div>}
-        {successMessage && <div className="text-green-500">{t(successMessage)}</div>}
+      {error && <div className="text-red-500">{t(error)}</div>}
+      {successMessage && <div className="text-green-500">{t(successMessage)}</div>}
+      
       {/* Search input */}
       <label htmlFor="table-search" className="sr-only">{t('Search')}</label>
       <div className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 dark:text-gray-400">
@@ -89,6 +103,7 @@ const ProductList = () => {
           />
         </div>
       </div>
+
       {/* Display filtered products */}
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -118,6 +133,9 @@ const ProductList = () => {
               {t('Warehouse')}
             </th>
             <th scope="col" className="px-6 py-3">
+              {t('Barcode')}
+            </th>
+            <th scope="col" className="px-6 py-3">
               {t('Action')}
             </th>
           </tr>
@@ -142,7 +160,7 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="w-full"
-                    value={modifiedFields.product_name || product.product_name }
+                    value={modifiedFields.product_name || ''}
                     onChange={(e) => setModifiedFields({...modifiedFields, product_name: e.target.value})}
                   />
                 ) : (
@@ -157,7 +175,7 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="w-full"
-                    value={modifiedFields.description || product.description}
+                    value={modifiedFields.description || ''}
                     onChange={(e) => setModifiedFields({...modifiedFields, description: e.target.value})}
                   />
                 ) : (
@@ -169,7 +187,7 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="w-full"
-                    value={modifiedFields.quantity || product.quantity}
+                    value={modifiedFields.quantity || ''}
                     onChange={(e) => setModifiedFields({...modifiedFields, quantity: e.target.value})}
                   />
                 ) : (
@@ -180,8 +198,8 @@ const ProductList = () => {
                 {editableProductId === product.id ? (
                   <input
                     type="text"
-                    className='w-auto'
-                    value={modifiedFields.expiration_date || product.expiration_date}
+                    className="w-full"
+                    value={modifiedFields.expiration_date || ''}
                     onChange={(e) => setModifiedFields({...modifiedFields, expiration_date: e.target.value})}
                   />
                 ) : (
@@ -189,15 +207,43 @@ const ProductList = () => {
                 )}
               </td>
               <td className="px-6 py-4">
-                <span>{product.warehouse.warehouse_name}</span>
+                <span>{product.warehouse?.warehouse_name || t('N/A')}</span>
               </td>
               <td className="px-6 py-4">
                 {editableProductId === product.id ? (
-                  <button onClick={() => handleModifyProduct(product.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{t('Validate')}</button>
+                  <input
+                    type="text"
+                    className="w-full"
+                    value={modifiedFields.barcode || ''}
+                    onChange={(e) => setModifiedFields({...modifiedFields, barcode: e.target.value})}
+                  />
                 ) : (
-                  <button onClick={() => setEditableProductId(product.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{t('Modify')}</button>
+                  <span>{product.barcode}</span>
                 )}
-                <button onClick={() => handleDeleteProduct(product.id)} className="font-medium text-red-600 dark:text-red-500 hover:underline ml-2">{t('Delete')}</button>
+              </td>
+              <td className="px-6 py-4">
+                {editableProductId === product.id ? (
+                  <>
+                    <button onClick={() => handleModifyProduct(product.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                      {t('Validate')}
+                    </button>
+                    <button onClick={() => setEditableProductId(null)} className="font-medium text-red-600 dark:text-red-500 hover:underline ml-2">
+                      {t('Cancel')}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => handleEditClick(product)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                      {t('Modify')}
+                    </button>
+                    <button onClick={() => handleDeleteProduct(product.id)} className="font-medium text-red-600 dark:text-red-500 hover:underline ml-2">
+                      {t('Delete')}
+                    </button>
+                  </>
+                )}
+                <button className="font-medium text-purple-600 dark:text-red-500 hover:underline ml-2">
+                      {t('view')}
+                </button>
               </td>
             </tr>
           ))}

@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         // get all product with join warehouse and product type
-        $products = Product::with('warehouse', 'productType', 'foodAids')->get();
+        $products = Product::with('warehouse', 'productType')->get();
         //$products = Product::all();
         return response()->json($products, 200);
     }

@@ -1,16 +1,20 @@
 import useSWR from 'swr'
 import { Navigate } from "react-router-dom";
 import axiosClient from "../axios-client";
+import { useState } from 'react';
 
 export const useAuth = ({middleware, redirectIfAuthenticated} = {}) => {
-
+    const [errorrr, setErrorrr] = useState("coucou");
 
   
-    const {data: user, error, mutate} = useSWR('/api/user', () =>
+    const {data: user, error: fetchError, mutate} = useSWR('/api/user', () =>
         axiosClient
         .get('/api/user')
         .then(res => res.data)
         .catch(error => {
+          setErrorrr(error.response.data);
+          console.log('error hook :',error.response.data);
+          
           if (error.response.status !== 409) throw error
   
           mutate('/verify-email')
@@ -43,6 +47,7 @@ export const useAuth = ({middleware, redirectIfAuthenticated} = {}) => {
         .post('/api/login', props)
         .then(() => mutate())
         .catch(error => {
+          
           if (error.response.status !== 422) throw error
           setErrors(Object.values(error.response.data.errors).flat())
         })
@@ -59,6 +64,7 @@ export const useAuth = ({middleware, redirectIfAuthenticated} = {}) => {
 
     return {
         user,
+        errorrr,
         register,
         login,
         logout

@@ -18,6 +18,11 @@ class UserMiddleware
     {
         // Check if the user is authenticated and is not an admin
         if (Auth::check() && (Auth::user()->type === 2 || Auth::user()->type === 3 || Auth::user()->type === 4) && Auth::user()->banned === 0) {
+            if (Auth::user()->status !== 'approved') {
+                Auth::logout();
+                return response()->json(['error' => 'Your account is not approved'], 403);
+
+            }
             return $next($request);
         }
 

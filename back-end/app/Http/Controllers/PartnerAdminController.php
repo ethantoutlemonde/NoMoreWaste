@@ -52,7 +52,7 @@ class PartnerAdminController extends Controller
     public function show(User $partnerAdmin)
     {
         // return $user with his supermarkets
-        return $partnerAdmin->load('supermarkets');
+        return $partnerAdmin->load('supermarkets','documents.type');
     }
 
     /**

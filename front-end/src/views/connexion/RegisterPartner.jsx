@@ -12,8 +12,8 @@ export default function RegisterPartner() {
         password: ''
     });
     const [files, setFiles] = useState({
-        document1: null,
-        document2: null
+        idCard: null,
+        ownership: null
     });
     const [success, setSuccess] = useState({});
     const [errors, setErrors] = useState({});
@@ -50,8 +50,8 @@ export default function RegisterPartner() {
         formData.append('email', data.email);
         formData.append('phone', data.phone);
         formData.append('password', data.password);
-        formData.append('document1', files.document1);
-        formData.append('document2', files.document2);
+        formData.append('idCard', files.idCard);
+        formData.append('ownership', files.ownership);
 
 
         for (let [key, value] of formData.entries()) {
@@ -73,7 +73,7 @@ export default function RegisterPartner() {
                 password: ''
             }));
             setSuccess(response.data)
-            // navigate('/connexion/login')
+            navigate('/connexion/login')
         })
         .catch((error) => {
             if (error.response && error.response.status === 400) {
@@ -103,13 +103,13 @@ export default function RegisterPartner() {
                     <input name="password" type="password" value={data.password} onChange={handleChange} className="p-2 rounded-lg border shadow" placeholder={t("Password")} />
                     {errors.password && <p className="text-red-500">{errors.password[0]}</p>}
 
-                    <label className="mt-2">{t("Document 1")}</label>
-                    <input name="document1" type="file" onChange={handleFileChange} className="p-2 rounded-lg border shadow bg-white" />
-                    {errors.document1 && <p className="text-red-500">{errors.document1[0]}</p>}
+                    <label className="mt-2">{t("Id card of the owner")}</label>
+                    <input name="idCard" type="file" onChange={handleFileChange} className="p-2 rounded-lg border shadow bg-white" />
+                    {errors.idCard && <p className="text-red-500">{errors.idCard[0]}</p>}
                     
-                    <label className="mt-2">{t("Document 2")}</label>
-                    <input name="document2" type="file" onChange={handleFileChange} className="p-2 rounded-lg border shadow bg-white" />
-                    {errors.document2 && <p className="text-red-500">{errors.document2[0]}</p>}
+                    <label className="mt-2">{t("certificate of ownership")}</label>
+                    <input name="ownership" type="file" onChange={handleFileChange} className="p-2 rounded-lg border shadow bg-white" />
+                    {errors.ownership && <p className="text-red-500">{errors.ownership[0]}</p>}
                     <button className="mt-4 bg-blue-500 text-white p-2 rounded-lg border shadow hover:bg-blue-600 hover:shadow-md duration-100">
                         {t('Register')}
                     </button>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('path');
             $table->foreignId('type_id')->constrained('document_types')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->boolean('status')->default(0);
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BeneficiaryAdminController;
 use App\Http\Controllers\BeneficiaryController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\MessageSupermarketController;
 use App\Http\Controllers\PartnerAdminController;
@@ -85,6 +86,7 @@ Route::middleware(AdminMiddleware::class)->resource('users', UserController::cla
 Route::middleware(AdminMiddleware::class)->resource('supermarketAdmin', SupermarketAdminController::class);
 Route::middleware(AdminMiddleware::class)->patch('supermarketAdmin/{supermarket}/ban', [SupermarketAdminController::class, 'ban'])->name('supermarkets.ban');
 Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollectionController::class);
+Route::middleware(AdminMiddleware::class)->resource('documents', DocumentController::class);
 
 // Message Routes
 //Route::middleware(AdminMiddleware::class)->resource('messageSupermarket', MessageSupermarketController::class);
@@ -114,3 +116,5 @@ Route::middleware(UserMiddleware::class)->get('/supermarket/{supermarket}/dispon
 Route::middleware(UserMiddleware::class)->get('/partner/{partner}/supermarkets', [PartnerController::class, 'mySupermarkets']);
 
 Route::middleware(UserMiddleware::class)->resource('supermarket/disponibility', SupermarketDisponibilityController::class);
+
+

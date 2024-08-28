@@ -13,8 +13,9 @@ import Flag from 'react-world-flags'
 
 
 export default function GuestLayout() {
-    const { user } = useAuth({ middleware: 'auth' })
-    console.log('user :',user);
+    const { user, errorrr } = useAuth({ middleware: 'auth' })
+    console.log('user :',user, errorrr);
+
 
     
 
@@ -32,6 +33,7 @@ export default function GuestLayout() {
 
     // Fermer le dropdown si un clic est détecté à l'extérieur
     useEffect(() => {
+
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setIsLangDropdownOpen(false);
@@ -104,6 +106,7 @@ export default function GuestLayout() {
         </header>
         <main className="mt-24 ">
             <Outlet />
+            coucou{errorrr}
         </main>
         
         </>

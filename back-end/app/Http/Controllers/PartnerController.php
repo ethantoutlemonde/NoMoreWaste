@@ -29,8 +29,8 @@ class PartnerController extends Controller
             'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'document1' => 'required|file|mimes:pdf,doc,docx,jpeg,png|max:2048',
-            'document2' => 'required|file|mimes:pdf,doc,docx,jpeg,png|max:2048',
+            'idCard' => 'required|file|mimes:pdf,doc,docx,jpeg,png|max:2048',
+            'ownership' => 'required|file|mimes:pdf,doc,docx,jpeg,png|max:2048',
         ]
         );
 
@@ -49,21 +49,21 @@ class PartnerController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if ($request->hasFile('document1')) {
-            $document1Path = $request->file('document1')->store('documents');
+        if ($request->hasFile('idCard')) {
+            $idCardPath = $request->file('idCard')->store('documents');
         }
         
-        if ($request->hasFile('document2')) {
-            $document2Path = $request->file('document2')->store('documents');
+        if ($request->hasFile('ownership')) {
+            $ownershipPath = $request->file('ownership')->store('documents');
         }
 
         $user->documents()->create([
-            'path' => $document1Path,
+            'path' => $idCardPath,
             'type_id' => 1,
         ]);
 
         $user->documents()->create([
-            'path' => $document2Path,
+            'path' => $ownershipPath,
             'type_id' => 2,
         ]);
         return response()->json(['success' => 'Partner succesfully created' ], 200);

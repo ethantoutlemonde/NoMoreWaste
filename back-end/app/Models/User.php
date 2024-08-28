@@ -51,6 +51,33 @@ class User extends Authenticatable
         ];
     }
 
+    public function checkAndApprovePartner()
+    {
+        // Vérifier si l'utilisateur est de type 4
+        if ($this->type !== 4) {
+            return;
+        }
+
+        // Récupérer les documents de type 1 et 2
+        $documentType1 = $this->documents()->where('type_id', 1)->first();
+        $documentType2 = $this->documents()->where('type_id', 2)->first();
+
+        // return $documentType1;
+
+        // Vérifier si les documents de type 1 et 2 sont approuvés
+        if ($documentType1 && $documentType1->status === 'approved' && 
+            $documentType2 && $documentType2->status === 'approved') {
+            
+            // Approuver l'utilisateur
+            $this->status = 'approved';
+            $this->save();
+        } else {
+            // Rejeter l'utilisateur
+            $this->status = 'rejected';
+            $this->save();
+        }
+    }
+
     protected static function boot()
     {
         parent::boot();

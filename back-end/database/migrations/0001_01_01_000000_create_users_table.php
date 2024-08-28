@@ -22,6 +22,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->integer('type')->nullable();
             $table->string('phone')->nullable();
+            $table->string('status')->default('pending');
             $table->boolean('banned')->nullable()->default(false);
             $table->timestamps();
         });

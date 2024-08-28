@@ -17,6 +17,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\RecipesController;
 use App\Models\FoodAid;
 use App\Models\ProductType;
 use App\Models\Warehouse;
@@ -78,3 +79,8 @@ Route::middleware(['auth:sanctum'])->resource('foodCollection', FoodCollectionCo
 Route::middleware(['auth:sanctum'])->resource('warehouse', WarehouseController::class);
 Route::middleware(['auth:sanctum'])->resource('productType', ProductTypeController::class);
 Route::middleware(['auth:sanctum'])->resource('product', ProductController::class);
+
+//smartFridge Routes
+
+Route::middleware(['auth:sanctum'])->resource('recipes', RecipesController::class);
+Route::middleware(['auth:sanctum'])->post('recipes/suggestMenu', [RecipesController::class, 'suggestMenu']);

@@ -35,6 +35,9 @@ import AddProductType from './Views/stock/AddProductType';
 import ShowProductType from './Views/stock/ShowProductType';
 import ShowStock from './Views/stock/ShowStock';
 import AddProduct from './Views/stock/AddProduct';
+import SmartFridge from './components/SmartFridgeLayout';
+import ShowSmartFridge from './Views/smart_fridge/ShowSmartFridge';
+import AddSmartFridge from './Views/smart_fridge/AddSmartFridge';
 
 const router = createBrowserRouter([
     {
@@ -224,6 +227,26 @@ const router = createBrowserRouter([
                     {
                         path: '/stock/ProductType/add',
                         element: <AddProductType/>
+                    }
+                ]
+            },
+
+            //smartFridge
+            {
+                path: '/SmartFridge',
+                element: <SmartFridge />,
+                children: [
+                    {
+                        path: '/SmartFridge',
+                        element: <Navigate to='/SmartFridge/show'/>
+                    },
+                    {
+                        path: '/SmartFridge/show',
+                        element: <ShowSmartFridge/>
+                    },
+                    {
+                        path: '/SmartFridge/add',
+                        element: <AddSmartFridge/>
                     }
                 ]
             },

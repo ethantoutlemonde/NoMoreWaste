@@ -124,6 +124,12 @@ export default function DefaultLayout() {
                         </Link>
                     </div>
 
+                    <Link to='/SmartFridge/show'>
+                        <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                        Smart Fridge
+                        </div>
+                    </Link>
+
                     {/* <Link to='/logout'>
                         <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
                         Logout

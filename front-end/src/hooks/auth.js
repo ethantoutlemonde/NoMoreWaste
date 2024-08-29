@@ -4,15 +4,15 @@ import axiosClient from "../axios-client";
 import { useState } from 'react';
 
 export const useAuth = ({middleware, redirectIfAuthenticated} = {}) => {
-    const [errorrr, setErrorrr] = useState("coucou");
+    // const [error, setError] = useState("coucou");
 
   
-    const {data: user, error: fetchError, mutate} = useSWR('/api/user', () =>
+    const {data: user, error , mutate} = useSWR('/api/user', () =>
         axiosClient
         .get('/api/user')
         .then(res => res.data)
         .catch(error => {
-          setErrorrr(error.response.data);
+          // setError(error.response.data);
           console.log('error hook :',error.response.data);
           
           if (error.response.status !== 409) throw error
@@ -64,7 +64,7 @@ export const useAuth = ({middleware, redirectIfAuthenticated} = {}) => {
 
     return {
         user,
-        errorrr,
+        error,
         register,
         login,
         logout

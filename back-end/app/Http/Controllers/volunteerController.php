@@ -75,6 +75,7 @@ class VolunteerController extends Controller
 
     public function getVolunteerDocuments(User $user)
     {
+        // return $user;
         return $user->documents;
     }
 }

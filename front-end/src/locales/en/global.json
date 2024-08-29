@@ -32,7 +32,10 @@
     "Country": "Country",
     "Supermarket": "Supermarket",
     "SIRET Number": "SIRET Number",
-    "Details": "Details"
+    "Details": "Details",
+    "Outreach": "Outreach",
+    "Food Collection": "Food Collection",
+    "Driver": "Driver"
 
 
 }

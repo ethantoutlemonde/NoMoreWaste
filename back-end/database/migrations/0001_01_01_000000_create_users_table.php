@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('status')->default('pending');
             $table->boolean('banned')->nullable()->default(false);
+            $table->boolean('driver')->nullable()->default(false);
             $table->timestamps();
         });
 

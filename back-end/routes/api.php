@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BeneficiaryAdminController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentAdminController;
 use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\MessageSupermarketController;
 use App\Http\Controllers\PartnerAdminController;
@@ -92,7 +93,7 @@ Route::middleware(AdminMiddleware::class)->resource('users', UserController::cla
 Route::middleware(AdminMiddleware::class)->resource('supermarketAdmin', SupermarketAdminController::class);
 Route::middleware(AdminMiddleware::class)->patch('supermarketAdmin/{supermarket}/ban', [SupermarketAdminController::class, 'ban'])->name('supermarkets.ban');
 Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollectionController::class);
-Route::middleware(AdminMiddleware::class)->resource('documents', DocumentController::class);
+Route::middleware(AdminMiddleware::class)->resource('documentAdmin', DocumentAdminController::class);
 
 // Message Routes
 //Route::middleware(AdminMiddleware::class)->resource('messageSupermarket', MessageSupermarketController::class);
@@ -111,8 +112,10 @@ Route::middleware('guest')->post('/beneficiary', [BeneficiaryController::class, 
 Route::middleware(UserMiddleware::class)->resource('partner', PartnerController::class);
 Route::middleware('guest')->post('/partner', [PartnerController::class, 'store']);
 
+Route::middleware(UserMiddleware::class)->resource('document', DocumentController::class);
 
-Route::middleware(UserMiddleware::class)->get('volunteer/{volunteer}/documents', [VolunteerController::class, 'getVolunteerDocuments']);
+
+Route::middleware(UserMiddleware::class)->get('volunteer/{user}/documents', [VolunteerController::class, 'getVolunteerDocuments']);
 
 Route::middleware(UserMiddleware::class)->resource('supermarket', SupermarketController::class);
 // Route::middleware('guest')->post('/supermarket', [SupermarketController::class, 'store']);

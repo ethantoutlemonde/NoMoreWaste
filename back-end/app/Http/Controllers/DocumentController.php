@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DocumentController extends Controller
@@ -22,24 +22,15 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Document $document)
-    {
-        return Storage::download($document->path);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Document $document)
-    {
+        $request->merge(['type' => (int) $request->type]);
+        // return $request;
+        $user = Auth::user();
+        
         $validator = Validator::make($request->all(), [
-            'status' => ['required', 'string', 'in:pending,approved,rejected']
+            // 'user_id' => ['required', 'integer', 'exists:users,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'file' => ['required', 'file', 'mimes:pdf,doc,docx,jpg,jpeg,png', 'max:2048'],
+            'type' => ['required', 'exists:document_types,id', 'unique:documents,type_id,NULL,id,user_id,' . $user->id ]
         ]
         );
 
@@ -47,13 +38,42 @@ class DocumentController extends Controller
             return response()->json(['error' => $validator->errors()->messages()], 400);
         }
 
+        // $existingDocument = Document::where('user_id', $user->id)
+        //                         ->where('type_id', $request->type)
+        //                         ->first();
 
+        // return $existingDocument;
 
-        $document->update($request->all());
+        // if ($existingDocument) {
+        //     return response()->json(['error' => 'You already have a document of this type'], 400);
+        // }
 
-        $document->user->checkAndApprovePartner();
+        $path = $request->file('file')->store('documents');
 
-        return response()->json(['success' => 'Document updated succesfully'], 200);;
+        Document::create([
+            'user_id' => $user->id,
+            'path' => $path,
+            'type_id' => $request->type,
+            'status' => 'pending'
+        ]);
+
+        return response()->json(['success' => 'Document uploaded succesfully'], 200);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Document $document)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Document $document)
+    {
+        //
     }
 
     /**

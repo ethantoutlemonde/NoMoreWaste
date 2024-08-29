@@ -13,8 +13,21 @@ import Flag from 'react-world-flags'
 
 
 export default function GuestLayout() {
-    const { user, errorrr } = useAuth({ middleware: 'auth' })
-    console.log('user :',user, errorrr);
+    const { user, otherError } = useAuth({ middleware: 'auth' })
+    console.log('user :',user, otherError);
+
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        console.log('otherError has changed:', otherError);
+        if (otherError) {
+          // Exécutez la fonction ici dès que `otherError` change
+          
+          
+          // Vous pouvez appeler une autre fonction ici si nécessaire
+          setError(otherError);
+        }
+      }, [otherError]); 
 
 
     
@@ -106,7 +119,7 @@ export default function GuestLayout() {
         </header>
         <main className="mt-24 ">
             <Outlet />
-            coucou{errorrr}
+            {otherError && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 w-fit fixed top-24 right-1/2" role="alert">{otherError}</div>}
         </main>
         
         </>

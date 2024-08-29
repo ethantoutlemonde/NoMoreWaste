@@ -20,7 +20,7 @@ class UserMiddleware
         if (Auth::check() && (Auth::user()->type === 2 || Auth::user()->type === 3 || Auth::user()->type === 4) && Auth::user()->banned === 0) {
             if (Auth::user()->status !== 'approved') {
                 Auth::logout();
-                return response()->json(['error' => 'Your account is not approved'], 403);
+                return response()->json(['error' => 'Your account is not approved'], 405);
 
             }
             return $next($request);

@@ -5,15 +5,19 @@ import { useState } from 'react';
 
 export const useAuth = ({middleware, redirectIfAuthenticated} = {}) => {
     // const [error, setError] = useState("coucou");
-
+    const [otherError, setOtherError] = useState("");
   
     const {data: user, error , mutate} = useSWR('/api/user', () =>
         axiosClient
         .get('/api/user')
         .then(res => res.data)
         .catch(error => {
-          // setError(error.response.data);
-          console.log('error hook :',error.response.data);
+          if (error.response.status === 405) {
+            setOtherError(error.response.data.error);
+            console.log('error hook :',error.response.data);
+          }
+          
+          
           
           if (error.response.status !== 409) throw error
   
@@ -65,6 +69,7 @@ export const useAuth = ({middleware, redirectIfAuthenticated} = {}) => {
     return {
         user,
         error,
+        otherError,
         register,
         login,
         logout

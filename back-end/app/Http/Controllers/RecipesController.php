@@ -31,30 +31,28 @@ class RecipesController extends Controller
 
     public function getRecipesByWarehouse(Warehouse $warehouse)
     {
-        $productTypes = DB::table('products')
-            ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
-            ->select('product_types.product_type')
-            ->where('products.warehouse_id', $warehouse->id)
-            ->distinct()
-            ->get();
 
-        $recipes = Recipes::all()->pluck('ingredients');
+        $warehouseProducts = Product::where('warehouse_id', $warehouse->id)->pluck('product_type_id');
+        $productTypeArray = [];
 
-        // compare if recipe ingredients are in warehouse
-        //explode(): Argument #2 ($string) must be of type string, array given"
+        foreach ($warehouseProducts as $warehouseProduct) {
+            $productTypeArray[] = ProductType::where('id', $warehouseProduct)->pluck('product_type')->first();
+        }
 
-        foreach ($recipes as $recipe) {
-            // $recipeIngredients = explode(',', $recipe);
-            // $recipeIngredients = array_map('trim', $recipeIngredients);
-            // $recipeIngredients = array_map('strtolower', $recipeIngredients);
+        if (empty($productTypeArray)) {
+            return response()->json(['error' => 'Warehouse is empty'], 404);
+        }
 
+        // return all recipes where all ingredients are in warehouse
+        $recipes = Recipes::all()->filter(function ($recipe) use ($productTypeArray) {
+            $recipeIngredients = $recipe->ingredients;
             $recipe->available = true;
 
-            foreach ($recipe as $ingredient) {
+            foreach ($recipeIngredients as $ingredient) {
                 $ingredientExists = false;
 
-                foreach ($productTypes as $productType) {
-                    if (strtolower($productType->product_type) === $ingredient) {
+                foreach ($productTypeArray as $productType) {
+                    if (strtolower($productType) === $ingredient) {
                         $ingredientExists = true;
                         break;
                     }
@@ -65,9 +63,16 @@ class RecipesController extends Controller
                     break;
                 }
             }
-        }
 
-        return response()->json([$productTypes, $recipes]);
+            return $recipe->available;
+            })->values();  // Utilisation de values() pour réindexer
+
+            if ($recipes->isEmpty()) {
+                return response()->json(['error' => 'No recipes available'], 404);
+            }
+
+            return response()->json($recipes);
+                // return response()->json([$productTypeArray, $recipes]);
         
     }
 

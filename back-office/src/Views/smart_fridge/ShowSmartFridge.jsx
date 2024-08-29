@@ -19,7 +19,7 @@ const ShowSmartFridge = () => {
     async function fetchData() {
       try {
         const response = await axiosClient.get("/api/recipes");
-        console.log("Fetched recipes:", response.data); // Ajoutez ce log pour voir les données
+        console.log("Fetched recipes:", response.data);
         setRecipes(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         setError(error.message || t('An error occurred while fetching recipes.'));
@@ -28,7 +28,7 @@ const ShowSmartFridge = () => {
     }
 
     fetchData();
-  }, []);
+  }, [t]);
 
   const handleDelete = async (id) => {
     setError('');
@@ -50,17 +50,17 @@ const ShowSmartFridge = () => {
   };
 
   const handleEdit = (recipe) => {
-    if (editingRecipe && editingRecipe.id === recipe.id) {
-      setEditingRecipe(null);
-      setFormData({ name: '', ingredients: '', instructions: '' });
-    } else {
-      setEditingRecipe(recipe);
-      setFormData({ 
-        name: recipe.name, 
-        ingredients: recipe.ingredients.join(', '), // Join array for display/editing
-        instructions: recipe.instructions 
-      });
-    }
+    setEditingRecipe(recipe);
+    setFormData({
+      name: recipe.name,
+      ingredients: recipe.ingredients.join(', '),
+      instructions: recipe.instructions
+    });
+  };
+
+  const handleCloseModal = () => {
+    setEditingRecipe(null);
+    setFormData({ name: '', ingredients: '', instructions: '' });
   };
 
   const handleChange = (e) => {
@@ -71,19 +71,19 @@ const ShowSmartFridge = () => {
     e.preventDefault();
     setError('');
     setSuccessMessage('');
-  
+
     try {
       const response = await axiosClient.put(`/api/recipes/${editingRecipe.id}`, {
         name: formData.name,
-        ingredients: formData.ingredients.split(',').map(item => item.trim()), // Convertir la chaîne en tableau
+        ingredients: formData.ingredients.split(',').map(item => item.trim()),
         instructions: formData.instructions
       });
-  
+
       if (response.status === 200) {
-        setSuccessMessage(t(response.data.message));
+        setSuccessMessage(t("Successfully updated recipe."));
         setEditingRecipe(null);
         setRecipes(prevRecipes =>
-          prevRecipes.map(recipe => 
+          prevRecipes.map(recipe =>
             recipe.id === editingRecipe.id ? { ...response.data.recipe } : recipe
           )
         );
@@ -95,13 +95,10 @@ const ShowSmartFridge = () => {
       console.error('Error:', error);
     }
   };
-  
 
   const filteredRecipes = recipes.filter(recipe =>
     recipe.name.toLowerCase().includes(filter.toLowerCase())
   );
-
-  console.log("Filtered recipes:", filteredRecipes);
 
   return (
     <div>
@@ -112,7 +109,7 @@ const ShowSmartFridge = () => {
       )}
 
       {successMessage && (
-        <div className="bg-green-100 border  bg-teal-400 hover:bg-teal-300 px-4 py-3 rounded relative mb-4" role="alert">
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
           <strong className="font-bold">{successMessage}</strong>
         </div>
       )}
@@ -133,68 +130,74 @@ const ShowSmartFridge = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredRecipes.length === 0 ? (
-            <p>{t('No recipes found')}</p>
+          <p>{t('No recipes found')}</p>
         ) : (
-            filteredRecipes.map((recipe) => (
+          filteredRecipes.map((recipe) => (
             <div key={recipe.id} className="bg-white shadow-md rounded-lg p-4">
-                <h3 className="font-semibold text-lg mb-2">{recipe.name}</h3>
-                <h3 className="font-semibold text-lg mb-2">
+              <h3 className="font-semibold text-lg mb-2">{recipe.name}</h3>
+              <h3 className="font-semibold text-lg mb-2">
                 {recipe.ingredients.join(' / ')}
-                </h3>
-                <h3 className="font-semibold text-lg mb-2">{recipe.instructions}</h3>
-                <button
+              </h3>
+              <button
                 onClick={() => handleEdit(recipe)}
                 className="m-2 bg-teal-400 hover:bg-teal-300 text-white px-4 py-2 rounded mt-2"
-                >
+              >
                 {t('Edit')}
-                </button>
-                <button
+              </button>
+              <button
                 onClick={() => handleDelete(recipe.id)}
                 className="m-2 bg-red-500 text-white px-4 py-2 rounded mt-2"
-                >
+              >
                 {t('Delete')}
-                </button>
+              </button>
             </div>
-            ))
+          ))
         )}
       </div>
 
-
       {editingRecipe && (
-        <div>
-          <h2 className="font-semibold text-xl text-gray-800 leading-tight text-center mb-4">{t('Edit Recipe')}</h2>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="name">{t('Recipe Name')}</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
-            />
-            <label htmlFor="ingredients">{t('Ingredients')}</label>
-            <textarea
-              id="ingredients"
-              name="ingredients"
-              value={formData.ingredients}
-              onChange={handleChange}
-              className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
-              rows="4"
-            />
-            <label htmlFor="instructions">{t('Instructions')}</label>
-            <textarea
-              id="instructions"
-              name="instructions"
-              value={formData.instructions}
-              onChange={handleChange}
-              className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
-              rows="4"
-            />
-            <button type="submit" className="m-2  bg-green-400 hover:bg-green-300 text-white px-4 py-2 rounded mt-2">
-              {t('Validate')}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg relative max-w-lg w-full">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+              onClick={handleCloseModal}
+            >
+              &times;
             </button>
-          </form>
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight mb-4 text-center">{t('Edit Recipe')}</h2>
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="name">{t('Recipe Name')}</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
+              />
+              <label htmlFor="ingredients">{t('Ingredients')}</label>
+              <textarea
+                id="ingredients"
+                name="ingredients"
+                value={formData.ingredients}
+                onChange={handleChange}
+                className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
+                rows="4"
+              />
+              <label htmlFor="instructions">{t('Instructions')}</label>
+              <textarea
+                id="instructions"
+                name="instructions"
+                value={formData.instructions}
+                onChange={handleChange}
+                className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
+                rows="4"
+              />
+              <button type="submit" className="m-2 bg-green-400 hover:bg-green-300 text-white px-4 py-2 rounded mt-2">
+                {t('Validate')}
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>

@@ -123,9 +123,15 @@ export default function DefaultLayout() {
                         </Link>
                     </div>
 
-                    <Link to='/SmartFridge/show'>
+                    <Link to='/SmartFridge'>
                         <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
                         Smart Fridge
+                        </div>
+                    </Link>
+
+                    <Link to='/MapPlan'>
+                        <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                        Map
                         </div>
                     </Link>
 

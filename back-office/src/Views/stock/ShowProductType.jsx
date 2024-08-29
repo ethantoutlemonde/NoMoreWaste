@@ -6,11 +6,11 @@ export default function ProductTypeShow() {
     const [productTypes, setProductTypes] = useState([]);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    const [editingProductType, setEditingProductType] = useState(null); 
-    const [formData, setFormData] = useState({}); 
-    const [filter, setFilter] = useState(''); // Filter state
+    const [editingProductType, setEditingProductType] = useState(null);
+    const [formData, setFormData] = useState({});
+    const [filter, setFilter] = useState('');
     const { t } = useTranslation('global');
-    
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -23,7 +23,7 @@ export default function ProductTypeShow() {
         }
 
         fetchData();
-    }, []);
+    }, [t]);
 
     const handleDelete = async (id) => {
         setError('');
@@ -45,15 +45,14 @@ export default function ProductTypeShow() {
     };
 
     const handleEdit = (productType) => {
-        if (editingProductType && editingProductType.id === productType.id) {
-            setEditingProductType(null);
-            setFormData({}); 
-        } else {
-            setEditingProductType(productType);
-            setFormData({ ...productType });
-        }
+        setEditingProductType(productType);
+        setFormData({ ...productType });
     };
-    
+
+    const handleCloseModal = () => {
+        setEditingProductType(null);
+        setFormData({});
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -66,10 +65,10 @@ export default function ProductTypeShow() {
 
         try {
             const response = await axiosClient.put(`/api/productType/${editingProductType.id}`, formData);
-    
+
             if (response.status === 200) {
                 setSuccessMessage(t(response.data.message));
-                setEditingProductType(null); 
+                setEditingProductType(null);
                 const updatedProductTypes = productTypes.map(productType => {
                     if (productType.id === editingProductType.id) {
                         return {
@@ -90,7 +89,6 @@ export default function ProductTypeShow() {
         }
     };
 
-    // Filter product types based on the filter input
     const filteredProductTypes = productTypes.filter(productType =>
         productType.product_type.toLowerCase().includes(filter.toLowerCase())
     );
@@ -113,10 +111,9 @@ export default function ProductTypeShow() {
                 {t('Product Type List')}
             </h2>
 
-            {/* Filter bar */}
             <div className="mb-4">
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     placeholder={t('Search product type')}
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
@@ -139,22 +136,30 @@ export default function ProductTypeShow() {
             </div>
 
             {editingProductType && (
-                <div>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight text-center mb-4">{t('Edit Product Type')}</h2>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="product_type">{t('Product Type')}</label>
-                        <input 
-                            type="text" 
-                            id="product_type" 
-                            name="product_type" 
-                            value={formData.product_type} 
-                            onChange={handleChange} 
-                            className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
-                        />
-                        <button type="submit" className="m-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded mt-2">
-                            {t('Validate')}
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg relative max-w-lg w-full">
+                        <button
+                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                            onClick={handleCloseModal}
+                        >
+                            &times;
                         </button>
-                    </form>
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight mb-4 text-center">{t('Edit Product Type')}</h2>
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor="product_type">{t('Product Type')}</label>
+                            <input
+                                type="text"
+                                id="product_type"
+                                name="product_type"
+                                value={formData.product_type || ''}
+                                onChange={handleChange}
+                                className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
+                            />
+                            <button type="submit" className="m-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded mt-2">
+                                {t('Validate')}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             )}
         </div>

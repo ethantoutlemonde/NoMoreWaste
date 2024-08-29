@@ -37,7 +37,7 @@ export default function WarehouseShow() {
             } catch (error) {
                 setError(t("An error occurred while deleting the warehouse"));
                 console.error('Error:', error);
-                if(error.response.status === 500){
+                if (error.response.status === 500) {
                     setError(t("This warehouse is used in a stock, you can't delete it"));
                 }
             }
@@ -45,17 +45,17 @@ export default function WarehouseShow() {
     };
 
     const handleEdit = (warehouse) => {
-        if (editingWarehouse && editingWarehouse.id === warehouse.id) {
-            setEditingWarehouse(null);
-            setFormData({});
-        } else {
-            setEditingWarehouse(warehouse);
-            setFormData({ ...warehouse });
-        }
+        setEditingWarehouse(warehouse);
+        setFormData({ ...warehouse });
+    };
+
+    const handleCloseModal = () => {
+        setEditingWarehouse(null);
+        setFormData({});
     };
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value }); // Met à jour les données du formulaire lorsqu'un champ est modifié
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (event) => {
@@ -84,7 +84,6 @@ export default function WarehouseShow() {
         }
     };
 
-    // Filter warehouses based on the filter input
     const filteredWarehouses = warehouses.filter(warehouse =>
         warehouse.warehouse_name.toLowerCase().includes(filter.toLowerCase()) ||
         warehouse.location.toLowerCase().includes(filter.toLowerCase())
@@ -133,33 +132,41 @@ export default function WarehouseShow() {
             </div>
 
             {editingWarehouse && (
-                <div className="mt-8">
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight text-center mb-4">{t('Edit Warehouse')}</h2>
-                    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                        <label htmlFor="warehouse_name" className="block text-gray-700">{t('Warehouse Name')}</label>
-                        <input 
-                            type="text" 
-                            id="warehouse_name" 
-                            name="warehouse_name" 
-                            value={formData.warehouse_name || ''} 
-                            onChange={handleChange}
-                            className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
-                        />
-
-                        <label htmlFor="location" className="block text-gray-700">{t('Location')}</label>
-                        <input 
-                            type="text" 
-                            id="location" 
-                            name="location" 
-                            value={formData.location || ''} 
-                            onChange={handleChange} 
-                            className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
-                        />
-
-                        <button type="submit" className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded mt-2">
-                            {t('Validate')}
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg relative max-w-lg w-full">
+                        <button
+                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                            onClick={handleCloseModal}
+                        >
+                            &times;
                         </button>
-                    </form>
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight mb-4 text-center">{t('Edit Warehouse')}</h2>
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor="warehouse_name" className="block text-gray-700">{t('Warehouse Name')}</label>
+                            <input
+                                type="text"
+                                id="warehouse_name"
+                                name="warehouse_name"
+                                value={formData.warehouse_name || ''}
+                                onChange={handleChange}
+                                className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
+                            />
+
+                            <label htmlFor="location" className="block text-gray-700">{t('Location')}</label>
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
+                                value={formData.location || ''}
+                                onChange={handleChange}
+                                className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
+                            />
+
+                            <button type="submit" className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded mt-2">
+                                {t('Validate')}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             )}
         </div>

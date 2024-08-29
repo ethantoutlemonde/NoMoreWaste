@@ -47,6 +47,8 @@ import SmartFridge from './components/SmartFridgeLayout';
 import ShowSmartFridge from './Views/smart_fridge/ShowSmartFridge';
 import AddSmartFridge from './Views/smart_fridge/AddSmartFridge';
 import SmartFridgeRecipes from './Views/smart_fridge/SmartFridge';
+import ShowRecipe from './Views/smart_fridge/ShowRecipe';
+import MapPlan from './components/MapPlan';
 
 const router = createBrowserRouter([
     {
@@ -291,8 +293,16 @@ const router = createBrowserRouter([
                     {
                         path: '/SmartFridge/recipes',
                         element: <SmartFridgeRecipes/>
+                    },
+                    {
+                        path: '/SmartFridge/recipes/:id',
+                        element: <ShowRecipe/>
                     }
                 ]
+            },
+            {
+                path: '/MapPlan',
+                element: <MapPlan/>,
             },
         ]
     },

@@ -9,4 +9,9 @@ class Warehouse extends Model
 {
     use HasFactory;
     protected $fillable = ['warehouse_name', 'location'];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

@@ -15,11 +15,18 @@ export default function TabbedPage() {
         <div className="md:flex">
             <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
                 <li>
-                    <NavLink to="show" className={({ isActive }) => 
+                    <NavLink to="recipes" className={({ isActive }) => 
                         isActive 
                         ? 'inline-flex items-center px-4 py-3 rounded-lg text-white bg-teal-600 hover:bg-teal-500 w-full' 
                         : 'inline-flex items-center px-4 py-3 rounded-lg text-white bg-teal-400 hover:bg-teal-300 w-full'
                     }>{t("Recipes")}</NavLink>
+                </li>
+                <li>
+                    <NavLink to="show" className={({ isActive }) => 
+                        isActive 
+                        ? 'inline-flex items-center px-4 py-3 rounded-lg text-white bg-teal-600 hover:bg-teal-500 w-full' 
+                        : 'inline-flex items-center px-4 py-3 rounded-lg text-white bg-teal-400 hover:bg-teal-300 w-full'
+                    }>{t("Manage Recipes")}</NavLink>
                 </li>
                 <li>
                     <NavLink to="add" className={({ isActive }) => 

@@ -38,6 +38,7 @@ import AddProduct from './Views/stock/AddProduct';
 import SmartFridge from './components/SmartFridgeLayout';
 import ShowSmartFridge from './Views/smart_fridge/ShowSmartFridge';
 import AddSmartFridge from './Views/smart_fridge/AddSmartFridge';
+import SmartFridgeRecipes from './Views/smart_fridge/SmartFridge';
 
 const router = createBrowserRouter([
     {
@@ -238,7 +239,7 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: '/SmartFridge',
-                        element: <Navigate to='/SmartFridge/show'/>
+                        element: <Navigate to='/SmartFridge/recipes'/>
                     },
                     {
                         path: '/SmartFridge/show',
@@ -247,6 +248,10 @@ const router = createBrowserRouter([
                     {
                         path: '/SmartFridge/add',
                         element: <AddSmartFridge/>
+                    },
+                    {
+                        path: '/SmartFridge/recipes',
+                        element: <SmartFridgeRecipes/>
                     }
                 ]
             },

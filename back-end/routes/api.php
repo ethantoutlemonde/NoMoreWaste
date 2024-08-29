@@ -83,4 +83,5 @@ Route::middleware(['auth:sanctum'])->resource('product', ProductController::clas
 //smartFridge Routes
 
 Route::middleware(['auth:sanctum'])->resource('recipes', RecipesController::class);
-Route::middleware(['auth:sanctum'])->post('recipes/suggestMenu', [RecipesController::class, 'suggestMenu']);
+route::middleware(['auth:sanctum'])->get('/recipes/warehouse/{warehouse}', [RecipesController::class, 'getRecipesByWarehouse']);
+// Route::middleware(['auth:sanctum'])->post('recipes/suggestMenu', [RecipesController::class, 'suggestMenu']);

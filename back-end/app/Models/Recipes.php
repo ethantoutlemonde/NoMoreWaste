@@ -7,15 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recipes extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'ingredients', 'instructions'];
 
-    public function getIngredientsAttribute($value)
-    {
-        return json_decode($value);
-    }
-
-    public function setIngredientsAttribute($value)
-    {
-        $this->attributes['ingredients'] = json_encode($value);
-    }
+    protected $casts = [
+        'ingredients' => 'array',
+    ];
 }

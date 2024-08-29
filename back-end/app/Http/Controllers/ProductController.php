@@ -13,6 +13,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         // get all product with join warehouse and product type

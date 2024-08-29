@@ -5,9 +5,12 @@ namespace Database\Seeders;
 use App\Models\Document;
 use App\Models\DocumentType;
 use App\Models\MessageSupermarket;
+use App\Models\Product;
+use App\Models\ProductType;
 use App\Models\Supermarket;
 use App\Models\SupermarketDisponibility;
 use App\Models\User;
+use App\Models\Warehouse;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -96,6 +99,22 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DocumentType::factory(4)->create();
+
+
+
+        ProductType::factory()->create([
+            'product_type' => 'Fruit'
+        ]);
+
+        Warehouse::factory()->create([
+            'warehouse_name' => 'Warehouse 1',
+            'location' => '23 rue longchamp, 75012, Paris',
+        ]);
+
+        Product::factory(4)->create([
+            'warehouse_id' => 1,
+            'product_type_id' => 1
+        ]);
 
 
     }

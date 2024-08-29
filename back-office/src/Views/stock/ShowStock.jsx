@@ -57,7 +57,7 @@ const ProductList = () => {
       setModifiedFields({}); 
       setSuccessMessage(t('Product modified successfully'));
     } catch (error) {
-      setError(error.response?.data?.message || t('An error occurred'));
+      setError(error.response?.data?.message || t('An error occurred, date needs to be in the future.'));
       console.error('Error modifying product:', error);
     }
   };
@@ -251,18 +251,43 @@ const ProductList = () => {
                   <span>{product.quantity}</span>
                 )}
               </td>
+              
               <td className="px-6 py-4">
-                {editableProductId === product.id ? (
-                  <input
-                    type="text"
-                    className="w-full"
-                    value={modifiedFields.expiration_date || ''}
-                    onChange={(e) => setModifiedFields({...modifiedFields, expiration_date: e.target.value})}
-                  />
-                ) : (
-                  <span>{product.expiration_date}</span>
-                )}
-              </td>
+  {editableProductId === product.id ? (
+    <input
+      type="text"
+      className="w-full"
+      value={modifiedFields.expiration_date || ''}
+      onChange={(e) => setModifiedFields({ ...modifiedFields, expiration_date: e.target.value })}
+    />
+  ) : (
+    <span
+      className={
+        (() => {
+          const expirationDate = new Date(product.expiration_date);
+          const today = new Date();
+
+          expirationDate.setHours(0, 0, 0, 0);
+          today.setHours(0, 0, 0, 0);
+
+          if (expirationDate < today) {
+            return 'text-red-500';
+          } else if (expirationDate.getTime() === today.getTime()) {
+            return 'text-orange-500';
+          } else {
+            return '';
+          }
+        })()
+      }
+    >
+      
+      {new Date(product.expiration_date).toLocaleDateString('fr-FR')}
+    </span>
+  )}
+</td>
+
+
+
               
               <td className="px-6 py-4">
                 {editableProductId === product.id ? (

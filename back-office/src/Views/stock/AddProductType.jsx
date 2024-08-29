@@ -10,7 +10,8 @@ export default function AddProductType() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setError('');
+        setSuccessMessage('');
         try {
             console.log('productType:', productType);
             const response = await axiosClient.post("/api/productType", {

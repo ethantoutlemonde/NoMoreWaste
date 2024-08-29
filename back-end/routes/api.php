@@ -9,12 +9,22 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\BeneficiaryAdminController;
 use App\Http\Controllers\BeneficiaryController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FoodCollectionController;
+use App\Http\Controllers\MessageSupermarketController;
+use App\Http\Controllers\PartnerAdminController;
+use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\SupermarketAdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupermarketController;
+use App\Http\Controllers\SupermarketDisponibilityController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VolunteerAdminController;
 use App\Http\Controllers\VolunteerController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\UserMiddleware;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\RecipesController;
@@ -56,7 +66,12 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 // --------------------------------------------------------------------------------------------------------------
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::middleware(AdminMiddleware::class)->get('/userAdmin', function (Request $request) {
+    return $request->user();
+});
+
+
+Route::middleware(UserMiddleware::class)->get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -64,13 +79,51 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 // Users Routes
 
-Route::middleware(['auth:sanctum'])->resource('admin', AdminController::class);
-Route::middleware(['auth:sanctum'])->resource('beneficiary', BeneficiaryController::class);
-Route::middleware(['auth:sanctum'])->resource('volunteer', VolunteerController::class);
-Route::middleware(['auth:sanctum'])->resource('users', UserController::class);
+Route::middleware(AdminMiddleware::class)->resource('admin', AdminController::class);
+Route::middleware(AdminMiddleware::class)->resource('beneficiaryAdmin', BeneficiaryAdminController::class);
+Route::middleware(AdminMiddleware::class)->resource('volunteerAdmin', VolunteerAdminController::class);
+Route::middleware(AdminMiddleware::class)->resource('partnerAdmin', PartnerAdminController::class);
+Route::middleware(AdminMiddleware::class)->resource('users', UserController::class);
+// Route::patch('users/{user}/ban', [UserController::class, 'ban'])->name('users.ban');
 
 
 // Food Aid Routes
+
+Route::middleware(AdminMiddleware::class)->resource('supermarketAdmin', SupermarketAdminController::class);
+Route::middleware(AdminMiddleware::class)->patch('supermarketAdmin/{supermarket}/ban', [SupermarketAdminController::class, 'ban'])->name('supermarkets.ban');
+Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollectionController::class);
+Route::middleware(AdminMiddleware::class)->resource('documents', DocumentController::class);
+
+// Message Routes
+//Route::middleware(AdminMiddleware::class)->resource('messageSupermarket', MessageSupermarketController::class);
+Route::get('supermarket/{supermarket}/messages', [MessageSupermarketController::class, 'allMessages'])->name('supermarket.messages');
+Route::post('supermarket/{supermarket}/messages', [MessageSupermarketController::class, 'store'])->name('supermarket.messages.store');
+
+
+
+
+// -------------------------------------- Front end routes ----------------------------------------
+
+Route::middleware(UserMiddleware::class)->resource('volunteer', VolunteerController::class);
+Route::middleware('guest')->post('/volunteer', [VolunteerController::class, 'store']);
+Route::middleware(UserMiddleware::class)->resource('beneficiary', BeneficiaryController::class);
+Route::middleware('guest')->post('/beneficiary', [BeneficiaryController::class, 'store']);
+Route::middleware(UserMiddleware::class)->resource('partner', PartnerController::class);
+Route::middleware('guest')->post('/partner', [PartnerController::class, 'store']);
+
+
+Route::middleware(UserMiddleware::class)->get('volunteer/{volunteer}/documents', [VolunteerController::class, 'getVolunteerDocuments']);
+
+Route::middleware(UserMiddleware::class)->resource('supermarket', SupermarketController::class);
+// Route::middleware('guest')->post('/supermarket', [SupermarketController::class, 'store']);
+Route::middleware(UserMiddleware::class)->get('/supermarket/{supermarket}/disponibilities', [SupermarketController::class, 'disponibilities']);
+
+
+Route::middleware(UserMiddleware::class)->get('/partner/{partner}/supermarkets', [PartnerController::class, 'mySupermarkets']);
+
+Route::middleware(UserMiddleware::class)->resource('supermarket/disponibility', SupermarketDisponibilityController::class);
+
+
 
 Route::middleware(['auth:sanctum'])->resource('supermarket', SupermarketController::class);
 Route::middleware(['auth:sanctum'])->resource('foodCollection', FoodCollectionController::class);

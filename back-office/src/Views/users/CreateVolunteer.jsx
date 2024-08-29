@@ -19,7 +19,7 @@ export default function CreateVolunteer() {
             password: password
         }
 
-        axiosClient.post('/api/volunteer', volunteer)
+        axiosClient.post('/api/volunteerAdmin', volunteer)
         .then((response) => {
             // Reset le formulaire et les erreurs si la soumission réussit
             setName('');

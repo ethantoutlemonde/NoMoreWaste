@@ -6,9 +6,9 @@ export const useAuth = ({middleware, redirectIfAuthenticated} = {}) => {
 
 
   
-    const {data: user, error, mutate} = useSWR('/api/user', () =>
+    const {data: user, error, mutate} = useSWR('/api/userAdmin', () =>
         axiosClient
-        .get('/api/user')
+        .get('/api/userAdmin')
         .then(res => res.data)
         .catch(error => {
           if (error.response.status !== 409) throw error

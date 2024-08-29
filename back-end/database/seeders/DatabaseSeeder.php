@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Document;
+use App\Models\DocumentType;
+use App\Models\MessageSupermarket;
 use App\Models\Supermarket;
 use App\Models\SupermarketDisponibility;
 use App\Models\User;
@@ -18,21 +21,46 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
+            // 'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@example.com',
-            'type' => 1
+            'type' => 1,
+            'status' => 'approved'
         ]);
 
         User::factory()->create([
-            'name' => 'Test beneficiary',
+            // 'name' => 'Test beneficiary',
+            'first_name' => 'Test',
+            'last_name' => 'Beneficiary',
             'email' => 'beneficiary@example.com',
-            'type' => 2
+            'type' => 2,
+            'status' => 'approved'
         ]);
 
         User::factory()->create([
-            'name' => 'Test volunteer',
+            'first_name' => 'Test',
+            'last_name' => 'Volunteer',
             'email' => 'volunteer@example.com',
-            'type' => 3
+            'type' => 3,
+            'status' => 'approved'
+        ]);
+
+        User::factory()->create([
+            'first_name' => 'Test',
+            'last_name' => 'Partner',
+            'email' => 'partner@example.com',
+            'type' => 4,
+            'status' => 'approved'
+        ]);
+
+        User::factory()->create([
+            'first_name' => 'Banned',
+            'last_name' => 'User',
+            'email' => 'banned@example.com',
+            'type' => 1,
+            'banned' => true,
+            'status' => 'approved'
         ]);
 
         Supermarket::factory()->create([
@@ -53,6 +81,22 @@ class DatabaseSeeder extends Seeder
         ]);
 
         SupermarketDisponibility::factory(2)->create();
+
+        MessageSupermarket::factory(10)->create();
+
+        MessageSupermarket::factory(10)->create([
+            'admin_id' => null
+        ]);
+
+        DocumentType::factory()->create([
+            'name' => 'ID Card'
+        ]);
+        DocumentType::factory()->create([
+            'name' => 'Ownership'
+        ]);
+
+        DocumentType::factory(4)->create();
+
 
     }
 }

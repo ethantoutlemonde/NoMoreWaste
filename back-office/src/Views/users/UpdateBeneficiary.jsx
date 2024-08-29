@@ -42,7 +42,7 @@ export default function UpdateBeneficiary() {
         console.log('submit')
         console.log(data)
 
-        axiosClient.patch(`/api/beneficiary/${id}`, data)
+        axiosClient.patch(`/api/beneficiaryAdmin/${id}`, data)
         .then((response) => {
             console.log(response)
             setData((prevData) => ({

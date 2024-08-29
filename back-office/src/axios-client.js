@@ -25,6 +25,13 @@ axiosClient.interceptors.response.use((response) => {
         localStorage.removeItem('ACCESS_TOKEN');
         // window.location.href = '/login';
     }
+    if (error.response.status === 403) {
+        if (window.location.pathname !== '/login') {
+            window.location.href = '/login';
+        }
+
+        console.log('forbidden');
+    }
     // return Promise.reject(error);
     throw error;
 })

@@ -2,5 +2,25 @@
     "Login to the BO": "Login to the BO",
     "Mail": "Mail",
     "Password": "Password",
-    "Login": "Login"
+    "Login": "Login",
+    "Logout": "Logout",
+    "Header": "Header",
+    "Language": "Language",
+    "Detail :": "Detail :",
+    "Beneficiary": "Beneficiary",
+    "Volunteer": "Volunteer",
+    "Partner": "Partner",
+    "Address": "Address",
+    "City": "City",
+    "Postal Code": "Postal Code",
+    "Country": "Country",
+    "Supermarket": "Supermarket",
+    "SIRET Number": "SIRET Number",
+    "Name": "Name",
+    "Owner": "Owner",
+    "Phone": "Phone",
+    "Ban" : "Ban",
+    "Unban" : "Unban",
+    "Send" : "Send"
+
 }

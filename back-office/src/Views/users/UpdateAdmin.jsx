@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import axiosClient from "../../axios-client"
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function UpdateAdmin() {
     const [errors, setErrors] = useState({});
@@ -11,6 +12,7 @@ export default function UpdateAdmin() {
     })
     const [success, setSuccess] = useState({});
     const { id } = useParams();
+    const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate();
 
@@ -66,7 +68,7 @@ export default function UpdateAdmin() {
             <form onSubmit={submit} className="flex flex-col w-80 bg-slate-50 p-10 rounded-xl">
                 <h1 className="text-2xl">Update Admin</h1>
                 <label className="mt-2">Name</label>
-                <input name="name" type="text" value={data.name} onChange={handleChange} className="bg-slate-100 rounded p-1"/>
+                <input name="name" type="text" value={data.name} onChange={handleChange}  className="bg-slate-100 rounded p-1"/>
                 {errors.name && <p className="text-red-500">{errors.name[0]}</p>}
                 <label className="mt-2">Email</label>
                 <input name="email" type="email" value={data.email} onChange={handleChange} className="bg-slate-100 rounded p-1"/>

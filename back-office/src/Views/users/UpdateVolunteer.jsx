@@ -42,7 +42,7 @@ export default function UpdateVolunteer() {
         console.log('submit')
         console.log(data)
 
-        axiosClient.patch(`/api/volunteer/${id}`, data)
+        axiosClient.patch(`/api/volunteerAdmin/${id}`, data)
         .then((response) => {
             console.log(response)
             setData((prevData) => ({

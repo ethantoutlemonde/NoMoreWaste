@@ -32,6 +32,9 @@ class FoodCollectionController extends Controller
         }
 
         $supermarkets = SupermarketDisponibility::where('date', $request->date)
+        ->whereHas('supermarket', function ($query) {
+            $query->where('banned', false); // Supposons que 'banned' est un booléen
+        })
         ->pluck('supermarket_id')
         ->toArray(); // Récupérer seulement les IDs des supermarchés
 
@@ -61,7 +64,8 @@ class FoodCollectionController extends Controller
      */
     public function show(FoodCollection $foodCollection)
     {
-        //
+        // return the food collection with the supermarkets
+        return $foodCollection->with('supermarkets')->first();
     }
 
     /**
@@ -77,6 +81,7 @@ class FoodCollectionController extends Controller
      */
     public function destroy(FoodCollection $foodCollection)
     {
-        //
+        $foodCollection->delete();
+        return response()->json(['success' => 'Food Collection succesfully deleted'], 200);
     }
 }

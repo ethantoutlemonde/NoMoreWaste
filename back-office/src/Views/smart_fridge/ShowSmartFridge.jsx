@@ -101,7 +101,7 @@ const ShowSmartFridge = () => {
     recipe.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  console.log("Filtered recipes:", filteredRecipes); // Ajoutez ce log pour vérifier le filtrage
+  console.log("Filtered recipes:", filteredRecipes);
 
   return (
     <div>

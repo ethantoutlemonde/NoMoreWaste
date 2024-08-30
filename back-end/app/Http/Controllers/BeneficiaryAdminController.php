@@ -63,15 +63,16 @@ class BeneficiaryAdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->all();
         $user = User::find($id);
 
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
-        $validator = Validator::make($data, [
-            'name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
             'password' => 'nullable|string|min:8',
         ]
         );
@@ -80,14 +81,7 @@ class BeneficiaryAdminController extends Controller
             return response()->json(['error' => $validator->errors()->messages()], 400);
         }
         
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-
-        // Mettre à jour le mot de passe uniquement s'il est fourni
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
-        }
-        $user->save();
+        $user->update($request->all());
 
         return response()->json(['success' => 'Beneficiary succesfully updated'], 200);
     }

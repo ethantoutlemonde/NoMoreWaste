@@ -59,14 +59,19 @@ export default function DetailAdmin() {
             :
             
             <div className="flex flex-col w-80 bg-slate-50 p-10 rounded-xl">
+                <h1 className='text-xl font-bold'>Detail :</h1>
                 <div className='flex justify-between mb-2'>
                     <Link className='text-2xl hover:text-gray-700' to={'update'}><HiOutlinePencilSquare /></Link>
                     <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
                 </div>
                 
-                <h1 className='text-xl font-bold'>Detail :</h1>
-                <h2 className='text-lg font-semibold'>Name</h2>
-                <p className='mb-4'>{data?.name}</p>
+                
+                <h2 className='text-lg font-semibold'>First Name</h2>
+                <p className='mb-4'>{data?.first_name}</p>
+                <h2 className='text-lg font-semibold'>Last Name</h2>
+                <p className='mb-4'>{data?.last_name}</p>
+                <h2 className='text-lg font-semibold'>Phone</h2>
+                <p className='mb-4'>{data?.phone}</p>
                 <h2 className='text-lg font-semibold'>Email</h2>
                 <p className='mb-4'>{data?.email}</p>
                 <div className='flex'>

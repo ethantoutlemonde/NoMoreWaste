@@ -52,7 +52,7 @@ export default function DetailPartner() {
         console.log('document', doc)
         // navigate(`/food_aid/partner_document/${document.id}`)
 
-        axiosClient.get(`/api/documents/${doc.id}`, {
+        axiosClient.get(`/api/documentAdmin/${doc.id}`, {
             responseType: 'blob' // Important: Axios va traiter la réponse comme un blob
         })
         .then(response => {
@@ -72,7 +72,7 @@ export default function DetailPartner() {
 
     const handleClickDocument = (doc, status) => () => {
         console.log('document', doc)
-        axiosClient.patch(`/api/documents/${doc.id}`, {status: status})
+        axiosClient.patch(`/api/documentAdmin/${doc.id}`, {status: status})
         .then(response => {
             console.log(response)
             setData(prevData => ({

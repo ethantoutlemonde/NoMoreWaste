@@ -24,7 +24,9 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ],
@@ -38,7 +40,9 @@ class AdminController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
             'email' => $request->email,
             'type' => 1,
             'password' => Hash::make($request->password),

@@ -5,7 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const columns = [
-    { field: 'name', headerName: 'Name', width: 150 },
+    { field: 'first_name', headerName: 'First Name', width: 150 },
+    { field: 'last_name', headerName: 'Last Name', width: 150 },
+    
     { field: 'email', headerName: 'Email', width: 150 },
   ];
 

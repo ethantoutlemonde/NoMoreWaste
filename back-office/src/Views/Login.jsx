@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from '../hooks/auth'
 import { useTranslation } from "react-i18next";
+import logo from '../assets/img/nomorewastePng1.png'
 
 export default function Login() {
     const emailRef = useRef();
@@ -14,7 +15,7 @@ export default function Login() {
 
     const { login } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard'
+        redirectIfAuthenticated: '/users/admin'
     })
 
     const onSubmit = (ev) => {
@@ -35,7 +36,8 @@ export default function Login() {
     return (
         
             <form onSubmit={onSubmit} className="w-96 flex flex-col gap-6 bg-slate-800 p-12 text-white rounded-xl shadow-xl">
-                <h1 className="text-4xl">{t("Login to the BO")}</h1>
+                <img src={logo} alt="" className='h-14'/>
+                <h1 className="text-4xl text-center">{t("Login to the BO")}</h1>
                 <input ref={emailRef} className="bg-slate-700 p-2 rounded focus:bg-slate-600" type="email" placeholder={t("Email")} />
                 <input ref={passwordRef} className="bg-slate-700 p-2 rounded focus:bg-slate-600" type="password" placeholder={t("Password")} />
                 {errors.length > 0 && <div className="bg-red-600 bg-opacity-40 p-2 rounded">{errors.map((error, index) => <p key={index}>{error}</p>)}</div>}

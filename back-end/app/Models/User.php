@@ -105,4 +105,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Supermarket::class, 'user_id');
     }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class, 'creator_id');
+    }
+
+    public function participeActivity()
+    {
+        return $this->belongsToMany(ActivityParticipant::class, 'user_id');
+    }
 }

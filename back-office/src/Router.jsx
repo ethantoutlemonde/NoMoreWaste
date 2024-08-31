@@ -4,7 +4,6 @@ import NotFound from './Views/NotFound';
 import DefaultLayout from './components/DefaultLayout';
 import GuestLayout from './components/GuestLayout';
 // import Users from './Views/users/Users';
-import Dashboard from './Views/Dashboard';
 import Register from './Views/Register';
 // import UpdateUser from './Views/users/UpdateUser';
 // import CreateUser from './Views/users/CreateUser';
@@ -47,6 +46,14 @@ import SmartFridge from './components/SmartFridgeLayout';
 import ShowSmartFridge from './Views/smart_fridge/ShowSmartFridge';
 import AddSmartFridge from './Views/smart_fridge/AddSmartFridge';
 import SmartFridgeRecipes from './Views/smart_fridge/SmartFridge';
+import ShowRecipe from './Views/smart_fridge/ShowRecipe';
+import MapPlan from './components/MapPlan';
+import ShowActivityType from './Views/activity/ShowActivityType';
+import AddActivityType from './Views/activity/AddActivityType';
+import ShowActivity from './Views/activity/ShowActivity';
+import AddActivity from './Views/activity/AddActivity';
+import Activity from './components/ActivityLayout';
+import ActivityType from './components/ActivityTypeLayout';
 
 const router = createBrowserRouter([
     {
@@ -199,17 +206,6 @@ const router = createBrowserRouter([
             },
 
 
-            // DASHBOARD
-
-            {
-                path: '/dashboard',
-                element: <Dashboard />,
-            },
-            // {
-            //     path: '/stock',
-            //     element: <Stock />,
-            // },
-
 
             // Stock
             {
@@ -291,6 +287,50 @@ const router = createBrowserRouter([
                     {
                         path: '/SmartFridge/recipes',
                         element: <SmartFridgeRecipes/>
+                    },
+                    {
+                        path: '/SmartFridge/recipes/:id',
+                        element: <ShowRecipe/>
+                    }
+                ]
+            },
+            {
+                path: '/MapPlan',
+                element: <MapPlan/>,
+            },
+            {
+                path: '/Activity/ActivityType',
+                element: <ActivityType />,
+                children: [
+                    {
+                        path: '/Activity/ActivityType',
+                        element: <Navigate to='/Activity/ActivityType/show'/>
+                    },
+                    {
+                        path: '/Activity/ActivityType/show',
+                        element: <ShowActivityType/>
+                    },
+                    {
+                        path: '/Activity/ActivityType/add',
+                        element: <AddActivityType/>
+                    }
+                ]
+            },
+            {
+                path: '/Activity',
+                element: <Activity />,
+                children: [
+                    {
+                        path: '/Activity',
+                        element: <Navigate to='/Activity/show'/>
+                    },
+                    {
+                        path: '/Activity/show',
+                        element: <ShowActivity/>
+                    },
+                    {
+                        path: '/Activity/add',
+                        element: <AddActivity/>
                     }
                 ]
             },
@@ -314,8 +354,6 @@ const router = createBrowserRouter([
         path: '*',
         element: <NotFound />
     }
-    
-
 ])
 
 export default router;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosClient from '../../axios-client';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const SmartFridge = () => {
     const { t } = useTranslation();
@@ -11,6 +12,7 @@ const SmartFridge = () => {
     const [filter, setFilter] = useState(''); // Initialize filter state
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [selectedRecipe, setSelectedRecipe] = useState(null); // State for selected recipe
 
     // Fetch Warehouses
     useEffect(() => {
@@ -37,6 +39,7 @@ const SmartFridge = () => {
             .then((response) => {
                 setRecipes(response.data);
                 setFilteredRecipes(response.data); // Initially display all recipes
+                setSelectedRecipe(null); // Reset selected recipe
                 console.log('Fetched recipes:', response.data);
             })
             .catch((error) => {
@@ -52,6 +55,16 @@ const SmartFridge = () => {
         );
         setFilteredRecipes(filtered);
     }, [filter, recipes]);
+
+    // Handle recipe click
+    const handleRecipeClick = (recipe) => {
+        setSelectedRecipe(recipe);
+    };
+
+    // Handle closing the modal
+    const handleCloseModal = () => {
+        setSelectedRecipe(null);
+    };
 
     return (
         <div>
@@ -93,7 +106,7 @@ const SmartFridge = () => {
                     type="text"
                     placeholder={t('Search recipe')}
                     value={filter}
-                    onChange={(e) => setFilter(e.target.value)} // Update filter state on input change
+                    onChange={(e) => setFilter(e.target.value)} 
                     className="block w-full p-2 border border-gray-300 rounded"
                 />
             </div>
@@ -103,14 +116,38 @@ const SmartFridge = () => {
                     <p>{t('No recipes found')}</p>
                 ) : (
                     filteredRecipes.map((recipe) => (
-                        <div key={recipe.id} className="bg-white shadow-md rounded-lg p-4">
+                        <Link to={`/SmartFridge/recipes/${recipe.id}`}
+                            key={recipe.id}
+                            className="bg-white shadow-md rounded-lg p-4 cursor-pointer"
+                            onClick={() => handleRecipeClick(recipe)} 
+                        >
                             <h3 className="font-semibold text-lg mb-2">{recipe.name}</h3>
                             <h3 className="font-semibold text-lg mb-2">{recipe.ingredients.join(' / ')}</h3>
-                            <p>{recipe.instructions}</p>
-                        </div>
+                        </Link>
                     ))
                 )}
             </div>
+
+
+
+            {selectedRecipe && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg relative max-w-lg w-full">
+                        <button
+                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                            onClick={handleCloseModal}
+                        >
+                            &times;
+                        </button>
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight mb-4">
+                            {t('Recipe Details')}
+                        </h2>
+                        <h3 className="font-semibold text-lg mb-2">{selectedRecipe.name}</h3>
+                        <p className="mb-4">{t('Ingredients')}: {selectedRecipe.ingredients.join(', ')}</p>
+                        <p>{t('Instructions')}: {selectedRecipe.instructions}</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

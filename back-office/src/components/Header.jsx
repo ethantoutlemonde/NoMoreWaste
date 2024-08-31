@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { HiChevronDown, HiChevronRight } from 'react-icons/hi'
 import { useAuth } from '../hooks/auth'
 import { useState } from "react";
+import logo from '../assets/img/nomorewastePng.png'
 
 export default function Header() {
     
@@ -59,7 +60,7 @@ export default function Header() {
         <>
             <header className="fixed left-0 right-0 top-0 h-20 ml-64 bg-gray-100 flex justify-between items-center p-4">
                 <div>
-                    <h1 className="text-3xl">No More Waste</h1>
+                    <img src={logo} alt="" className='h-14'/>
                 </div>
                 <div className="flex gap-4">
                     <div className="relative">

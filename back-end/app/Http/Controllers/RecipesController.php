@@ -18,15 +18,9 @@ class RecipesController extends Controller
         return response()->json($recipes);
     }
 
-    public function show($id)
+    public function show(Recipes $recipe)
     {
-        $recipe = Recipes::find($id);
-
-        if (!$recipe) {
-            return response()->json(['error' => 'Recipe not found'], 404);
-        }
-
-        return response()->json(['recipe' => $recipe], 200);
+        return response()->json($recipe);
     }
 
     public function getRecipesByWarehouse(Warehouse $warehouse)

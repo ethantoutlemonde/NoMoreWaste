@@ -16,6 +16,10 @@ import PartnerSupermarketDetail from './views/partner/PartnerSupermarketDetail';
 import PartnerSupermarketAdd from './views/partner/PartnerSupermarketAdd';
 import PartnerSupermarketUpdate from './views/partner/PartnerSupermarketUpdate';
 import DocumentsOutreach from './views/volunteer/documents/DocumentsOutreach';
+import FoodAidLayout from './components/FoodAidLayout';
+import FoodCollection from './views/volunteer/food_aid/FoodCollection';
+import Outreach from './views/volunteer/food_aid/Outreach';
+import FoodCollectionDetail from './views/volunteer/food_aid/FoodCollectionDetail';
 
 const router = createBrowserRouter([
     {
@@ -40,6 +44,28 @@ const router = createBrowserRouter([
                     {
                         path: '/volunteer/documents/outreach',
                         element: <DocumentsOutreach />
+                    }
+                ]
+            },
+            {
+                path: '/volunteer/foodAid',
+                element: <FoodAidLayout />,
+                children: [
+                    {
+                        path: '/volunteer/foodAid',
+                        element: <Navigate to={'/volunteer/foodAid/food_collection'} />
+                    },
+                    {
+                        path: '/volunteer/foodAid/food_collection',
+                        element: <FoodCollection />
+                    },
+                    {
+                        path: '/volunteer/foodAid/food_collection/:id',
+                        element: <FoodCollectionDetail />
+                    },
+                    {
+                        path: '/volunteer/foodAid/outreach',
+                        element: <Outreach />
                     }
                 ]
             },

@@ -132,6 +132,11 @@ Route::middleware(UserMiddleware::class)->resource('supermarket/disponibility', 
 
 Route::middleware(['auth:sanctum'])->resource('supermarket', SupermarketController::class);
 Route::middleware(['auth:sanctum'])->resource('foodCollection', FoodCollectionController::class);
+Route::middleware(['auth:sanctum'])->post('foodCollection/{foodCollection}/participate', [FoodCollectionController::class, 'participate']);
+Route::middleware(['auth:sanctum'])->delete('foodCollection/{foodCollection}/participants', [FoodCollectionController::class, 'deleteParticipation']);
+Route::middleware(['auth:sanctum'])->post('foodCollection/{foodCollection}/participants', [FoodCollectionController::class, 'addParticipant']);
+
+
 
 
 Route::middleware(['auth:sanctum'])->resource('warehouse', WarehouseController::class);

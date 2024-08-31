@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../../axios-client";
 import CircularProgress from '@mui/material/CircularProgress';
 import { HiOutlineTrash } from "react-icons/hi";
+import { DataGrid } from "@mui/x-data-grid";
+import FoodCollectionParticipants from "../../../components/FoodCollectionParticipants";
 
 export default function DetailFoodCollection() {
     const { id } = useParams();
@@ -14,6 +16,12 @@ export default function DetailFoodCollection() {
     // get the food collection with the given id using the API with axiosClient and useEffect hook
     // display the food collection data in the component
     useEffect(() => {
+        fetchData();
+            
+    }
+    , [id]);
+
+    const fetchData = () => {
         axiosClient.get(`/api/foodCollection/${id}`)
             .then(response => {
                 console.log(response.data);
@@ -23,9 +31,8 @@ export default function DetailFoodCollection() {
             .catch(error => {
                 console.error(error);
             });
-            
-    }
-    , [id]);
+    };
+
 
     // delete the food collection with the given id using the API with axiosClient
     const onDelete = () => {
@@ -35,15 +42,17 @@ export default function DetailFoodCollection() {
                 navigate('./..');
             });
     };
+
     return (
         <div className="mt-4">
             <Link className="bg-white rounded py-1 px-2 hover:bg-slate-50 border-gray-100 border " to={'./..'}>Return</Link>
-            <div className="mt-2">
+            <div className="mt-2 grid grid-cols-2 gap-4">
             {loading ? <CircularProgress />
             :
-            <div>
-                <div className="flex justify-between mb-2">
-                    <h1 className="text-xl  font-semibold">Detail of the FoodCollection of the {data?.date}</h1>
+            <>
+            <div className="">
+                <div className="flex mb-2">
+                    <h1 className="text-xl mr-6 font-semibold">Detail of the FoodCollection of the {data?.date}</h1>
                     <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
                 </div>
                 
@@ -62,8 +71,17 @@ export default function DetailFoodCollection() {
                         </Link>
                     ))}
                 </div>
-                <h2 className="text-lg mb-4 mt-4">Map :</h2>
+                
             </div>
+            <div className="h-5/6">
+                <FoodCollectionParticipants foodCollection={data} fetchData={fetchData}/>
+                
+            </div>
+            <div>
+                <h2 className="text-lg mb-4 mt-4">Map :</h2>
+                <a href="./../../../../back-end\mapPlan\htmlFiles\trajet.html" download="trajet.html">Download</a>
+            </div>
+            </>
             }
             </div>
             

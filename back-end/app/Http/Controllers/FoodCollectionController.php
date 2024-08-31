@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\FoodCollection;
 use App\Models\SupermarketDisponibility;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class FoodCollectionController extends Controller
@@ -65,7 +67,7 @@ class FoodCollectionController extends Controller
     public function show(FoodCollection $foodCollection)
     {
         // return the food collection with the supermarkets
-        return $foodCollection->with('supermarkets')->first();
+        return $foodCollection->with('supermarkets','participants')->first();
     }
 
     /**
@@ -84,4 +86,43 @@ class FoodCollectionController extends Controller
         $foodCollection->delete();
         return response()->json(['success' => 'Food Collection succesfully deleted'], 200);
     }
+
+    public function participate(FoodCollection $foodCollection)
+    {
+        if ($foodCollection->participants()->where('volunteer_id', Auth::user()->id)->exists()) {
+            return response()->json(['message' => 'You are already participating to the food collection.'], 400);
+        }
+        $foodCollection->participants()->attach(Auth::user()->id);
+        return response()->json(['message' => 'You are now participating to the food collection.']);
+    }
+
+    public function cancelParticipation(FoodCollection $foodCollection)
+    {
+        $foodCollection->participants()->detach(Auth::user()->id);
+        return response()->json(['message' => 'You are no longer participating to the food collection.']);
+    }
+
+    public function deleteParticipation(FoodCollection $foodCollection, Request $request)
+    {
+        $volunteer = User::find($request->volunteer_id);
+        if (!$volunteer) {
+            return response()->json(['error' => 'Volunteer not found'], 404);
+        }
+        $foodCollection->participants()->detach($volunteer);
+        return response()->json(['message' => 'The volunteer is no longer participating to the food collection.']);
+    }
+
+    public function addParticipant(FoodCollection $foodCollection, Request $request)
+    {
+        $volunteer = User::find($request->volunteer_id);
+        if (!$volunteer) {
+            return response()->json(['error' => 'Volunteer not found'], 404);
+        }
+        if ($foodCollection->participants()->where('volunteer_id', $volunteer->id)->exists()) {
+            return response()->json(['message' => 'You are already participating to the food collection.'], 400);
+        }
+        $foodCollection->participants()->attach($volunteer);
+        return response()->json(['message' => 'The volunteer is now participating to the food collection.']);
+    }
+        
 }

@@ -24,12 +24,18 @@ export default function VolunteerLayout() {
 
     return (
         <>
-            <div>
+            <div className="flex gap-4">
                 <NavLink to={'/volunteer/documents'} className={({ isActive }) => 
                         isActive 
-                        ? 'bg-white p-2 rounded-lg border hover:bg-gray-50 hover:shadow' 
+                        ? ' p-2 rounded-lg bg-gray-50 hover:shadow' 
                         : 'bg-white p-2 rounded-lg hover:bg-gray-50 hover:shadow'
                     } >{t("Documents")}
+                </NavLink>
+                <NavLink to={'/volunteer/foodAid'} className={({ isActive }) => 
+                        isActive 
+                        ? ' p-2 rounded-lg bg-gray-50 hover:shadow' 
+                        : 'bg-white p-2 rounded-lg hover:bg-gray-50 hover:shadow'
+                    } >{t("Food Aid")}
                 </NavLink>
             </div>
             

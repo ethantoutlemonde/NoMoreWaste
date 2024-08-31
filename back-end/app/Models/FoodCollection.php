@@ -16,4 +16,8 @@ class FoodCollection extends Model
     public function supermarkets() {
         return $this->belongsToMany(Supermarket::class);
     }
+
+    public function participants() {
+        return $this->belongsToMany(User::class, 'food_collection_participants', 'food_collection_id', 'volunteer_id');
+    }
 }

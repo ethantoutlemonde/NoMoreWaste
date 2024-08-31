@@ -16,6 +16,10 @@ import PartnerSupermarketDetail from './views/partner/PartnerSupermarketDetail';
 import PartnerSupermarketAdd from './views/partner/PartnerSupermarketAdd';
 import PartnerSupermarketUpdate from './views/partner/PartnerSupermarketUpdate';
 import DocumentsOutreach from './views/volunteer/documents/DocumentsOutreach';
+import Activity from './components/ActivityLayout';
+import ShowActivity from './views/volunteer/Activity/ShowActivity';
+import AddActivity from './views/volunteer/Activity/AddActivity';
+import ParticipateActivity from './views/volunteer/Activity/ParticipateActivity';
 
 const router = createBrowserRouter([
     {
@@ -66,7 +70,29 @@ const router = createBrowserRouter([
             {
                 path: '/partner/supermarkets/add',
                 element: <PartnerSupermarketAdd />
-            }
+            },
+            {
+                path: '/volunteer/Activity',
+                element: <Activity />,
+                children: [
+                    {
+                        path: '/volunteer/Activity',
+                        element: <Navigate to='/volunteer/Activity/show'/>
+                    },
+                    {
+                        path: '/volunteer/Activity/show',
+                        element: <ShowActivity/>
+                    },
+                    {
+                        path: '/volunteer/Activity/add',
+                        element: <AddActivity/>
+                    },
+                    {
+                        path: '/volunteer/Activity/participate',
+                        element: <ParticipateActivity/>
+                    }
+                ]
+            },
         ]
         
     },

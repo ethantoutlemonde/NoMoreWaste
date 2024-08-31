@@ -3,31 +3,37 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../../axios-client";
 import CircularProgress from '@mui/material/CircularProgress';
 import { HiOutlineTrash } from "react-icons/hi";
+import { useTranslation } from 'react-i18next';
 
 export default function DetailFoodCollection() {
     const { id } = useParams();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
-
+    const [mapLoading, setMapLoading] = useState(false);
+    const [formattedAddresses, setFormattedAddresses] = useState([]);
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
+    const { t } = useTranslation(); // Hook de traduction
     const navigate = useNavigate();
 
-    // get the food collection with the given id using the API with axiosClient and useEffect hook
-    // display the food collection data in the component
     useEffect(() => {
         axiosClient.get(`/api/foodCollection/${id}`)
             .then(response => {
                 console.log(response.data);
                 setData(response.data);
                 setLoading(false);
+
+                const addresses = response.data?.supermarkets.map(supermarket => {
+                    const { address, city, postal_code, country } = supermarket;
+                    return `${address}, ${postal_code}, ${city}, ${country}`;
+                });
+                setFormattedAddresses(addresses);
             })
             .catch(error => {
                 console.error(error);
             });
-            
-    }
-    , [id]);
+    }, [id]);
 
-    // delete the food collection with the given id using the API with axiosClient
     const onDelete = () => {
         console.log('delete', id);
         axiosClient.delete(`/api/foodCollection/${id}`)
@@ -35,38 +41,123 @@ export default function DetailFoodCollection() {
                 navigate('./..');
             });
     };
+
+    const handleSubmit = async () => {
+        setMapLoading(true);
+        setMessage('');
+        setMessageType('');
+
+        try {
+            const response = await fetch('http://localhost:5000/generate-map', {  // Assurez-vous que l'URL est correcte
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ points: formattedAddresses }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage(t('successfuly Created', { file: data.file }));
+                setMessageType('success');
+            } else {
+                setMessage(t('errorMessage', { error: data.error }));
+                setMessageType('error');
+            }
+        } catch (error) {
+            setMessage(t('errorMessage', { error: error.message }));
+            setMessageType('error');
+        } finally {
+            setMapLoading(false);
+        }
+    };
+
     return (
         <div className="mt-4">
-            <Link className="bg-white rounded py-1 px-2 hover:bg-slate-50 border-gray-100 border " to={'./..'}>Return</Link>
-            <div className="mt-2">
-            {loading ? <CircularProgress />
-            :
-            <div>
-                <div className="flex justify-between mb-2">
-                    <h1 className="text-xl  font-semibold">Detail of the FoodCollection of the {data?.date}</h1>
-                    <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
-                </div>
-                
-                <p>Date : {data?.date}</p>
-                <h2 className="text-lg mb-4 mt-4">List of collected supermarkets : </h2>
-                <div className="flex flex-row flex-wrap gap-4">
-                    {data?.supermarkets.map(supermarket => (
-                        <Link to={`/food_aid/partner_supermarket/${supermarket.id}`} key={supermarket.id} className="bg-white w-fit p-4 rounded-lg shadow hover:shadow-md duration-100">
-                            <p className="font-semibold">{supermarket.name}</p>
-                            <p>{supermarket.address}</p>
-                            <p>{supermarket.email}</p>
-                            <p>{supermarket.phone}</p>
-                            
+            <style>
+                {`
+                    @keyframes neon {
+                        0%, 100% {
+                            text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff, 0 0 160px #ff00ff;
+                            color: #ff00ff;
+                        }
+                        20% {
+                            text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 80px #00ff00, 0 0 160px #00ff00;
+                            color: #00ff00;
+                        }
+                        40% {
+                            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff, 0 0 160px #00ffff;
+                            color: #00ffff;
+                        }
+                        60% {
+                            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000, 0 0 160px #ff0000;
+                            color: #ff0000;
+                        }
+                        80% {
+                            text-shadow: 0 0 5px #ffff00, 0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 40px #ffff00, 0 0 80px #ffff00, 0 0 160px #ffff00;
+                            color: #ffff00;
+                        }
+                    }
 
-                            
-                        </Link>
-                    ))}
-                </div>
-                <h2 className="text-lg mb-4 mt-4">Map :</h2>
+                    .neon-text {
+                        font-size: 1.25rem;
+                        font-weight: bold;
+                        animation: neon 5s infinite;
+                    }
+
+                    .text-red-500 {
+                        color: #f56565; /* Couleur rouge pour les messages d'erreur */
+                    }
+                `}
+            </style>
+            <Link className="bg-white rounded py-1 px-2 hover:bg-slate-50 border-gray-100 border" to={'./..'}>{t('return')}</Link>
+            <div className="mt-2">
+                {loading ? <CircularProgress />
+                    :
+                    <div className="m-auto w-96">
+                        <div className="flex justify-between mb-2">
+                            <h1 className="text-xl font-semibold">{t('foodCollectionDetail', { date: data?.date })}</h1>
+                            <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
+                        </div>
+
+                        <p>{t('date', { date: data?.date })}</p>
+                        <h2 className="text-lg mb-4 mt-4">{t('listSupermarkets')}</h2>
+                        <div className="flex flex-row flex-wrap gap-4">
+                            {data?.supermarkets.map(supermarket => (
+                                <Link to={`/food_aid/partner_supermarket/${supermarket.id}`} key={supermarket.id} className="bg-white w-fit p-4 rounded-lg shadow hover:shadow-md duration-100">
+                                    <p className="font-semibold">{supermarket.name}</p>
+                                    <p>{supermarket.address}</p>
+                                    <p>{supermarket.email}</p>
+                                    <p>{supermarket.phone}</p>
+                                </Link>
+                            ))}
+                        </div>
+
+                        <h2 className="text-lg mb-4 mt-4">{t('formattedAddresses')}</h2>
+                        <ul className="list-disc ml-5">
+                            {formattedAddresses.map((address, index) => (
+                                <li key={index}>{address}</li>
+                            ))}
+                        </ul>
+
+                        <div className="mt-4">
+                            <button 
+                                onClick={handleSubmit} 
+                                className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                                {t('generateMap')}
+                            </button>
+                        </div>
+                        {mapLoading && <CircularProgress />}
+
+                        {message && (
+                            <p className={`mt-4 ${messageType === 'success' ? 'neon-text' : 'text-red-500'}`}>
+                                {message}
+                            </p>
+                        )}
+                    </div>
+                }
             </div>
-            }
-            </div>
-            
         </div>
     );
 }

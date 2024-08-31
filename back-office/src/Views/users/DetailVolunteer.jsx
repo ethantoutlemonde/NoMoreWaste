@@ -66,8 +66,12 @@ export default function DetailVolunteer() {
                     <Link className='text-2xl hover:text-gray-700' to={'update'}><HiOutlinePencilSquare /></Link>
                     <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
                 </div>
-                <h2 className='text-lg font-semibold'>Name</h2>
-                <p className='mb-4'>{data?.name}</p>
+                <h2 className='text-lg font-semibold'>First Name</h2>
+                <p className='mb-4'>{data?.first_name}</p>
+                <h2 className='text-lg font-semibold'>Last Name</h2>
+                <p className='mb-4'>{data?.last_name}</p>
+                <h2 className='text-lg font-semibold'>Phone</h2>
+                <p className='mb-4'>{data?.phone}</p>
                 <h2 className='text-lg font-semibold'>Email</h2>
                 <p className='mb-4'>{data?.email}</p>
                 <div className='flex'>

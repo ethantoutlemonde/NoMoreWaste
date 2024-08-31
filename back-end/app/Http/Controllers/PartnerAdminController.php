@@ -60,7 +60,23 @@ class PartnerAdminController extends Controller
      */
     public function update(Request $request, User $partnerAdmin)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $partnerAdmin->id,
+            'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
+            'password' => 'nullable|string|min:8',
+        ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->messages()], 400);
+        }
+        
+        $partnerAdmin->update($request->all());
+
+        return response()->json(['success' => 'Partner succesfully updated'], 200);
     }
 
     /**

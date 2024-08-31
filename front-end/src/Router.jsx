@@ -8,13 +8,14 @@ import RegisterChooser from './views/connexion/RegisterChooser';
 import RegisterVolunteer from './views/connexion/RegisterVolunteer';
 import RegisterBeneficiary from './views/connexion/RegisterBeneficiary';
 import VolunteerDocumentsLayout from './components/VolunteerDocumentsLayout';
-import DocumentsFoodCollection from './views/volunteer/DocumentsFoodCollection';
+import DocumentsFoodCollection from './views/volunteer/documents/DocumentsFoodCollection';
 import RegisterPartner from './views/connexion/RegisterPartner';
 import Login from './views/connexion/Login';
 import PartnerSupermarkets from './views/partner/PartnerSupermarkets';
 import PartnerSupermarketDetail from './views/partner/PartnerSupermarketDetail';
 import PartnerSupermarketAdd from './views/partner/PartnerSupermarketAdd';
 import PartnerSupermarketUpdate from './views/partner/PartnerSupermarketUpdate';
+import DocumentsOutreach from './views/volunteer/documents/DocumentsOutreach';
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
                     {
                         path: '/volunteer/documents/food_collection',
                         element: <DocumentsFoodCollection />
+                    },
+                    {
+                        path: '/volunteer/documents/outreach',
+                        element: <DocumentsOutreach />
                     }
                 ]
             },

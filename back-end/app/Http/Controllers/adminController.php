@@ -24,7 +24,9 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ],
@@ -38,7 +40,9 @@ class AdminController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
             'email' => $request->email,
             'type' => 1,
             'password' => Hash::make($request->password),
@@ -59,15 +63,17 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->all();
+        // $data = $request->all();
         $user = User::find($id);
 
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
-        $validator = Validator::make($data, [
-            'name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
             'password' => 'nullable|string|min:8',
         ]
         );
@@ -76,14 +82,7 @@ class AdminController extends Controller
             return response()->json(['error' => $validator->errors()->messages()], 400);
         }
         
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-
-        // Mettre à jour le mot de passe uniquement s'il est fourni
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
-        }
-        $user->save();
+        $user->update($request->all());
 
         return response()->json(['success' => 'Admin succesfully updated'], 200);
     }

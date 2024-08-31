@@ -96,6 +96,8 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
     const { t } = useTranslation('global');
     const [formData, setFormData] = useState({ ...activity });
     const [errors, setErrors] = useState({});
+    const [filter, setFilter] = useState(''); // Pour la recherche des bénévoles
+    const [volunteers, setVolunteers] = useState([]);
 
     useEffect(() => {
         setFormData({ ...activity });
@@ -138,6 +140,31 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
         const formattedDate = date.toISOString().split('T')[0];
         return `${formattedDate}T${hours}:${minutes}`;
     };
+
+    useEffect(() => {
+        async function fetchVolunteers() {
+            try {
+                const response = await axiosClient.get('/api/volunteerAdmin');
+                console.log('Volunteers Response:', response.data);
+                setVolunteers(response.data); // Assurez-vous que c'est un tableau d'objets
+            } catch (error) {
+                setError(t('An error occurred while fetching volunteers.'));
+                console.error('Error:', error);
+            }
+        }
+
+        fetchVolunteers();
+    }, [t]);
+
+    const handleVolunteerChange = (e) => {
+        // Mettre à jour creator_id avec l'identifiant du bénévole sélectionné
+        setFormData({ ...formData, creator_id: e.target.value });
+    };
+
+    const filteredVolunteers = (volunteers || []).filter(volunteer =>
+        `${volunteer.first_name} ${volunteer.last_name}`.toLowerCase().includes(filter.toLowerCase()) ||
+        (volunteer.email || '').toLowerCase().includes(filter.toLowerCase())
+    );
 
     return (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
@@ -288,6 +315,43 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                 ))}
                             </select>
                             {errors.activity_type_id && <p className="text-red-500 text-sm">{errors.activity_type_id[0]}</p>}
+                        </div>
+                    </div>
+                    
+                    <div className="flex mb-4 space-x-4">
+                        <div className="flex-1">
+                            <label htmlFor="volunteer_search" className="block text-gray-700">{t('Search Volunteer')}</label>
+                            <input
+                                type="text"
+                                id="volunteer_search"
+                                placeholder={t('Search by name or email')}
+                                value={filter}
+                                onChange={(e) => setFilter(e.target.value)}
+                                className="block w-full p-2 border border-gray-300 rounded"
+                            />
+                        </div>
+
+                        <div className="flex-1">
+                            <label htmlFor="creator_id" className="block text-gray-700">{t('Select Volunteer')}</label>
+                            <select
+                                id="creator_id"
+                                name="creator_id"
+                                value={formData.creator_id}
+                                onChange={handleVolunteerChange}
+                                className="block w-full p-2 border border-gray-300 rounded"
+                                required
+                            >
+                                <option value="">{t('Select a volunteer')}</option>
+                                {filteredVolunteers.length > 0 ? (
+                                    filteredVolunteers.map(volunteer => (
+                                        <option key={volunteer.id} value={volunteer.id}>
+                                            {`${volunteer.first_name} ${volunteer.last_name}`} ({volunteer.email})
+                                        </option>
+                                    ))
+                                ) : (
+                                    <option value="">{t('No volunteers found')}</option>
+                                )}
+                            </select>
                         </div>
                     </div>
 

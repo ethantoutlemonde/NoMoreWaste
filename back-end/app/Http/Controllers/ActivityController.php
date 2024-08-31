@@ -14,7 +14,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $activities = Activity::with('activityType')->get();
+        $activities = Activity::with('activityType', 'creator')->get();
         return response()->json(['activities' => $activities], 200);
     }
 
@@ -47,10 +47,9 @@ class ActivityController extends Controller
     /**
      * Display the specified activity.
      */
-    public function show($id)
+    public function show(Activity $activity)
     {
-        $activity = Activity::with('activityType')->findOrFail($id);
-        return response()->json(['activity' => $activity], 200);
+        return response()->json(['activity' => $activity -> load("creator")], 200);
     }
 
     /**

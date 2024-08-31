@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Activity;
+use App\Models\ActivityParticipant;
+use App\Models\ActivityType;
 use App\Models\Document;
 use App\Models\DocumentType;
 use App\Models\MessageSupermarket;
@@ -115,6 +118,23 @@ class DatabaseSeeder extends Seeder
             'warehouse_id' => 1,
             'product_type_id' => 1
         ]);
+
+        ActivityType::factory()->create([
+            'name' => 'bricolage'
+        ]);
+        ActivityType::factory()->create([
+            'name' => 'cuisine'
+        ]);
+        ActivityType::factory()->create([
+            'name' => 'partage vehicule'
+        ]);
+        ActivityType::factory()->create([
+            'name' => 'gardiennage'
+        ]);
+        Activity::factory(10)->create();
+
+        ActivityParticipant::factory(10)->create();
+
 
 
     }

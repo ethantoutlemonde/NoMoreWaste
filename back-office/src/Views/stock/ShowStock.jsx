@@ -146,12 +146,12 @@ const ProductList = () => {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
           <tr>
-            <th scope="col" className="p-4">
+            {/* <th scope="col" className="p-4">
               <div className="flex items-center">
                 <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500    focus:ring-2  "/>
                 <label htmlFor="checkbox-all-search" className="sr-only">{t('Select All')}</label>
               </div>
-            </th>
+            </th> */}
             <th scope="col" className="px-6 py-3">
               {t('Product name')}
             </th>
@@ -181,7 +181,7 @@ const ProductList = () => {
         <tbody>
           {filteredProducts.map(product => (
             <tr key={product.id} className="bg-white border-b   hover:bg-gray-50 ">
-              <td className="w-4 p-4">
+              {/* <td className="w-4 p-4">
                 <div className="flex items-center">
                   <input 
                     id={`checkbox-table-search-${product.id}`} 
@@ -192,7 +192,7 @@ const ProductList = () => {
                   />
                   <label htmlFor={`checkbox-table-search-${product.id}`} className="sr-only">{t('Select')}</label>
                 </div>
-              </td>
+              </td> */}
               <td className="px-6 py-4">
                 {editableProductId === product.id ? (
                   <input

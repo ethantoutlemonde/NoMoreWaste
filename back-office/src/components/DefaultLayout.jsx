@@ -90,12 +90,27 @@ export default function DefaultLayout() {
                             </div>
                         </Link>
                     </div>
-                    
-                    <Link to='/dashboard'>
-                        <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
-                        Dashboard
+
+                    <button onClick={() => dropdownHandler('Activity')} className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white text-left flex justify-between items-center">
+                        <div className="">
+                        Activity
                         </div>
-                    </Link>
+                        <HiChevronDown id="arrrow-down-Activity" className="items-center hidden"/>
+                        <HiChevronRight id="arrrow-right-Activity" className="items-center"/>
+                        
+                    </button>
+                    <div  id="Activity" className="hidden pl-4">
+                        <Link to='/Activity'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Activity
+                            </div>
+                        </Link>
+                        <Link to='/Activity/ActivityType'>
+                            <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
+                            Activity Type
+                            </div>
+                        </Link>
+                    </div>
 
                     <button onClick={() => dropdownHandler('Stock')} className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white text-left flex justify-between items-center">
                         <div className="">

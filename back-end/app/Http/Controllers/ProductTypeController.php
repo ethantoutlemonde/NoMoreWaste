@@ -37,10 +37,10 @@ class ProductTypeController extends Controller
         $request->validate([
             'product_type' => 'required|string|max:255|unique:product_types',
         ], [
-            'product_type.required' => 'Le champ du type de produit est requis.',
-            'product_type.string' => 'Le champ du type de produit doit être une chaîne de caractères.',
-            'product_type.max' => 'Le champ du type de produit ne peut pas dépasser :max caractères.',
-            'product_type.unique' => 'Ce type de produit existe déjà.',
+            'product_type.required' => 'the field of product type is required.',
+            'product_type.string' => 'the field of product type must be a string.',
+            'product_type.max' => 'the field of product type cannot exceed :max characters.',
+            'product_type.unique' => 'this type of product already exists.',
         ]);
 
         $productType = ProductType::create($request->all());
@@ -71,10 +71,10 @@ class ProductTypeController extends Controller
         $request->validate([
             'product_type' => 'required|string|max:255|unique:product_types,product_type,' . $id,
         ], [
-            'product_type.required' => 'Le champ du type de produit est requis.',
-            'product_type.string' => 'Le champ du type de produit doit être une chaîne de caractères.',
-            'product_type.max' => 'Le champ du type de produit ne peut pas dépasser :max caractères.',
-            'product_type.unique' => 'Ce type de produit existe déjà.',
+            'product_type.required' => 'the field of product type is required.',
+            'product_type.string' => 'the field of product type must be a string.',
+            'product_type.max' => 'the field of product type cannot exceed :max characters.',
+            'product_type.unique' => 'this type of product already exists.',
         ]);
 
         $productType = ProductType::findOrFail($id);

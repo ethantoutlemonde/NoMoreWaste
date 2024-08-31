@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -138,3 +140,8 @@ Route::middleware(['auth:sanctum'])->resource('product', ProductController::clas
 Route::middleware(['auth:sanctum'])->resource('recipes', RecipesController::class);
 route::middleware(['auth:sanctum'])->get('/recipes/warehouse/{warehouse}', [RecipesController::class, 'getRecipesByWarehouse']);
 // Route::middleware(['auth:sanctum'])->post('recipes/suggestMenu', [RecipesController::class, 'suggestMenu']);
+
+
+//Activity
+Route::middleware(['auth:sanctum'])->resource('activity', ActivityController::class);
+Route::middleware(['auth:sanctum'])->resource('activityType', ActivityTypeController::class);

@@ -14,7 +14,7 @@ export default function GuestLayout() {
     console.log('user :',user);
 
     if(user) {
-        return <Navigate to='/dashboard' />
+        return <Navigate to='/' />
     }
     return (
         <div className="flex justify-center items-center h-screen bg-slate-700">

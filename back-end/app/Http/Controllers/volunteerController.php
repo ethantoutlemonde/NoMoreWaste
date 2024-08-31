@@ -44,6 +44,7 @@ class VolunteerController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'type' => 3,
+            'status' => 'approved',
             'password' => Hash::make($request->password),
         ]);
         return response()->json(['success' => 'Volunteer succesfully created' ], 200);
@@ -76,6 +77,6 @@ class VolunteerController extends Controller
     public function getVolunteerDocuments(User $user)
     {
         // return $user;
-        return $user->documents;
+        return $user->documents->load('type');
     }
 }

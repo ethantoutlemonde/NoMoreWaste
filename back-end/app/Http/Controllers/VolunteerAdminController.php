@@ -28,9 +28,6 @@ class VolunteerAdminController extends Controller
             'phone' => ['required','regex:/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-        ],
-        [
-
         ]
         );
 
@@ -44,6 +41,7 @@ class VolunteerAdminController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'type' => 3,
+            'status' => 'approved',
             'password' => Hash::make($request->password),
         ]);
         return response()->json(['success' => 'Volunteer succesfully created' ], 200);
@@ -52,9 +50,9 @@ class VolunteerAdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        return $user->load('documents');
     }
 
     /**

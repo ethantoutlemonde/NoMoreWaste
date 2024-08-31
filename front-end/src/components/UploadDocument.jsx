@@ -2,7 +2,7 @@ import { useState } from "react";
 import axiosClient from "../axios-client";
 import { useTranslation } from "react-i18next";
 
-export default function UploadDocument({type}) {
+export default function UploadDocument({type, fetchDocuments}) {
     const [file, setFile] = useState(null);
     const [name, setName] = useState('');
     const [success, setSuccess] = useState({});
@@ -33,6 +33,7 @@ export default function UploadDocument({type}) {
         .then(response => {
             console.log('submitDocument, response:', response);
             setSuccess(response.data);
+            fetchDocuments();
         })
         .catch(error => {
             console.log('submitDocument, error:', error);

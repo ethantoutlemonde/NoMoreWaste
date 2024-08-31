@@ -10,6 +10,10 @@ export default function DocumentsFoodCollection() {
     const [SelectedType, setSelectedType] = useState(null);
     const {t} = useTranslation('global');
     useEffect(() => {
+        fetchDocuments();
+    }, []);
+
+    const fetchDocuments = () => {
         console.log('DocumentsFoodCollection, user:', user);
         axiosClient.get(`/api/volunteer/${user.id}/documents`)
         .then(response => {
@@ -17,7 +21,7 @@ export default function DocumentsFoodCollection() {
             setDocuments(response.data);
             documents.some(doc => doc.type_id === 1) ? console.log(true) : console.log(false); ;
         })
-    }, []);
+    }
 
     const handleUploadDocument = (type) => {
         console.log('handleDocument, type:', type);
@@ -124,7 +128,7 @@ export default function DocumentsFoodCollection() {
                 </div>
             </div>
             {SelectedType &&
-            <UploadDocument type={SelectedType} />
+            <UploadDocument type={SelectedType} fetchDocuments={fetchDocuments} />
             
             }
             

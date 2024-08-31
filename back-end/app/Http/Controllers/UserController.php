@@ -31,7 +31,7 @@ class UserController extends Controller
     {
         // return the user without the password
         
-        return $user;
+        return $user->load('documents.type');
         // return User::where('id', $id)->get();
     }
 

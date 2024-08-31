@@ -122,7 +122,7 @@ export default function DetailPartner() {
                     {loadingBan && <CircularProgress />}
                 </div>
             </div>
-            {data?.supermarkets  &&
+            {data.supermarkets.length !== 0  &&
             <div className="flex flex-col bg-slate-50 p-10 rounded-xl">
                 <h1 className='text-2xl font-semibold mb-6'>Supermarkets :</h1>
                 <div className='flex flex-row flex-wrap gap-4'>
@@ -138,7 +138,7 @@ export default function DetailPartner() {
                 
             </div>
             }
-            {data.documents &&
+            {data.documents.length !== 0 &&
             <div className="flex flex-col bg-slate-50 p-10 rounded-xl">
                 <h1 className='text-2xl font-semibold mb-6'>Documents :</h1>
                 <div className='flex flex-row flex-wrap gap-4'>

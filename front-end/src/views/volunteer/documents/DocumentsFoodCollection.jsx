@@ -14,17 +14,38 @@ export default function DocumentsFoodCollection() {
         axiosClient.get(`/api/volunteer/${user.id}/documents`)
         .then(response => {
             console.log('DocumentsFoodCollection, response:', response);
+            setDocuments(response.data);
+            documents.some(doc => doc.type_id === 1) ? console.log(true) : console.log(false); ;
         })
     }, []);
 
     const handleUploadDocument = (type) => {
-        console.log('handleClickDocument, type:', type);
+        console.log('handleDocument, type:', type);
         setSelectedType(type);
     }
 
-    const handleDownloadDocument = (type) => {
-        console.log('handleDownloadDocument, type:', type);
+    const handleDownloadDocument = (doc) => {
+        console.log('document', doc)
+        // navigate(`/food_aid/partner_document/${document.id}`)
+
+        axiosClient.get(`/api/document/${doc.id}`, {
+            responseType: 'blob' // Important: Axios va traiter la réponse comme un blob
+        })
+        .then(response => {
+            console.log(response)
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            var name = doc.path.split('.')
+            name = name[name.length -1]
+            console.log("Name :",name)
+            link.setAttribute('download', doc.type.name + '-' + user.first_name + user.last_name + '.' + name);
+            document.body.appendChild(link);
+            link.click();
+        })
+
     }
+
 
     
     return (
@@ -35,39 +56,39 @@ export default function DocumentsFoodCollection() {
                 <h2 className="text-lg font-medium">{t("Driver")}</h2>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type === 1) ? <div>🟢</div> : <div>🔴</div>}
+                        {documents.some(doc => doc.type_id === 1) ? <div>🟢</div> : <div>🔴</div>}
                     </div>
                     
                     <div className="col-span-4">{t("Id card")}</div>
                     <div className="col-span-1">
-                    {documents.some(doc => doc.type === 1) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type === 1))}>Download</button> 
+                    {documents.some(doc => doc.type_id === 1) 
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 1))}>Download</button> 
                         : <button onClick={() => handleUploadDocument(1)}>Upload</button>
                     }
                     </div>
                 </div>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type === 3) ? <div>🟢</div> : <div>🔴</div>}
+                        {documents.some(doc => doc.type_id === 2) ? <div>🟢</div> : <div>🔴</div>}
                     </div>
                     
                     <div className="col-span-4">{t("Driving license")}</div>
                     <div className="col-span-1">
-                    {documents.some(doc => doc.type === 1) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type === 1))}>Download</button> 
+                    {documents.some(doc => doc.type_id === 2) 
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 2))}>Download</button> 
                         : <button onClick={() => handleUploadDocument(2)}>Upload</button>
                     }
                     </div>
                 </div>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type === 3) ? <div>🟢</div> : <div>🔴</div>}
+                        {documents.some(doc => doc.type_id === 3) ? <div>🟢</div> : <div>🔴</div>}
                     </div>
                     
                     <div className="col-span-4">{t("Criminal record")}</div>
                     <div className="col-span-1">
-                    {documents.some(doc => doc.type === 1) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type === 1))}>Download</button> 
+                    {documents.some(doc => doc.type_id === 3) 
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 3))}>Download</button> 
                         : <button onClick={() => handleUploadDocument(3)}>Upload</button>
                     }
                     </div>
@@ -77,27 +98,27 @@ export default function DocumentsFoodCollection() {
                 <h2 className="text-lg font-medium">{t("Volunteer")}</h2>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type === 1) ? <div>🟢</div> : <div>🔴</div>}
+                        {documents.some(doc => doc.type_id === 1) ? <div>🟢</div> : <div>🔴</div>}
                     </div>
                     
                     <div className="col-span-4">{t("Id card")}</div>
                     <div className="col-span-1">
-                    {documents.some(doc => doc.type === 1) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type === 1))}>Download</button> 
-                        : <button onClick={() => handleUploadDocument(4)}>Upload</button>
+                    {documents.some(doc => doc.type_id === 1) 
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 1))}>Download</button> 
+                        : <button onClick={() => handleUploadDocument(1)}>Upload</button>
                     }
                     </div>
                 </div>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type === 3) ? <div>🟢</div> : <div>🔴</div>}
+                        {documents.some(doc => doc.type_id === 3) ? <div>🟢</div> : <div>🔴</div>}
                     </div>
                     
                     <div className="col-span-4">{t("Criminal record")}</div>
                     <div className="col-span-1">
-                    {documents.some(doc => doc.type === 1) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type === 1))}>Download</button> 
-                        : <button onClick={() => handleUploadDocument(5)}>Upload</button>
+                    {documents.some(doc => doc.type_id === 3) 
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 3))}>Download</button> 
+                        : <button onClick={() => handleUploadDocument(3)}>Upload</button>
                     }
                     </div>
                 </div>

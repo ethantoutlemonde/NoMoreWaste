@@ -2,8 +2,19 @@ import '../css/home.css';
 import homePageImg from '../assets/img/homepage.png';
 import DevenezBenevoleImg from '../assets/img/DevenezBenevoleImg.png';
 import nomoreWasteHomepageImg from '../assets/img/nomorewasteHomepage.png';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Beneficiary from '../../../back-office/src/Views/users/Beneficiary';
+import Footer from './Footer/Footer';
 
 export default function Home() {
+    const navigate = useNavigate();
+    const { t } = useTranslation();
+
+    const handleButtonClick = () => {
+        navigate('/connexion');
+    };
+
     return (
         <>
         <div className="HomePageBody">
@@ -22,9 +33,9 @@ export default function Home() {
             </div>
             <div className="DevenezBenevoleSection">
                 <div className="DevenezBenevoleSectionLeft">
-                    <h1>Devenez Bénévole</h1>
-                    <button className="DevenezBenevoleButton">
-                        Rejoindre !
+                    <h1>{t('became beneficiary')}</h1>
+                    <button className="DevenezBenevoleButton" onClick={handleButtonClick}>
+                        {t('join !')}
                     </button>
                 </div>
                 <div className="DevenezBenevoleSectionRight">
@@ -37,40 +48,41 @@ export default function Home() {
             <div className="BenevoleCentreInteret">
                 <div className="BenevoleCentreInteretText">
                     <div>
-                        <h1>Le bénévolat et plus si affinités</h1>
+                        <h1>{t('Volunteering and more if you like')}</h1>
                     </div>
                     <div>
-                        <h2>Contribuez à une cause qui vous touche a cœur</h2>
+                        <h2>{t('Contribute to a cause that matters to you')}</h2>
                     </div>
                 </div>
                 <div className="BenevoleCentreInteretButtonSection">
                     <div className="BenevoleCentreInteretButton">
-                        🍵 Maraude
+                        🍵 {t('food distribution')}
                     </div>
                     <div className="BenevoleCentreInteretButton">
-                        👵 Aide à la personne
+                        👵 {t('personal assistance')}
                     </div>
                     <div className="BenevoleCentreInteretButton">
-                        📚 Aide administrative
+                        📚 {t('adminstartive help')}
                     </div>
                     <div className="BenevoleCentreInteretButton">
-                        💼 Aide à l'emploi
+                        💼 {t('job help')}
                     </div>
                     <div className="BenevoleCentreInteretButton">
-                        🐰 Soins des annimaux
+                        🐰 {t('animals healing')}
                     </div>
                     <div className="BenevoleCentreInteretButton">
-                        🚛 Logisique
+                        🚛 {t('logistic')}
                     </div>
                     <div className="BenevoleCentreInteretButton">
-                        📅 Evénementiel
+                        📅 {t('evenmential')}
                     </div>
                     <div className="BenevoleCentreInteretButton">
-                        🙋‍♂️ Soutien Scolaire et formation
+                        🙋‍♂️ {t('academic support')}
                     </div>
                 </div>
             </div>
             <div className="HomePageAvisSection"></div>
+            <Footer></Footer>
             </>
     )
 }

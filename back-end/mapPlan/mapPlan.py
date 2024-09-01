@@ -66,7 +66,7 @@ def find_optimal_order(G, origin, destination, points):
 
 def save_map(m):
     dossier_actuel = os.path.dirname(os.path.abspath(__file__))
-    chemin_fichier_html = os.path.join(dossier_actuel, "htmlFiles", "trajet.html")
+    chemin_fichier_html = os.path.join(dossier_actuel, "../../back-office/public", "trajet.html")
     print(f"Saving map to: {chemin_fichier_html}")
     m.save(chemin_fichier_html)
     print(f"Carte sauvegardée sous {chemin_fichier_html}!")

@@ -4,6 +4,7 @@ import axiosClient from "../../../axios-client";
 import CircularProgress from '@mui/material/CircularProgress';
 import { HiOutlineTrash } from "react-icons/hi";
 import { useTranslation } from 'react-i18next';
+import GeneratePdfButton from "./GeneratedPdfButton";
 
 export default function DetailFoodCollection() {
     const { id } = useParams();
@@ -13,16 +14,15 @@ export default function DetailFoodCollection() {
     const [formattedAddresses, setFormattedAddresses] = useState([]);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
-    const { t } = useTranslation(); // Hook de traduction
+    const [showIframe, setShowIframe] = useState(false);
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     useEffect(() => {
         axiosClient.get(`/api/foodCollection/${id}`)
             .then(response => {
-                console.log(response.data);
                 setData(response.data);
                 setLoading(false);
-
                 const addresses = response.data?.supermarkets.map(supermarket => {
                     const { address, city, postal_code, country } = supermarket;
                     return `${address}, ${postal_code}, ${city}, ${country}`;
@@ -31,14 +31,17 @@ export default function DetailFoodCollection() {
             })
             .catch(error => {
                 console.error(error);
+                setLoading(false);
             });
     }, [id]);
 
     const onDelete = () => {
-        console.log('delete', id);
         axiosClient.delete(`/api/foodCollection/${id}`)
             .then(() => {
                 navigate('./..');
+            })
+            .catch(error => {
+                console.error(error);
             });
     };
 
@@ -46,9 +49,10 @@ export default function DetailFoodCollection() {
         setMapLoading(true);
         setMessage('');
         setMessageType('');
+        setShowIframe(false); // Hide iframe initially
 
         try {
-            const response = await fetch('http://localhost:5000/generate-map', {  // Assurez-vous que l'URL est correcte
+            const response = await fetch('http://localhost:5000/generate-map', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,8 +63,9 @@ export default function DetailFoodCollection() {
             const data = await response.json();
 
             if (response.ok) {
-                setMessage(t('successfuly Created', { file: data.file }));
+                setMessage(t('successfullyCreated', { file: data.file }));
                 setMessageType('success');
+                setShowIframe(true); // Show iframe on success
             } else {
                 setMessage(t('errorMessage', { error: data.error }));
                 setMessageType('error');
@@ -154,6 +159,22 @@ export default function DetailFoodCollection() {
                             <p className={`mt-4 ${messageType === 'success' ? 'neon-text' : 'text-red-500'}`}>
                                 {message}
                             </p>
+                        )}
+
+                        {showIframe && (
+                            <div className="mt-4">
+                                <div>
+                                    <a
+                                        href='/trajet.html'
+                                        download
+                                        className="text-blue-500 hover:underline"
+                                    >
+                                        Télécharger le fichier
+                                    </a>
+                                    <iframe src="/trajet.html" frameborder="0" className="w-96 h-96" ></iframe>
+                                </div>
+                                <GeneratePdfButton />
+                            </div>
                         )}
                     </div>
                 }

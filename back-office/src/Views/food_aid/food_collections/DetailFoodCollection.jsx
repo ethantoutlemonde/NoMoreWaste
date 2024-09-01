@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../../axios-client";
 import CircularProgress from '@mui/material/CircularProgress';
-import { HiOutlineTrash } from "react-icons/hi";
+import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import { DataGrid } from "@mui/x-data-grid";
 import FoodCollectionParticipants from "../../../components/FoodCollectionParticipants";
 
@@ -53,10 +53,15 @@ export default function DetailFoodCollection() {
             <div className="">
                 <div className="flex mb-2">
                     <h1 className="text-xl mr-6 font-semibold">Detail of the FoodCollection of the {data?.date}</h1>
-                    <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
+                    <div className="flex items-start gap-2">
+                        <Link to={'update'} className='text-2xl hover:text-gray-700'><HiOutlinePencilSquare /></Link>
+                        <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
+                    </div>
+                    
                 </div>
                 
                 <p>Date : {data?.date}</p>
+                <p>Start Time : {data?.start_time}</p>
                 <h2 className="text-lg mb-4 mt-4">List of collected supermarkets : </h2>
                 <div className="flex flex-row flex-wrap gap-4">
                     {data?.supermarkets.map(supermarket => (

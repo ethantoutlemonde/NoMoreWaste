@@ -10,7 +10,8 @@ class FoodCollection extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date'
+        'date',
+        'start_time'
     ];
 
     public function supermarkets() {

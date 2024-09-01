@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('food_collections', function (Blueprint $table) {
             $table->id();
             $table->date('date');
+            $table->time('start_time');
             $table->timestamps();
         });
     }

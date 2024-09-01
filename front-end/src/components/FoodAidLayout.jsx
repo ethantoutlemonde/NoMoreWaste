@@ -12,13 +12,13 @@ export default function FoodAidLayout() {
                         isActive 
                         ? 'bg-blue-500 text-white p-2 rounded-lg border hover:shadow' 
                         : 'bg-white p-2 rounded-lg hover:bg-gray-50 hover:shadow'
-                    }>{t("Food Collection")}
+                    }>{t("Food Collections")}
                 </NavLink>
                 <NavLink to="/volunteer/foodAid/outreach" className={({ isActive }) => 
                         isActive 
                         ? 'bg-blue-500 text-white p-2 rounded-lg border hover:shadow' 
                         : 'bg-white p-2 rounded-lg hover:bg-gray-50 hover:shadow'
-                    }>{t("Outreach")}
+                    }>{t("Outreachs")}
                 </NavLink>
             </div>
 

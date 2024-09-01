@@ -25,9 +25,17 @@ class FoodCollectionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'date' => 'required|date|after_or_equal:today|unique:food_collections'
+            'date' => 'required|date|after_or_equal:today|unique:food_collections',
+            'start_time' => ['required', 'date_format:H:i', 'after:08:00', 'before:20:00']
         ]
         );
+
+        // date is today but the time is less than the current time return error
+        if ($request->date == date('Y-m-d') && $request->start_time < date('H:i')) {
+            return response()->json(['error' => [
+                'start_time' => 'The start time must be greater than the current time'
+            ]], 400);
+        }
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->messages()], 400);
@@ -42,7 +50,8 @@ class FoodCollectionController extends Controller
 
         // Créer la nouvelle FoodCollection
         $foodCollection = FoodCollection::create([
-            'date' => $request->date
+            'date' => $request->date,
+            'start_time' => $request->start_time
         ]);
 
         // Associer les supermarchés disponibles à la FoodCollection via la table pivot
@@ -66,8 +75,12 @@ class FoodCollectionController extends Controller
      */
     public function show(FoodCollection $foodCollection)
     {
-        // return the food collection with the supermarkets
-        return $foodCollection->with('supermarkets','participants')->first();
+        // return the food collection with his supermarkets and participants
+        return $foodCollection->load('supermarkets', 'participants');
+
+
+
+        // return $foodCollection->with('supermarkets','participants')->first();
     }
 
     /**
@@ -75,7 +88,24 @@ class FoodCollectionController extends Controller
      */
     public function update(Request $request, FoodCollection $foodCollection)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'date' => 'required|date|after_or_equal:today|unique:food_collections' . ($foodCollection->date == $request->date ? ',' . $foodCollection->id : ''),
+            'start_time' => ['required', 'date_format:H:i', 'after:08:00', 'before:20:00']
+        ]
+        );
+
+        if ($request->date == date('Y-m-d') && $request->start_time < date('H:i')) {
+            return response()->json(['error' => [
+                'start_time' => 'The start time must be greater than the current time'
+            ]], 400);
+        }
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->messages()], 400);
+        }
+
+        $foodCollection->update($request->all());
+        return response()->json(['success' => 'Food Collection succesfully updated'], 200);
     }
 
     /**

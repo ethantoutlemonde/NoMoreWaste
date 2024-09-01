@@ -36,16 +36,18 @@ export default function GeneratePdfButton() {
     };
 
     return (
-        <div>
-            <button onClick={handleGeneratePdf} disabled={loading}>
-                {loading ? 'En cours...' : 'Générer le PDF'}
-            </button>
-            {message && <p>{message}</p>}
-            {pdfUrl && (
-                <a href={pdfUrl} download>
-                    Télécharger le PDF
-                </a>
-            )}
+        <div className='mt-5'>
+            {message && <p className='mt-4 mb-4'>{message}</p>}
+            <div className='flex row-auto mb-4'>
+                <button onClick={handleGeneratePdf} disabled={loading} className="mr-2 bg-fuchsia-500 text-white py-2 px-4 rounded hover:bg-fuchsia-600 focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-opacity-75 transition-colors duration-300 ease-in-out">
+                    {loading ? 'En cours...' : 'Générer le PDF'}
+                </button>
+                {pdfUrl && (
+                    <a href={pdfUrl} download target='_blank' className="bg-fuchsia-500 text-white py-2 px-4 rounded hover:bg-fuchsia-600 focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-opacity-75 transition-colors duration-300 ease-in-out">
+                        Télécharger le PDF
+                    </a>
+                )}
+            </div>
         </div>
     );
 }

@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { HiOutlineTrash } from "react-icons/hi";
 import { useTranslation } from 'react-i18next';
 import GeneratePdfButton from "./GeneratedPdfButton";
+import Map from "./Map";
 
 export default function DetailFoodCollection() {
     const { id } = useParams();
@@ -149,7 +150,7 @@ export default function DetailFoodCollection() {
                         <div className="mt-4">
                             <button 
                                 onClick={handleSubmit} 
-                                className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                                className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
                                 {t('generateMap')}
                             </button>
                         </div>
@@ -167,18 +168,19 @@ export default function DetailFoodCollection() {
                                     <a
                                         href='/trajet.html'
                                         download
-                                        className="text-blue-500 hover:underline"
+                                        className=" bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75 transition-colors duration-300 ease-in-out"
                                     >
                                         Télécharger le fichier
                                     </a>
+                                    <GeneratePdfButton />
                                     <iframe src="/trajet.html" frameborder="0" className="w-96 h-96" ></iframe>
                                 </div>
-                                <GeneratePdfButton />
                             </div>
                         )}
                     </div>
                 }
             </div>
+            <Map/>
         </div>
     );
 }

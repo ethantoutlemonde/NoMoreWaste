@@ -87,7 +87,7 @@ def main(points):
     
     optimal_order = find_optimal_order(G, origin, destination, points)  
 
-    m = folium.Map(location=get_coordinates(origin), zoom_start=6)
+    m = folium.Map(location=get_coordinates(origin), zoom_start=10)
 
     with ThreadPoolExecutor() as executor:
         futures = []

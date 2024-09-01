@@ -10,10 +10,15 @@ class FoodCollection extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date'
+        'date',
+        'start_time'
     ];
 
     public function supermarkets() {
         return $this->belongsToMany(Supermarket::class);
+    }
+
+    public function participants() {
+        return $this->belongsToMany(User::class, 'food_collection_participants', 'food_collection_id', 'volunteer_id');
     }
 }

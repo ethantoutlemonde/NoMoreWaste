@@ -54,6 +54,7 @@ import ShowActivity from './Views/activity/ShowActivity';
 import AddActivity from './Views/activity/AddActivity';
 import Activity from './components/ActivityLayout';
 import ActivityType from './components/ActivityTypeLayout';
+import UpdateFoodCollection from './Views/food_aid/food_collections/UpdateFoodCollection';
 
 const router = createBrowserRouter([
     {
@@ -173,6 +174,10 @@ const router = createBrowserRouter([
                     {
                         path: '/food_aid/food_collections/:id',
                         element: <DetailFoodCollection />
+                    },
+                    {
+                        path: '/food_aid/food_collections/:id/update',
+                        element: <UpdateFoodCollection />
                     },
                 ]
             },

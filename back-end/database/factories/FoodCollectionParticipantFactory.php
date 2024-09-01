@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FoodCollection>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FoodCollectionParticipant>
  */
-class FoodCollectionFactory extends Factory
+class FoodCollectionParticipantFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class FoodCollectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'date' => fake()->date(),
-            'start_time' => fake()->time(),
+            //
         ];
     }
 }

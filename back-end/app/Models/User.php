@@ -115,4 +115,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(ActivityParticipant::class, 'user_id');
     }
+
+    public function foodCollections()
+    {
+        return $this->belongsToMany(FoodCollection::class, 'food_collection_participants', 'volunteer_id', 'food_collection_id');
+    }
 }

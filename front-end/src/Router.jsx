@@ -20,6 +20,11 @@ import Activity from './components/ActivityLayout';
 import ShowActivity from './views/volunteer/Activity/ShowActivity';
 import AddActivity from './views/volunteer/Activity/AddActivity';
 import ParticipateActivity from './views/volunteer/Activity/ParticipateActivity';
+import FoodAidLayout from './components/FoodAidLayout';
+import FoodCollection from './views/volunteer/food_aid/FoodCollection';
+import Outreach from './views/volunteer/food_aid/Outreach';
+import FoodCollectionDetail from './views/volunteer/food_aid/FoodCollectionDetail';
+
 
 const router = createBrowserRouter([
     {
@@ -44,6 +49,28 @@ const router = createBrowserRouter([
                     {
                         path: '/volunteer/documents/outreach',
                         element: <DocumentsOutreach />
+                    }
+                ]
+            },
+            {
+                path: '/volunteer/foodAid',
+                element: <FoodAidLayout />,
+                children: [
+                    {
+                        path: '/volunteer/foodAid',
+                        element: <Navigate to={'/volunteer/foodAid/food_collection'} />
+                    },
+                    {
+                        path: '/volunteer/foodAid/food_collection',
+                        element: <FoodCollection />
+                    },
+                    {
+                        path: '/volunteer/foodAid/food_collection/:id',
+                        element: <FoodCollectionDetail />
+                    },
+                    {
+                        path: '/volunteer/foodAid/outreach',
+                        element: <Outreach />
                     }
                 ]
             },

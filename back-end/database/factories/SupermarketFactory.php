@@ -26,7 +26,7 @@ class SupermarketFactory extends Factory
             'siret' => fake()->unique()->numerify('##############'),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
-            'banned' => fake()->boolean(),
+            'banned' => false,
             'user_id' => User::where('type', 4)->inRandomOrder()->first()->id,
         ];
     }

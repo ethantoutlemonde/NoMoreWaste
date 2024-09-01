@@ -79,7 +79,7 @@ export default function DefaultLayout() {
                             Food Collections
                             </div>
                         </Link>
-                        <Link to='/food_aid/outreach'>
+                        <Link to='/food_aid/outreachs'>
                             <div className="rounded px-4 py-2 hover:bg-slate-800 hover:text-white">
                             Outreach
                             </div>

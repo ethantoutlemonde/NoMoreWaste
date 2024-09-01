@@ -17,6 +17,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentAdminController;
 use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\MessageSupermarketController;
+use App\Http\Controllers\OutreachController;
 use App\Http\Controllers\PartnerAdminController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\SupermarketAdminController;
@@ -94,8 +95,9 @@ Route::middleware(AdminMiddleware::class)->resource('users', UserController::cla
 
 Route::middleware(AdminMiddleware::class)->resource('supermarketAdmin', SupermarketAdminController::class);
 Route::middleware(AdminMiddleware::class)->patch('supermarketAdmin/{supermarket}/ban', [SupermarketAdminController::class, 'ban'])->name('supermarkets.ban');
-Route::middleware(AdminMiddleware::class)->resource('foodCollection', FoodCollectionController::class);
+Route::middleware(AdminMiddleware::class)->resource('foodCollectionAdmin', FoodCollectionController::class);
 Route::middleware(AdminMiddleware::class)->resource('documentAdmin', DocumentAdminController::class);
+Route::middleware(AdminMiddleware::class)->resource('outreachAdmin', OutreachController::class);
 
 // Message Routes
 //Route::middleware(AdminMiddleware::class)->resource('messageSupermarket', MessageSupermarketController::class);
@@ -131,10 +133,16 @@ Route::middleware(UserMiddleware::class)->resource('supermarket/disponibility', 
 
 
 Route::middleware(['auth:sanctum'])->resource('supermarket', SupermarketController::class);
+
 Route::middleware(['auth:sanctum'])->resource('foodCollection', FoodCollectionController::class);
 Route::middleware(['auth:sanctum'])->post('foodCollection/{foodCollection}/participate', [FoodCollectionController::class, 'participate']);
 Route::middleware(['auth:sanctum'])->delete('foodCollection/{foodCollection}/participants', [FoodCollectionController::class, 'deleteParticipation']);
 Route::middleware(['auth:sanctum'])->post('foodCollection/{foodCollection}/participants', [FoodCollectionController::class, 'addParticipant']);
+
+Route::middleware(['auth:sanctum'])->resource('outreach', OutreachController::class);
+Route::middleware(['auth:sanctum'])->post('outreach/{outreach}/participate', [OutreachController::class, 'participate']);
+Route::middleware(['auth:sanctum'])->delete('outreach/{outreach}/participants', [OutreachController::class, 'deleteParticipation']);
+Route::middleware(['auth:sanctum'])->post('outreach/{outreach}/participants', [OutreachController::class, 'addParticipant']);
 
 
 

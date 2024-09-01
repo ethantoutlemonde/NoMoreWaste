@@ -7,7 +7,9 @@ use App\Models\ActivityParticipant;
 use App\Models\ActivityType;
 use App\Models\Document;
 use App\Models\DocumentType;
+use App\Models\FoodCollection;
 use App\Models\MessageSupermarket;
+use App\Models\Outreach;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Supermarket;
@@ -134,6 +136,10 @@ class DatabaseSeeder extends Seeder
         Activity::factory(10)->create();
 
         ActivityParticipant::factory(10)->create();
+
+        Outreach::factory(10)->create();
+
+        FoodCollection::factory(10)->create();
 
 
 

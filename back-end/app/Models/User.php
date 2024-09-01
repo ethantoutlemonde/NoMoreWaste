@@ -120,4 +120,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(FoodCollection::class, 'food_collection_participants', 'volunteer_id', 'food_collection_id');
     }
+
+    public function outreachs()
+    {
+        return $this->belongsToMany(Outreach::class, 'volunteer_id');
+    }
 }

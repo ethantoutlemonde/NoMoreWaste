@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FoodCollection>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Outreach>
  */
-class FoodCollectionFactory extends Factory
+class OutreachFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,9 @@ class FoodCollectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'date' => fake()->dateTimeBetween("now", "+30 days"),
-            'start_time' => fake()->time(),
+            // a date max 30 days in the future
+            "date" => fake()->date("now", "+30 days"),
+            "start_time" => fake()->time(),
         ];
     }
 }

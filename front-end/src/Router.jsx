@@ -20,6 +20,7 @@ import FoodAidLayout from './components/FoodAidLayout';
 import FoodCollection from './views/volunteer/food_aid/FoodCollection';
 import Outreach from './views/volunteer/food_aid/Outreach';
 import FoodCollectionDetail from './views/volunteer/food_aid/FoodCollectionDetail';
+import OutreachDetail from './views/volunteer/food_aid/OutreachDetail';
 
 const router = createBrowserRouter([
     {
@@ -66,7 +67,11 @@ const router = createBrowserRouter([
                     {
                         path: '/volunteer/foodAid/outreach',
                         element: <Outreach />
-                    }
+                    },
+                    {
+                        path: '/volunteer/foodAid/outreach/:id',
+                        element: <OutreachDetail />
+                    },
                 ]
             },
             {

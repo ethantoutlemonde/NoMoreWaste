@@ -19,7 +19,7 @@ import DetailBeneficiary from './Views/users/DetailBeneficiary';
 import UpdateBeneficiary from './Views/users/UpdateBeneficiary';
 import DetailVolunteer from './Views/users/DetailVolunteer';
 import UpdateVolunteer from './Views/users/UpdateVolunteer';
-import Outreach from './Views/food_aid/outreach/Outreach';
+import OutreachLayout from './components/OutreachLayout';
 import PartnerSupermarket from './Views/food_aid/partner_supermarket/PartnerSupermarker';
 import AddSupermarket from './Views/food_aid/partner_supermarket/AddSupermarket';
 import FoodCollectionsLayout from './components/FoodCollectionsLayout';
@@ -55,6 +55,8 @@ import AddActivity from './Views/activity/AddActivity';
 import Activity from './components/ActivityLayout';
 import ActivityType from './components/ActivityTypeLayout';
 import UpdateFoodCollection from './Views/food_aid/food_collections/UpdateFoodCollection';
+import Outreachs from './Views/food_aid/outreach/Outreachs';
+import DetailOutreach from './Views/food_aid/outreach/DetailOutreach';
 
 const router = createBrowserRouter([
     {
@@ -186,8 +188,25 @@ const router = createBrowserRouter([
             // Outreach
 
             {
-                path: '/food_aid/outreach',
-                element: <Outreach />,
+                path: '/food_aid/outreachs',
+                element: <OutreachLayout />,
+                children: [
+                    {
+                        path: '/food_aid/outreachs',
+                        element: <Navigate to='/food_aid/outreachs/index'/>
+                    },
+                    {
+                        path: '/food_aid/outreachs/index',
+                        element: <Outreachs />
+                    },
+                    {
+                        path: '/food_aid/outreachs/new',
+                    },
+                    {
+                        path: '/food_aid/outreachs/:id',
+                        element: <DetailOutreach />
+                    }
+                ]
             },
 
 

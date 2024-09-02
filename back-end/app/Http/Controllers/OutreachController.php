@@ -24,7 +24,30 @@ class OutreachController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'date' => 'required|date|after_or_equal:today|unique:food_collections',
+            'start_time' => ['required', 'date_format:H:i', 'after:08:00', 'before:20:00']
+        ]
+        );
+
+        // date is today but the time is less than the current time return error
+        if ($request->date == date('Y-m-d') && $request->start_time < date('H:i')) {
+            return response()->json(['error' => [
+                'start_time' => 'The start time must be greater than the current time'
+            ]], 400);
+        }
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->messages()], 400);
+        }
+
+        // Créer la nouvelle FoodCollection
+        $outreach = Outreach::create([
+            'date' => $request->date,
+            'start_time' => $request->start_time
+        ]);
+
+        return response()->json(['success' => 'Outreach succesfully created' ], 200);
     }
 
     /**

@@ -57,6 +57,7 @@ import ActivityType from './components/ActivityTypeLayout';
 import UpdateFoodCollection from './Views/food_aid/food_collections/UpdateFoodCollection';
 import Outreachs from './Views/food_aid/outreach/Outreachs';
 import DetailOutreach from './Views/food_aid/outreach/DetailOutreach';
+import NewOutreach from './Views/food_aid/outreach/NewOutreach';
 
 const router = createBrowserRouter([
     {
@@ -201,6 +202,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/food_aid/outreachs/new',
+                        element: <NewOutreach />
                     },
                     {
                         path: '/food_aid/outreachs/:id',

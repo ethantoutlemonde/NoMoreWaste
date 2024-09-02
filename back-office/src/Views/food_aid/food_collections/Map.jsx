@@ -6,12 +6,12 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { useTranslation } from 'react-i18next';
 import GeneratePdfButton from "./GeneratedPdfButton";
 
-export default function DetailFoodCollection() {
+export default function Map({formattedAddresses}) {
     const { id } = useParams();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     const [mapLoading, setMapLoading] = useState(false);
-    const [formattedAddresses, setFormattedAddresses] = useState([]);
+    // const [formattedAddresses, setFormattedAddresses] = useState([]);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
     const [showIframe, setShowIframe] = useState(false);
@@ -22,7 +22,7 @@ export default function DetailFoodCollection() {
         setMapLoading(true);
         setMessage('');
         setMessageType('');
-        setShowIframe(false); // Hide iframe initially
+        setShowIframe(false);
 
         try {
             const response = await fetch('http://localhost:5000/generate-map', {
@@ -89,12 +89,12 @@ export default function DetailFoodCollection() {
                     }
                 `}
             </style>
-            <div className="m-auto w-96">
+            <div className="">
                 <div className="mt-4">
                     <button 
                         onClick={handleSubmit} 
                         className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
-                        {t('generateMap')}
+                        {t('Generate Map')}
                     </button>
                 </div>
                 {mapLoading && <CircularProgress />}
@@ -116,7 +116,7 @@ export default function DetailFoodCollection() {
                                 Télécharger le fichier
                             </a>
                             <GeneratePdfButton />
-                            <iframe src="/trajet.html" frameborder="0" className="w-96 h-96" ></iframe>
+                            <iframe src="/trajet.html" frameBorder="0" className="w-full h-96" ></iframe>
                         </div>
                     </div>
                 )}

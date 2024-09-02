@@ -24,7 +24,7 @@ import FoodAidLayout from './components/FoodAidLayout';
 import FoodCollection from './views/volunteer/food_aid/FoodCollection';
 import Outreach from './views/volunteer/food_aid/Outreach';
 import FoodCollectionDetail from './views/volunteer/food_aid/FoodCollectionDetail';
-
+import Donation from './views/donation/Donation';
 
 const router = createBrowserRouter([
     {
@@ -160,6 +160,10 @@ const router = createBrowserRouter([
             {
                 path: '/connexion/register/partner',
                 element: <RegisterPartner />
+            },
+            {
+                path: '/donation',
+                element: <Donation />
             },
         ]
     },

@@ -42,7 +42,7 @@ export default function DetailFoodCollection() {
                 console.error(error);
                 setLoading(false);
             });
-    },
+    };
 
     const onDelete = () => {
         axiosClient.delete(`/api/foodCollection/${id}`)
@@ -93,14 +93,12 @@ export default function DetailFoodCollection() {
                 <FoodCollectionParticipants foodCollection={data} fetchData={fetchData}/>
                 
             </div>
-            <div>
-                <h2 className="text-lg mb-4 mt-4">Map :</h2>
-                <a href="./../../../../back-end\mapPlan\htmlFiles\trajet.html" download="trajet.html">Download</a>
+            <div className="col-span-2 h-1/2">
+                <Map formattedAddresses={formattedAddresses}/>
             </div>
             </>
             }
             </div>
-            <Map/>
         </div>
     );
 }

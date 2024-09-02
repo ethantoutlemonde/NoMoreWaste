@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Outreach;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class OutreachController extends Controller
 {
@@ -85,5 +87,54 @@ class OutreachController extends Controller
         }
         $outreach->participants()->attach($volunteer);
         return response()->json(['message' => 'The volunteer is now participating to the Outreach.']);
+    }
+
+    public function addProduct(Outreach $outreach, Request $request)
+    {
+        // return $request;
+        // validate the data
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required|integer|exists:products,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $product = Product::find($request->product_id);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->messages()], 400);
+        }
+
+        // if the quantity is greater than the available quantity return an error
+        if ($request->quantity > $product->quantity) {
+            return response()->json(['error' => 'The quantity is greater than the available quantity.'], 400);
+        }
+
+        $product->quantity -= $request->quantity;
+        $product->save();
+
+        // if the product is already in the outreach dont add a new line but update the quantity by adding the new quantity
+        if ($outreach->products()->where('product_id', $request->product_id)->exists()) {
+            $currentQuantity = $outreach->products()->where('product_id', $request->product_id)->first()->pivot->quantity;
+            // return $currentQuantity;
+            // Ajouter la nouvelle quantité
+            $newQuantity = $currentQuantity + $request->quantity;
+        
+            // Mettre à jour la quantité dans la table pivot
+            $outreach->products()->updateExistingPivot($request->product_id, ['quantity' => $newQuantity]);
+            return response()->json(['message' => 'The product quantity has been updated in the Outreach.']);
+        }
+
+        // remove the quantity from the product
+        
+        
+
+
+        $outreach->products()->attach($request->product_id, ['quantity' => $request->quantity]);
+        return response()->json(['message' => 'The product has been added to the Outreach.']);
+    }
+
+    public function getProducts(Outreach $outreach)
+    {
+        return $outreach->products->load('productType');
     }
 }

@@ -25,7 +25,7 @@ class Product extends Model
 
     public function outreach()
     {
-        return $this->belongsToMany(Outreach::class);
+        return $this->belongsToMany(Outreach::class)->withPivot('quantity');
     }
 
 }

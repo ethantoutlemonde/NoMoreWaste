@@ -18,7 +18,7 @@ class OutreachFactory extends Factory
     {
         return [
             // a date max 30 days in the future
-            "date" => fake()->date("now", "+30 days"),
+            'date' => fake()->dateTimeBetween("now", "+30 days"),
             "start_time" => fake()->time(),
         ];
     }

@@ -143,6 +143,8 @@ Route::middleware(['auth:sanctum'])->resource('outreach', OutreachController::cl
 Route::middleware(['auth:sanctum'])->post('outreach/{outreach}/participate', [OutreachController::class, 'participate']);
 Route::middleware(['auth:sanctum'])->delete('outreach/{outreach}/participants', [OutreachController::class, 'deleteParticipation']);
 Route::middleware(['auth:sanctum'])->post('outreach/{outreach}/participants', [OutreachController::class, 'addParticipant']);
+Route::middleware(['auth:sanctum'])->post('outreach/{outreach}/products', [OutreachController::class, 'addProduct']);
+Route::middleware(['auth:sanctum'])->get('outreach/{outreach}/products', [OutreachController::class, 'getProducts']);
 
 
 

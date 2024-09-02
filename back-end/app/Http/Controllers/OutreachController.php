@@ -63,7 +63,24 @@ class OutreachController extends Controller
      */
     public function update(Request $request, Outreach $outreach)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'date' => 'required|date|after_or_equal:today|unique:food_collections' . ($outreach->date == $request->date ? ',' . $outreach->id : ''),
+            'start_time' => ['required', 'date_format:H:i', 'after:08:00', 'before:20:00']
+        ]
+        );
+
+        if ($request->date == date('Y-m-d') && $request->start_time < date('H:i')) {
+            return response()->json(['error' => [
+                'start_time' => 'The start time must be greater than the current time'
+            ]], 400);
+        }
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->messages()], 400);
+        }
+
+        $outreach->update($request->all());
+        return response()->json(['success' => 'Outreach succesfully updated'], 200);
     }
 
     /**
@@ -71,7 +88,8 @@ class OutreachController extends Controller
      */
     public function destroy(Outreach $outreach)
     {
-        //
+        $outreach->delete();
+        return response()->json(['success' => 'Outreach succesfully deleted'], 200);
     }
 
     public function participate(Outreach $outreach)

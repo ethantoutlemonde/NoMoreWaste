@@ -9,7 +9,7 @@ import homepageImage from '../../assets/img/homepage.png';
 const stripePromise = loadStripe('pk_test_oKhSR5nslBRnBZpjO6KuzZeX');
 
 const DonationComponent = () => {
-  const { t } = useTranslation(); // Utilisation de useTranslation pour accéder aux traductions
+  const { t } = useTranslation("global");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -62,7 +62,7 @@ const DonationComponent = () => {
       <div className="bg-cover bg-center h-screen" style={{backgroundImage: `url(${homepageImage})`}}>
         <div className="flex justify-center items-center h-full">
           <div className="w-full md:w-1/2 p-20 max-h-full bg-white bg-opacity-80 rounded-lg">
-            <h2 className="text-center text-3xl text-black mb-6">{t("donate")}</h2>
+            <h2 className="text-center text-3xl text-black mb-6">{t('donate')}</h2>
             <form onSubmit={handleSubmit} className="text-black">
               <CardNumberElement className="bg-white border border-black rounded-lg p-2.5 mb-4" />
               <CardExpiryElement className="bg-white border border-black rounded-lg p-2.5 mb-4" />

@@ -23,7 +23,7 @@ export default function AddSupermarket() {
     const [success, setSuccess] = useState({});
     // const { id } = useParams();
 
-    const { t } = useTranslation();
+    const { t } = useTranslation("global");
 
     const navigate = useNavigate();
 

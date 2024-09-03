@@ -18,7 +18,7 @@ export default function DetailFoodCollection() {
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
     const [showIframe, setShowIframe] = useState(false);
-    const { t } = useTranslation();
+    const { t } = useTranslation("global");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -63,7 +63,7 @@ export default function DetailFoodCollection() {
             <>
             <div className="">
                 <div className="flex mb-2">
-                    <h1 className="text-xl mr-6 font-semibold">Detail of the FoodCollection of the {data?.date}</h1>
+                    <h1 className="text-xl mr-6 font-semibold">{t('Detail of the FoodCollection of the ')}{data?.date}</h1>
                     <div className="flex items-start gap-2">
                         <Link to={'update'} className='text-2xl hover:text-gray-700'><HiOutlinePencilSquare /></Link>
                         <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
@@ -71,9 +71,9 @@ export default function DetailFoodCollection() {
                     
                 </div>
                 
-                <p>Date : {data?.date}</p>
-                <p>Start Time : {data?.start_time}</p>
-                <h2 className="text-lg mb-4 mt-4">List of collected supermarkets : </h2>
+                <p>{t('Date :')}{data?.date}</p>
+                <p>{t('Start Time :')} {data?.start_time}</p>
+                <h2 className="text-lg mb-4 mt-4">{t('List of collected supermarkets : ')}</h2>
                 <div className="flex flex-row flex-wrap gap-4">
                     {data?.supermarkets.map(supermarket => (
                         <Link to={`/food_aid/partner_supermarket/${supermarket.id}`} key={supermarket.id} className="bg-white w-fit p-4 rounded-lg shadow hover:shadow-md duration-100">

@@ -5,10 +5,12 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import Badge from '@mui/material/Badge';
 import dayjs, { Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 export default function FoodCollection() {
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [foodCollections, setFoodCollections] = useState([]);
+    const { t } = useTranslation('global');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,7 +53,7 @@ export default function FoodCollection() {
     };
     return (
         <div>
-            <h1>Food Collection</h1>
+            <h1>{t("Food Collection")}</h1>
             <DateCalendar
             value={selectedDate}
             onChange={(newDate) => setSelectedDate(newDate)}

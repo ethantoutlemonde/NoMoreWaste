@@ -35,7 +35,72 @@
     "Details": "Details",
     "Outreach": "Outreach",
     "Food Collection": "Food Collection",
-    "Driver": "Driver"
+    "Driver": "Driver",
+
+    "Modify Activity": "Modify Activity",
+    "Add Activity": "Add Activity",
+    "Add Supermarket Disponibility": "Add Supermarket Disponibility",
+    "Choose a Date": "Choose a Date",
+    "Food Aid": "Food Aid",
+    "Food Collections": "Food Collections",
+    "Outreachs": "Outreachs",
+    "Donation" : "Donation",
+    "Add Supermarket" : "Add Supermarket",
+    "Disponibility" : "Disponibility",
+    "Are you sure you want to delete this availability?" : "Are you sure you want to delete this availability?",
+    "Cancel" : "Cancel",
+    "Delete" : "Delete",
+    "Send" : "Send",
+    "Upload" : "Upload",
+    "Upload your File" : "Upload your File",
+    "Activities" : "Activities",
+    "Participate" : "Participate",
+    "Manage" : "Manage",
+
+    "Postal code" : "Postal code",
+    "donate" : "donate",
+    "Processing..." : "Processing...",
+    "Pay" : "Pay",
+    "Download Receipt" : "Download Receipt",
+    "red" : "red",
+    "Update Supermarket" : "Update Supermarket",
+    "Update" : "Update",
+    "Driving license" : "Driving license",
+    "Id card" : "Id card",
+    "Criminal record" : "Criminal record",
+    "Download" : "Download",
+    "Food Collection Detail" : "Food Collection Detail",
+    "Number of participants : " : "Number of participants : ",
+    "became beneficiary" : "became beneficiary",
+    "join !" : "join !",
+    "Volunteering and more if you like" : "Volunteering and more if you like",
+    "Contribute to a cause that matters to you" : "Contribute to a cause that matters to you",
+    "food distribution" : "food distribution",
+    "personal assistance" : "personal assistance",
+    "adminstartive help" : "adminstartive help",
+    "job help" : "job help",
+    "animals healing" : "animals healing",
+    "logistic" : "logistic",
+    "evenmential" : "evenmential",
+    "academic support" : "academic support"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
 
 
 }

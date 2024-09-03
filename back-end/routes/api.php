@@ -82,13 +82,14 @@ Route::middleware(UserMiddleware::class)->get('/user', function (Request $reques
 
 // Users Routes
 
+
+
 Route::middleware(AdminMiddleware::class)->resource('admin', AdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('beneficiaryAdmin', BeneficiaryAdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('volunteerAdmin', VolunteerAdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('partnerAdmin', PartnerAdminController::class);
-Route::middleware(AdminMiddleware::class)->resource('users', UserController::class);
+Route::middleware(UserMiddleware::class)->resource('users', UserController::class);
 // Route::patch('users/{user}/ban', [UserController::class, 'ban'])->name('users.ban');
-
 
 // Food Aid Routes
 

@@ -3,7 +3,7 @@ import axiosClient from '../../axios-client';
 import { useTranslation } from 'react-i18next';
 
 const AddSmartFridge = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("global");
   const [products, setProducts] = useState([]); // État pour les ingrédients
   const [recipeName, setRecipeName] = useState(''); // État pour le nom de la recette
   const [instructions, setInstructions] = useState(''); // État pour les instructions

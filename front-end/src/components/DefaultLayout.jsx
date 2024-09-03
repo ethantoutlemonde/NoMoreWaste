@@ -122,7 +122,7 @@ export default function DefaultLayout() {
 
                         {isUserDropdownOpen && (
                             <div className="absolute mt-2 bg-white p-3 rounded shadow w-auto min-w-fit z-50 flex flex-col gap-2">
-                                <Link className="hover:underline">Profil</Link>
+                                <Link className="hover:underline" to={"/profil"}>Profil</Link>
                                 <button className="hover:underline" onClick={onLogout}>{t("Logout")}</button>
                             </div>
                         )}

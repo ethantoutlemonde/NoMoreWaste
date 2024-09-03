@@ -8,7 +8,7 @@ export default function AddProduct() {
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
 
-    const { t } = useTranslation();
+    const { t } = useTranslation("global");
 
     const [data, setData] = useState({
         product_name: "",

@@ -3,7 +3,7 @@ import axiosClient from '../../axios-client';
 import { useTranslation } from 'react-i18next';
 
 const ShowSmartFridge = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("global");
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');

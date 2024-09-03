@@ -10,12 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DialogActions, DialogContent, DialogContentText } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export default function SupermarketDisponibilityCalendar({supermarket_id , disponibilities , fetchDisponibilities}) {
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [openDialog, setOpenDialog] = useState(false);
     const navigate = useNavigate();
     const [selectedDisponibility, setSelectedDisponibility] = useState(null);
+    const { t } = useTranslation("global");
 
     disponibilities = disponibilities.map(disponibility => ({
         id: disponibility.id,
@@ -87,18 +89,18 @@ export default function SupermarketDisponibilityCalendar({supermarket_id , dispo
                 }}
             />
             <Dialog open={openDialog} onClose={handleClose}>
-                <DialogTitle>Disponibility</DialogTitle>
+                <DialogTitle>{t("Disponibility")}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to delete this availability?
+                        {t("Are you sure you want to delete this availability?")}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <button onClick={handleClose} className="bg-gray-50 p-2 rounded hover:bg-gray-100">
-                        Cancel
+                        {t("Cancel")}
                     </button>
                     <button onClick={handleDelete} className="bg-red-500 text-white p-2 rounded hover:bg-red-600">
-                        Delete
+                        {t("Delete")}
                     </button>
                 </DialogActions>
             </Dialog>

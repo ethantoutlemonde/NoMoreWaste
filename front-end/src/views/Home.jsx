@@ -9,7 +9,7 @@ import Footer from './Footer/Footer';
 
 export default function Home() {
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t } = useTranslation("global");
 
     const handleButtonClick = () => {
         navigate('/connexion');

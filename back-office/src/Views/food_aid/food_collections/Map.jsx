@@ -15,7 +15,7 @@ export default function Map({formattedAddresses}) {
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
     const [showIframe, setShowIframe] = useState(false);
-    const { t } = useTranslation();
+    const { t } = useTranslation("global");
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
@@ -113,7 +113,7 @@ export default function Map({formattedAddresses}) {
                                 download
                                 className=" bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75 transition-colors duration-300 ease-in-out"
                             >
-                                Télécharger le fichier
+                                {t('Download file')}
                             </a>
                             <GeneratePdfButton />
                             <iframe src="/trajet.html" frameBorder="0" className="w-full h-96" ></iframe>

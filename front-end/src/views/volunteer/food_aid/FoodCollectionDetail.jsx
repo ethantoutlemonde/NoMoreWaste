@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import axiosClient from '../../../axios-client';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useTranslation } from "react-i18next";
 
 export default function FoodCollectionDetail() {
     const { id } = useParams();
     const [foodCollection, setFoodCollection] = useState([]);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const { t } = useTranslation('global');
 
     useEffect(() => {
         axiosClient.get(`/api/foodCollection/${id}`)
@@ -40,9 +42,9 @@ export default function FoodCollectionDetail() {
     }
     return (
         <div>
-            <h1>Food Collection Detail {id}</h1>
-            <p>Number of participants : <span>{foodCollection?.participants?.length}</span></p>
-            <button onClick={handleParticipate} className="bg-blue-400 text-white p-2 rounded-lg border shadow hover:bg-blue-500 hover:shadow-md duration-100">Participate</button>
+            <h1>{t("Food Collection Detail")} {id}</h1>
+            <p>{t("Number of participants :")} <span>{foodCollection?.participants?.length}</span></p>
+            <button onClick={handleParticipate} className="bg-blue-400 text-white p-2 rounded-lg border shadow hover:bg-blue-500 hover:shadow-md duration-100">{t("Participate")}</button>
             {error.message && <p className="text-red-500">{error.message}</p>}
             {successMessage.message && <p className="text-green-500">{successMessage.message}</p>}
         </div>

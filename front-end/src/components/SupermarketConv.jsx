@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import axiosClient from "../axios-client";
 import { useAuth } from "../hooks/auth";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useTranslation } from 'react-i18next'; 
 
 export default function SupermarketConv({supermarket_id}) {
     const chatDiv = useRef(null);
@@ -9,6 +10,8 @@ export default function SupermarketConv({supermarket_id}) {
     const inputMessage = useRef(null);
     const { user } = useAuth({ middleware: 'auth' })
     const [loading, setLoading] = useState(true)
+    const { t } = useTranslation("global");
+
     
     useEffect(() => {
         axiosClient.get(`/api/supermarket/${supermarket_id}/messages`)
@@ -66,7 +69,7 @@ export default function SupermarketConv({supermarket_id}) {
         </div>
         <form onSubmit={send} className="bg-blue-100 w-full flex gap-2 p-2 rounded-b-lg">
             <textarea ref={inputMessage} type="text" className="w-full bg-white rounded p-1" />
-            <button type="submit" className="bg-blue-500 p-1 text-white rounded hover:bg-blue-400">Send</button>
+            <button type="submit" className="bg-blue-500 p-1 text-white rounded hover:bg-blue-400">{t("Send")}</button>
         </form>
         </>
     )

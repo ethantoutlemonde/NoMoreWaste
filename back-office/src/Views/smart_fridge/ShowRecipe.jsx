@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function ShowRecipe() {
     const {id} = useParams();
-    const { t } = useTranslation();
+    const { t } = useTranslation("global");
     const [recipe, setRecipe] = useState({});
     const [error, setError] = useState('');
     useEffect(() => {

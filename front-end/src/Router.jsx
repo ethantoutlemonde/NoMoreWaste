@@ -25,6 +25,7 @@ import FoodCollection from './views/volunteer/food_aid/FoodCollection';
 import Outreach from './views/volunteer/food_aid/Outreach';
 import FoodCollectionDetail from './views/volunteer/food_aid/FoodCollectionDetail';
 import Donation from './views/donation/Donation';
+import Profil from './views/Profil';
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home />
+            },
+            {
+                path: '/profil',
+                element: <Profil/>
             },
             {
                 path: '/volunteer',

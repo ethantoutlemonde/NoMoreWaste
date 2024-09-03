@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 const SmartFridge = () => {
-    const { t } = useTranslation();
+    const { t } = useTranslation("global");
     const [warehouses, setWarehouses] = useState([]);
     const [selectedWarehouseId, setSelectedWarehouseId] = useState(null);
     const [recipes, setRecipes] = useState([]);

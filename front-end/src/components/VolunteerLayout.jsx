@@ -66,8 +66,8 @@ export default function VolunteerLayout() {
 
                         {isActivityDropdownOpen && (
                             <div className="absolute mt-2 bg-white p-3 rounded shadow w-auto min-w-fit z-50 flex flex-col gap-2">
-                                <Link className="hover:underline" to={'/volunteer/Activity/participate'}>Participate</Link>
-                                <Link className="hover:underline"  to={'/volunteer/Activity'}>Manage</Link>
+                                <Link className="hover:underline" to={'/volunteer/Activity/participate'}>{t("Participate")}</Link>
+                                <Link className="hover:underline"  to={'/volunteer/Activity'}>{t("Manage")}</Link>
                             </div>
                         )}
                     </div>

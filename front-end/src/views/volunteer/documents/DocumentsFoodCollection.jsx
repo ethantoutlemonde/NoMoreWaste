@@ -66,8 +66,8 @@ export default function DocumentsFoodCollection() {
                     <div className="col-span-4">{t("Id card")}</div>
                     <div className="col-span-1">
                     {documents.some(doc => doc.type_id === 1) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 1))}>Download</button> 
-                        : <button onClick={() => handleUploadDocument(1)}>Upload</button>
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 1))}>{t("Download")}</button> 
+                        : <button onClick={() => handleUploadDocument(1)}>{t("Upload")}</button>
                     }
                     </div>
                 </div>
@@ -79,8 +79,8 @@ export default function DocumentsFoodCollection() {
                     <div className="col-span-4">{t("Driving license")}</div>
                     <div className="col-span-1">
                     {documents.some(doc => doc.type_id === 2) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 2))}>Download</button> 
-                        : <button onClick={() => handleUploadDocument(2)}>Upload</button>
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 2))}>{t("Download")}</button> 
+                        : <button onClick={() => handleUploadDocument(2)}>{t("Upload")}</button>
                     }
                     </div>
                 </div>
@@ -92,8 +92,8 @@ export default function DocumentsFoodCollection() {
                     <div className="col-span-4">{t("Criminal record")}</div>
                     <div className="col-span-1">
                     {documents.some(doc => doc.type_id === 3) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 3))}>Download</button> 
-                        : <button onClick={() => handleUploadDocument(3)}>Upload</button>
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 3))}>{t("Download")}</button> 
+                        : <button onClick={() => handleUploadDocument(3)}>{t("Upload")}</button>
                     }
                     </div>
                 </div>
@@ -108,8 +108,8 @@ export default function DocumentsFoodCollection() {
                     <div className="col-span-4">{t("Id card")}</div>
                     <div className="col-span-1">
                     {documents.some(doc => doc.type_id === 1) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 1))}>Download</button> 
-                        : <button onClick={() => handleUploadDocument(1)}>Upload</button>
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 1))}>{t("Download")}</button> 
+                        : <button onClick={() => handleUploadDocument(1)}>{t("Upload")}</button>
                     }
                     </div>
                 </div>
@@ -121,8 +121,8 @@ export default function DocumentsFoodCollection() {
                     <div className="col-span-4">{t("Criminal record")}</div>
                     <div className="col-span-1">
                     {documents.some(doc => doc.type_id === 3) 
-                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 3))}>Download</button> 
-                        : <button onClick={() => handleUploadDocument(3)}>Upload</button>
+                        ? <button onClick={() => handleDownloadDocument(documents.find(doc => doc.type_id === 3))}>{t("Download")}</button> 
+                        : <button onClick={() => handleUploadDocument(3)}>{t("Upload")}</button>
                     }
                     </div>
                 </div>

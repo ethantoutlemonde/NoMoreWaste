@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 import axiosClient from '../../../axios-client';
+import { HiOutlineXMark   } from "react-icons/hi2";
 
 export default function Activities() {
     const [data, setData] = useState(null);
     const [activityTypes, setActivityTypes] = useState([]);
     const [selectedActivityType, setSelectedActivityType] = useState(0);
     const [search, setSearch] = useState('');
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
+
+
     useEffect(() => {
         fetchActivities();
     }, [search, selectedActivityType])
@@ -37,13 +42,18 @@ export default function Activities() {
     }
 
     const handleParticipate = (id) => {
+        setError(null)
+        setSuccess(null)
+
         axiosClient.post(`/api/activity/${id}/participate`)
         .then(response => {
             console.log(response.data)
             fetchActivities();
+            setSuccess(response.data)
         })
         .catch(error => {
             console.log(error)
+            setError(error.response.data)
         })
     }
     return (
@@ -57,7 +67,10 @@ export default function Activities() {
                     ))}
                 </select>
             </div>
+            
             <div className='flex flex-col gap-4 mt-6'>
+                {error && <div className="bg-red-100 text-red-600 border border-red-600 mt-4 p-2 rounded flex justify-between"><p >{error.message}</p><button onClick={() => setError(null)}><HiOutlineXMark/></button></div>}
+                {success && <div className="bg-green-100 text-green-600 border border-green-600 mt-4 p-2 rounded flex justify-between"><p >{success.message}</p><button onClick={() => setSuccess(null)}><HiOutlineXMark/></button></div>}
                 {data && data.map(activity => (
                     <div key={activity.id} className="bg-white rounded-lg p-4 shadow-sm">
                         <div className='flex justify-between'>

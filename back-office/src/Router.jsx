@@ -59,6 +59,7 @@ import Outreachs from './Views/food_aid/outreach/Outreachs';
 import DetailOutreach from './Views/food_aid/outreach/DetailOutreach';
 import NewOutreach from './Views/food_aid/outreach/NewOutreach';
 import UpdateOutreach from './Views/food_aid/outreach/UpdateOutreach';
+import DetailActivity from './Views/activity/DetailActivity';
 
 const router = createBrowserRouter([
     {
@@ -358,6 +359,10 @@ const router = createBrowserRouter([
                     {
                         path: '/Activity/show',
                         element: <ShowActivity/>
+                    },
+                    {
+                        path: '/Activity/:id',
+                        element: <DetailActivity/>
                     },
                     {
                         path: '/Activity/add',

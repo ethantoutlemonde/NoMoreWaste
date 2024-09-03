@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -98,7 +99,7 @@ class ActivityController extends Controller
 
         $activity->update($validated);
 
-        return response()->json(['activity' => $activity]);
+        return response()->json(['activity' => $activity , "success" => "Activity updated successfully"], 200);
     }
 
     /**
@@ -130,5 +131,40 @@ class ActivityController extends Controller
         $user = Auth::user();
         $activity->participants()->attach($user->id);
         return response()->json(['message' => 'You are now participating in this activity']);
+    }
+
+    public function cancelParticipation(Activity $activity)
+    {
+        $user = Auth::user();
+        $activity->participants()->detach($user->id);
+        return response()->json(['message' => 'You are no longer participating in this activity']);
+    }
+
+    public function deleteParticipation(Activity $activity, Request $request)
+    {
+        $volunteer = User::find($request->volunteer_id);
+        if (!$volunteer) {
+            return response()->json(['error' => 'Volunteer not found'], 404);
+        }
+        $activity->participants()->detach($volunteer);
+        return response()->json(['message' => 'The volunteer is no longer participating in the activity']);
+    }
+
+    public function addParticipant(Activity $activity, Request $request)
+    {
+        $volunteer = User::find($request->volunteer_id);
+        if (!$volunteer) {
+            return response()->json(['error' => 'Volunteer not found'], 404);
+        }
+        if ($activity->participants()->where('volunteer_id', $volunteer->id)->exists()) {
+            return response()->json(['message' => 'The volunteer is already participating in the activity'], 400);
+        }
+        $activity->participants()->attach($volunteer->id);
+        return response()->json(['message' => 'The volunteer is now participating in the activity']);
+    }
+
+    public function participants(Activity $activity)
+    {
+        return response()->json(['participants' => $activity->participants], 200);
     }
 }

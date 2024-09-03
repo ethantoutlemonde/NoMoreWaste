@@ -113,7 +113,7 @@ class User extends Authenticatable
 
     public function participeActivity()
     {
-        return $this->belongsToMany(ActivityParticipant::class, 'user_id');
+        return $this->belongsToMany(Activity::class, 'activity_participants', 'user_id', 'activity_id');
     }
 
     public function foodCollections()

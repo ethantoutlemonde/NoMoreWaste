@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -71,5 +72,10 @@ class BeneficiaryController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function myActivities(User $beneficiary)
+    {
+        return $beneficiary->participeActivity->load('activityType');
     }
 }

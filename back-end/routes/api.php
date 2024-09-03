@@ -162,8 +162,16 @@ route::middleware(['auth:sanctum'])->get('/recipes/warehouse/{warehouse}', [Reci
 
 //Activity
 Route::middleware(['auth:sanctum'])->resource('activity', ActivityController::class);
-Route::middleware(['auth:sanctum'])->get('myActivities', [ActivityController::class, 'myActivities']);
+Route::middleware(['auth:sanctum'])->get('/volunteer/myActivities', [ActivityController::class, 'myActivities']);
+Route::middleware(['auth:sanctum'])->get('/beneficiary/{beneficiary}/myActivities', [BeneficiaryController::class, 'myActivities']);
 Route::middleware(['auth:sanctum'])->get('searchActivities', [ActivityController::class, 'searchActivities']);
+
+
 Route::middleware(['auth:sanctum'])->post('activity/{activity}/participate', [ActivityController::class, 'participate']);
+Route::middleware(['auth:sanctum'])->get('activity/{activity}/participants', [ActivityController::class, 'participants']);
+Route::middleware(['auth:sanctum'])->delete('activity/{activity}/participants', [ActivityController::class, 'deleteParticipation']);
+Route::middleware(['auth:sanctum'])->delete('activity/{activity}/participate', [ActivityController::class, 'cancelParticipation']);
+Route::middleware(['auth:sanctum'])->post('activity/{activity}/participants', [ActivityController::class, 'addParticipant']);
+
 
 Route::middleware(['auth:sanctum'])->resource('activityType', ActivityTypeController::class);

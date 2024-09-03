@@ -1,28 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import axiosClient from '../../axios-client';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import axiosClient from "../../axios-client"
+import { useTranslation } from "react-i18next"
+import ActivityParticipants from "./ActivityParticipants"
 
-export default function ShowActivity() {
+export default function DetailActivity() {
+    const { id } = useParams()
+    const [activityTypes, setActivityTypes] = useState([])
+    const [errors, setErrors] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [formData, setFormData] = useState({})
+    const [filter, setFilter] = useState('');
+    const [volunteers, setVolunteers] = useState([]);
+    const [success, setSuccess] = useState(false);
+
+
     const { t } = useTranslation('global');
-    const [activities, setActivities] = useState([]);
-    const [activityTypes, setActivityTypes] = useState([]);
-    const [selectedActivity, setSelectedActivity] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+
 
     useEffect(() => {
-        fetchActivities();
-        fetchActivityTypes();
-    }, []);
+        console.log("Detail Activity")
+        fetchActivities()
+        fetchActivityTypes()
+        fetchVolunteers()
+    }, [])
 
-    const fetchActivities = async () => {
+    const fetchActivities = () => {
+        axiosClient.get(`/api/activity/${id}`)
+        .then (response => {
+            console.log(response.data)
+            setFormData(response.data.activity)
+            setLoading(false)
+            
+        })
+        .catch (error => {
+            console.log(error)
+            setErrors(error)
+        })
+    }
+
+    async function fetchVolunteers() {
         try {
-            const response = await axiosClient.get('/api/activity');
-            setActivities(response.data.activities);
+            const response = await axiosClient.get('/api/volunteerAdmin');
+            console.log('Volunteers Response:', response.data);
+            setVolunteers(response.data); // Assurez-vous que c'est un tableau d'objets
         } catch (error) {
-            console.error('Error fetching activities:', error);
+            setErrors(t('An error occurred while fetching volunteers.'));
+            console.error('Error:', error);
         }
-    };
+    }
+
+    // const formatDateTimeWithoutSeconds = (dateTime) => {
+    //     console.log("dateTime", dateTime)
+    //     const date = new Date(dateTime);
+    //     const hours = String(date.getHours()).padStart(2, '0');
+    //     const minutes = String(date.getMinutes()).padStart(2, '0');
+    //     const formattedDate = date.toISOString().split('T')[0];
+    //     return `${formattedDate}T${hours}:${minutes}`;
+    // };
 
     const fetchActivityTypes = async () => {
         try {
@@ -33,89 +68,18 @@ export default function ShowActivity() {
             console.error('Error fetching activity types:', error);
         }
     };
-
-    const handleClick = (activity) => {
-        setSelectedActivity(activity);
-        setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-        setSelectedActivity(null);
-    };
-
-    const handleDelete = async (id) => {
-        try {
-            await axiosClient.delete(`/api/activity/${id}`);
-            fetchActivities(); // Reload the activities list after deletion
-        } catch (error) {
-            console.error('Error deleting activity:', error);
-        }
-    };
-
-    return (
-        <div className="container mx-auto p-4">
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight text-center mb-8">
-                {t('Activity List')}
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {activities.map(activity => (
-                    <div key={activity.id} className="p-4 border border-gray-300 rounded shadow-md">
-                        <h3 className="font-bold text-lg mb-2">{activity.name}</h3>
-                        <p className="text-gray-600">{new Date(activity.start_datetime).toLocaleDateString()}</p>
-                        <p className="text-gray-600">{activity.creator_name}</p>
-                        {/* <button
-                            onClick={() => handleClick(activity)}
-                            className="mt-2 text-rose-300 hover:underline"
-                        >
-                            {t('View Details')}
-                        </button> */}
-                        <Link to={`/Activity/${activity.id}`} className="mt-2 text-rose-300 hover:underline">{t('View Details')}</Link>
-                        <button
-                            onClick={() => handleDelete(activity.id)}
-                            className="ml-4 text-red-500 hover:underline"
-                        >
-                            {t('Delete')}
-                        </button>
-                    </div>
-                ))}
-            </div>
-
-            {showModal && selectedActivity && (
-                <Modal
-                    activity={selectedActivity}
-                    onClose={handleCloseModal}
-                    onUpdate={() => fetchActivities()}
-                    activityTypes={activityTypes}
-                />
-            )}
-        </div>
-    );
-}
-
-function Modal({ activity, onClose, onUpdate, activityTypes }) {
-    const { t } = useTranslation('global');
-    const [formData, setFormData] = useState({ ...activity });
-    const [errors, setErrors] = useState({});
-    const [filter, setFilter] = useState(''); // Pour la recherche des bénévoles
-    const [volunteers, setVolunteers] = useState([]);
-
-    useEffect(() => {
-        setFormData({ ...activity });
-        setErrors({}); // Clear errors when activity changes
-    }, [activity]);
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrors(null);
+        setSuccess(false);
         try {
-            await axiosClient.put(`/api/activity/${activity.id}`, formData);
-            onUpdate();
-            onClose();
+            await axiosClient.put(`/api/activity/${formData.id}`, formData);
+            fetchActivities()
+            setSuccess(true);
         } catch (error) {
             if (error.response && error.response.data.errors) {
                 setErrors(error.response.data.errors);
@@ -128,35 +92,12 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
     const handleDelete = async (id) => {
         try {
             await axiosClient.delete(`/api/activity/${id}`);
-            onUpdate();
-            onClose();
+            fetchActivities();
+
         } catch (error) {
             console.error('Error deleting activity:', error);
         }
     };
-
-    const formatDateTimeWithoutSeconds = (dateTime) => {
-        const date = new Date(dateTime);
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        const formattedDate = date.toISOString().split('T')[0];
-        return `${formattedDate}T${hours}:${minutes}`;
-    };
-
-    useEffect(() => {
-        async function fetchVolunteers() {
-            try {
-                const response = await axiosClient.get('/api/volunteerAdmin');
-                console.log('Volunteers Response:', response.data);
-                setVolunteers(response.data); // Assurez-vous que c'est un tableau d'objets
-            } catch (error) {
-                setError(t('An error occurred while fetching volunteers.'));
-                console.error('Error:', error);
-            }
-        }
-
-        fetchVolunteers();
-    }, [t]);
 
     const handleVolunteerChange = (e) => {
         // Mettre à jour creator_id avec l'identifiant du bénévole sélectionné
@@ -169,28 +110,10 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
     );
 
     return (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+        <div className="grid grid-cols-2">
             <div className="bg-white p-6 rounded shadow-lg w-full max-w-lg relative">
-                <button
-                    onClick={onClose}
-                    className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-                >
-                    <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M6 18L18 6M6 6l12 12"
-                        />
-                    </svg>
-                </button>
-                <h2 className="text-xl font-semibold mb-4">{activity.name}</h2>
+                {loading ? <p>{t('Loading...')} </p> : <>
+                <h2 className="text-xl font-semibold mb-4">{formData.name}</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
@@ -199,12 +122,12 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                 type="text"
                                 id="name"
                                 name="name"
-                                value={formData.name}
+                                value={formData?.name}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.name ? 'border-red-500' : 'border-gray-300'} rounded`}
                                 required
                             />
-                            {errors.name && <p className="text-red-500 text-sm">{errors.name[0]}</p>}
+                            {errors?.name && <p className="text-red-500 text-sm">{errors?.name[0]}</p>}
                         </div>
 
                         <div>
@@ -212,11 +135,11 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                             <textarea
                                 id="description"
                                 name="description"
-                                value={formData.description}
+                                value={formData?.description}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.description ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.description ? 'border-red-500' : 'border-gray-300'} rounded`}
                             />
-                            {errors.description && <p className="text-red-500 text-sm">{errors.description[0]}</p>}
+                            {errors?.description && <p className="text-red-500 text-sm">{errors?.description[0]}</p>}
                         </div>
 
                         <div>
@@ -225,12 +148,12 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                 type="datetime-local"
                                 id="start_datetime"
                                 name="start_datetime"
-                                value={formatDateTimeWithoutSeconds(formData.start_datetime)}
+                                value={formData?.start_datetime}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.start_datetime ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.start_datetime ? 'border-red-500' : 'border-gray-300'} rounded`}
                                 required
                             />
-                            {errors.start_datetime && <p className="text-red-500 text-sm">{errors.start_datetime[0]}</p>}
+                            {errors?.start_datetime && <p className="text-red-500 text-sm">{errors?.start_datetime[0]}</p>}
                         </div>
 
                         <div>
@@ -239,12 +162,12 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                 type="datetime-local"
                                 id="end_datetime"
                                 name="end_datetime"
-                                value={formatDateTimeWithoutSeconds(formData.end_datetime)}
+                                value={formData?.end_datetime}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.end_datetime ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.end_datetime ? 'border-red-500' : 'border-gray-300'} rounded`}
                                 required
                             />
-                            {errors.end_datetime && <p className="text-red-500 text-sm">{errors.end_datetime[0]}</p>}
+                            {errors?.end_datetime && <p className="text-red-500 text-sm">{errors?.end_datetime[0]}</p>}
                         </div>
 
                         <div>
@@ -253,11 +176,11 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                 type="text"
                                 id="adress"
                                 name="adress"
-                                value={formData.adress}
+                                value={formData?.adress}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.adress ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.adress ? 'border-red-500' : 'border-gray-300'} rounded`}
                             />
-                            {errors.adress && <p className="text-red-500 text-sm">{errors.adress[0]}</p>}
+                            {errors?.adress && <p className="text-red-500 text-sm">{errors?.adress[0]}</p>}
                         </div>
 
                         <div>
@@ -266,11 +189,11 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                 type="text"
                                 id="city"
                                 name="city"
-                                value={formData.city}
+                                value={formData?.city}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.city ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.city ? 'border-red-500' : 'border-gray-300'} rounded`}
                             />
-                            {errors.city && <p className="text-red-500 text-sm">{errors.city[0]}</p>}
+                            {errors?.city && <p className="text-red-500 text-sm">{errors?.city[0]}</p>}
                         </div>
 
                         <div>
@@ -279,11 +202,11 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                 type="text"
                                 id="country"
                                 name="country"
-                                value={formData.country}
+                                value={formData?.country}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.country ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.country ? 'border-red-500' : 'border-gray-300'} rounded`}
                             />
-                            {errors.country && <p className="text-red-500 text-sm">{errors.country[0]}</p>}
+                            {errors?.country && <p className="text-red-500 text-sm">{errors?.country[0]}</p>}
                         </div>
 
                         <div>
@@ -292,11 +215,11 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                 type="text"
                                 id="postal_code"
                                 name="postal_code"
-                                value={formData.postal_code}
+                                value={formData?.postal_code}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.postal_code ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.postal_code ? 'border-red-500' : 'border-gray-300'} rounded`}
                             />
-                            {errors.postal_code && <p className="text-red-500 text-sm">{errors.postal_code[0]}</p>}
+                            {errors?.postal_code && <p className="text-red-500 text-sm">{errors?.postal_code[0]}</p>}
                         </div>
 
                         <div>
@@ -304,9 +227,9 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                             <select
                                 id="activity_type_id"
                                 name="activity_type_id"
-                                value={formData.activity_type_id}
+                                value={formData?.activity_type_id}
                                 onChange={handleChange}
-                                className={`block w-full p-2 border ${errors.activity_type_id ? 'border-red-500' : 'border-gray-300'} rounded`}
+                                className={`block w-full p-2 border ${errors?.activity_type_id ? 'border-red-500' : 'border-gray-300'} rounded`}
                                 required
                             >
                                 <option value="" disabled>{t('Select Activity Type')}</option>
@@ -316,7 +239,7 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                                     </option>
                                 ))}
                             </select>
-                            {errors.activity_type_id && <p className="text-red-500 text-sm">{errors.activity_type_id[0]}</p>}
+                            {errors?.activity_type_id && <p className="text-red-500 text-sm">{errors?.activity_type_id[0]}</p>}
                         </div>
                     </div>
                     
@@ -363,14 +286,19 @@ function Modal({ activity, onClose, onUpdate, activityTypes }) {
                         </button>
                         <button
                             type="button"
-                            onClick={() => handleDelete(activity.id)}
+                            onClick={() => handleDelete(formData.id)}
                             className="bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded"
                         >
                             {t('Delete')}
                         </button>
                     </div>
                 </form>
+                {success && <p className="text-green-500">{t('Activity updated successfully.')}</p>}
+                </>}
+            </div>
+            <div className="h-4/5">
+                <ActivityParticipants activity_id={id}/>
             </div>
         </div>
-    );
+    )
 }

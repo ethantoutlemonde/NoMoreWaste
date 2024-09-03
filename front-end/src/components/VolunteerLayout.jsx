@@ -13,14 +13,7 @@ export default function VolunteerLayout() {
     const [isActivityDropdownOpen, setIsActivityDropdownOpen] = useState(false);
     const dropdownActivityRef = useRef(null);
 
-    if(!user) {
-        return <Navigate to='/home' />
-    }
-
-    if(user.type === 2) {
-        console.log('Beneficiary');
-        return <Navigate to='/beneficiary' />
-    }
+    
 
     const activityDropdownHandler = () => {
         // console.log('userDropdownHandler');
@@ -43,7 +36,14 @@ export default function VolunteerLayout() {
 
 
 
+    if(!user) {
+        return <Navigate to='/home' />
+    }
 
+    if(user.type === 2) {
+        console.log('Beneficiary');
+        return <Navigate to='/beneficiary' />
+    }
 
     return (
         <>
@@ -67,7 +67,7 @@ export default function VolunteerLayout() {
                         {isActivityDropdownOpen && (
                             <div className="absolute mt-2 bg-white p-3 rounded shadow w-auto min-w-fit z-50 flex flex-col gap-2">
                                 <Link className="hover:underline" to={'/volunteer/Activity/participate'}>Participate</Link>
-                                <Link className="hover:underline"  to={'/volunteer/Activity'}>Manage</Link>
+                                <Link className="hover:underline"  to={'/volunteer/Activity'}>My Activities</Link>
                             </div>
                         )}
                     </div>

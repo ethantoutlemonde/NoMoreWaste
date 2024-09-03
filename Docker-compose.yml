@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    container_name: backend
+    env_file: ./back-end/.env
+    volumes:
+      - ./back-end:/var/www
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    command: sh -c "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
+
+  backoffice:
+    build:
+      context: ./back-office
+      dockerfile: Dockerfile
+    container_name: backoffice
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3001:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

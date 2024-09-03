@@ -6,6 +6,7 @@ use App\Models\Activity;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
@@ -41,7 +42,7 @@ class ActivityController extends Controller
 
         $activity = Activity::create($validated);
 
-        return response()->json(['activity' => $activity], 201);
+        return response()->json(['activity' => $activity, 'success' => 'Activity succesfully created'], 201);
     }
 
     /**
@@ -87,5 +88,11 @@ class ActivityController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Activity not found'], 404);
         }
+    }
+
+    public function myActivities(Request $request)
+    {
+        $user = Auth::user();
+        return Activity::where('creator_id', $user->id)->with('activityType')->get();
     }
 }

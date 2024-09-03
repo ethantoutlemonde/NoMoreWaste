@@ -48,7 +48,12 @@ class OutreachController extends Controller
         // Créer la nouvelle FoodCollection
         $outreach = Outreach::create([
             'date' => $request->date,
-            'start_time' => $request->start_time
+            'start_time' => $request->start_time,
+            'address' => $request->address,
+            'city' =>$request->city,
+            'country' => $request->country,
+            'postal_code' => $request->postal_code
+
         ]);
 
         return response()->json(['success' => 'Outreach succesfully created' ], 200);

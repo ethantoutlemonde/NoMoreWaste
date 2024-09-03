@@ -88,10 +88,9 @@ export default function DetailOutreach() {
     }
     return (
         <>
-        <h1>Detail Outreach</h1>
         {error?.error && <p className="text-red-500">{error.error}</p>}
         {loading ? <CircularProgress />:
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-6 mt-4">
             <div>
                 <div className="flex mb-2">
                     <h1 className="text-xl mr-6 font-semibold">Outreach information of the {data?.date}</h1>
@@ -107,7 +106,7 @@ export default function DetailOutreach() {
                 <p>Address : {data?.address}</p>
                 <p>City : {data?.city}</p>
                 <p>Country : {data?.country}</p>
-                <p>Postal code : {data?.postale_code}</p>
+                <p>Postal code : {data?.postal_code}</p>
                 <div className="h-2/3 mt-4">
                     <OutreachParticipants outreach={data} fetchData={fetchData}/>
                 </div>

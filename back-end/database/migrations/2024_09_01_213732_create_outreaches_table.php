@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->time('start_time');
+            $table->string('address');
+            $table->string('city');
+            $table->string('country');
+            $table->string('postal_code');
             $table->timestamps();
         });
     }

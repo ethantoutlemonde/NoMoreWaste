@@ -26,7 +26,11 @@ class OutreachController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'date' => 'required|date|after_or_equal:today|unique:food_collections',
-            'start_time' => ['required', 'date_format:H:i', 'after:08:00', 'before:20:00']
+            'start_time' => ['required', 'date_format:H:i', 'after:08:00', 'before:20:00'],
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'postal_code' => ['required', 'string', 'regex:/^\d{5}$/']
         ]
         );
 
@@ -65,7 +69,11 @@ class OutreachController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'date' => 'required|date|after_or_equal:today|unique:food_collections' . ($outreach->date == $request->date ? ',' . $outreach->id : ''),
-            'start_time' => ['required', 'date_format:H:i', 'after:08:00', 'before:20:00']
+            'start_time' => ['required', 'date_format:H:i', 'after:08:00', 'before:20:00'],
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'postal_code' => ['required', 'string', 'regex:/^\d{5}$/']
         ]
         );
 

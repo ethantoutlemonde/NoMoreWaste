@@ -11,7 +11,11 @@ class Outreach extends Model
 
     protected $fillable = [
         'date',
-        'start_time'
+        'start_time',
+        'address',
+        'city',
+        'country',
+        'postal_code',
     ];
 
     public function products() {

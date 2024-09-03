@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import axiosClient from "../../../axios-client"
 import { Link } from "react-router-dom"
-import AddActivity from "./AddActivity";
 
 export default function ShowActivity() {
     const [data, setData] = useState({});

@@ -58,6 +58,7 @@ import UpdateFoodCollection from './Views/food_aid/food_collections/UpdateFoodCo
 import Outreachs from './Views/food_aid/outreach/Outreachs';
 import DetailOutreach from './Views/food_aid/outreach/DetailOutreach';
 import NewOutreach from './Views/food_aid/outreach/NewOutreach';
+import UpdateOutreach from './Views/food_aid/outreach/UpdateOutreach';
 
 const router = createBrowserRouter([
     {
@@ -207,6 +208,10 @@ const router = createBrowserRouter([
                     {
                         path: '/food_aid/outreachs/:id',
                         element: <DetailOutreach />
+                    },
+                    {
+                        path: '/food_aid/outreachs/:id/update',
+                        element: <UpdateOutreach />
                     }
                 ]
             },

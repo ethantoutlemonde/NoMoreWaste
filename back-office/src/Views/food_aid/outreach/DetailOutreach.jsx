@@ -93,9 +93,21 @@ export default function DetailOutreach() {
         {loading ? <CircularProgress />:
         <div className="grid grid-cols-2 gap-6">
             <div>
-                <h1 className="text-xl mr-6 font-semibold">Outreach information of the {data?.date}</h1>
+                <div className="flex mb-2">
+                    <h1 className="text-xl mr-6 font-semibold">Outreach information of the {data?.date}</h1>
+                    <div className="flex items-start gap-2">
+                        <Link to={'update'} className='text-2xl hover:text-gray-700'><HiOutlinePencilSquare /></Link>
+                        <button className='text-2xl text-red-500 hover:text-red-400' onClick={onDelete}><HiOutlineTrash /></button>
+                    </div>
+                    
+                </div>
+                
                 <p>Date : {data?.date}</p>
                 <p>Start Time : {data?.start_time}</p>
+                <p>Address : {data?.address}</p>
+                <p>City : {data?.city}</p>
+                <p>Country : {data?.country}</p>
+                <p>Postal code : {data?.postale_code}</p>
                 <div className="h-2/3 mt-4">
                     <OutreachParticipants outreach={data} fetchData={fetchData}/>
                 </div>

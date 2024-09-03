@@ -16,10 +16,15 @@ import PartnerSupermarketDetail from './views/partner/PartnerSupermarketDetail';
 import PartnerSupermarketAdd from './views/partner/PartnerSupermarketAdd';
 import PartnerSupermarketUpdate from './views/partner/PartnerSupermarketUpdate';
 import DocumentsOutreach from './views/volunteer/documents/DocumentsOutreach';
+import Activity from './components/ActivityLayout';
+import ShowActivity from './views/volunteer/Activity/ShowActivity';
+import AddActivity from './views/volunteer/Activity/AddActivity';
+import ParticipateActivity from './views/volunteer/Activity/ParticipateActivity';
 import FoodAidLayout from './components/FoodAidLayout';
 import FoodCollection from './views/volunteer/food_aid/FoodCollection';
 import Outreach from './views/volunteer/food_aid/Outreach';
 import FoodCollectionDetail from './views/volunteer/food_aid/FoodCollectionDetail';
+import Donation from './views/donation/Donation';
 import OutreachDetail from './views/volunteer/food_aid/OutreachDetail';
 
 const router = createBrowserRouter([
@@ -97,7 +102,29 @@ const router = createBrowserRouter([
             {
                 path: '/partner/supermarkets/add',
                 element: <PartnerSupermarketAdd />
-            }
+            },
+            {
+                path: '/volunteer/Activity',
+                element: <Activity />,
+                children: [
+                    {
+                        path: '/volunteer/Activity',
+                        element: <Navigate to='/volunteer/Activity/show'/>
+                    },
+                    {
+                        path: '/volunteer/Activity/show',
+                        element: <ShowActivity/>
+                    },
+                    {
+                        path: '/volunteer/Activity/add',
+                        element: <AddActivity/>
+                    },
+                    {
+                        path: '/volunteer/Activity/participate',
+                        element: <ParticipateActivity/>
+                    }
+                ]
+            },
         ]
         
     },
@@ -138,6 +165,10 @@ const router = createBrowserRouter([
             {
                 path: '/connexion/register/partner',
                 element: <RegisterPartner />
+            },
+            {
+                path: '/donation',
+                element: <Donation />
             },
         ]
     },

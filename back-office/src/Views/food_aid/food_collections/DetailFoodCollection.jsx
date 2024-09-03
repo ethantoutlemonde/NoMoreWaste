@@ -5,16 +5,22 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import { DataGrid } from "@mui/x-data-grid";
 import FoodCollectionParticipants from "../../../components/FoodCollectionParticipants";
+import { useTranslation } from 'react-i18next';
+import GeneratePdfButton from "./GeneratedPdfButton";
+import Map from "./Map";
 
 export default function DetailFoodCollection() {
     const { id } = useParams();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
-
+    const [mapLoading, setMapLoading] = useState(false);
+    const [formattedAddresses, setFormattedAddresses] = useState([]);
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
+    const [showIframe, setShowIframe] = useState(false);
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
-    // get the food collection with the given id using the API with axiosClient and useEffect hook
-    // display the food collection data in the component
     useEffect(() => {
         fetchData();
             
@@ -24,22 +30,27 @@ export default function DetailFoodCollection() {
     const fetchData = () => {
         axiosClient.get(`/api/foodCollection/${id}`)
             .then(response => {
-                console.log(response.data);
                 setData(response.data);
                 setLoading(false);
+                const addresses = response.data?.supermarkets.map(supermarket => {
+                    const { address, city, postal_code, country } = supermarket;
+                    return `${address}, ${postal_code}, ${city}, ${country}`;
+                });
+                setFormattedAddresses(addresses);
             })
             .catch(error => {
                 console.error(error);
+                setLoading(false);
             });
     };
 
-
-    // delete the food collection with the given id using the API with axiosClient
     const onDelete = () => {
-        console.log('delete', id);
         axiosClient.delete(`/api/foodCollection/${id}`)
             .then(() => {
                 navigate('./..');
+            })
+            .catch(error => {
+                console.error(error);
             });
     };
 
@@ -82,14 +93,12 @@ export default function DetailFoodCollection() {
                 <FoodCollectionParticipants foodCollection={data} fetchData={fetchData}/>
                 
             </div>
-            <div>
-                <h2 className="text-lg mb-4 mt-4">Map :</h2>
-                <a href="./../../../../back-end\mapPlan\htmlFiles\trajet.html" download="trajet.html">Download</a>
+            <div className="col-span-2 h-1/2">
+                <Map formattedAddresses={formattedAddresses}/>
             </div>
             </>
             }
             </div>
-            
         </div>
     );
 }

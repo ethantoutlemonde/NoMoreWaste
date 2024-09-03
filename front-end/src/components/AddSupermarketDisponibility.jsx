@@ -42,7 +42,7 @@ export default function AddSupermarketDisponibility({supermarket_id, onAddDispon
                     {errors.date && <p className="text-red-500">{errors.date[0]}</p>}
                     {errors.length > 0 && <div className="bg-red-300 border-2 border-red-400  bg-opacity-80 p-2 rounded-md">{errors.map((error, index) => <p key={index}>{error}</p>)}</div>}
                     <button className="bg-blue-400 text-white p-2 rounded-lg border shadow hover:bg-blue-500 hover:shadow-md duration-100">
-                        {t("Login")}
+                        {t("Add")}
                     </button>
                     {success && <p className="text-green-500">{success.success}</p>}
                 </form>

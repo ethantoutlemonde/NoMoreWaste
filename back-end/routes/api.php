@@ -163,5 +163,7 @@ route::middleware(['auth:sanctum'])->get('/recipes/warehouse/{warehouse}', [Reci
 //Activity
 Route::middleware(['auth:sanctum'])->resource('activity', ActivityController::class);
 Route::middleware(['auth:sanctum'])->get('myActivities', [ActivityController::class, 'myActivities']);
+Route::middleware(['auth:sanctum'])->get('searchActivities', [ActivityController::class, 'searchActivities']);
+Route::middleware(['auth:sanctum'])->post('activity/{activity}/participate', [ActivityController::class, 'participate']);
 
 Route::middleware(['auth:sanctum'])->resource('activityType', ActivityTypeController::class);

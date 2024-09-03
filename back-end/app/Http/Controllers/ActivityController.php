@@ -19,6 +19,31 @@ class ActivityController extends Controller
         return response()->json(['activities' => $activities], 200);
     }
 
+    public function searchActivities(Request $request) {
+        // return $request;
+        $search = $request->get('s');
+        $type = $request->get('t');
+
+        
+
+
+        $query = Activity::where('name', 'like', '%'.$search.'%');
+
+        // add to the query if start_datetime is after now
+        $query->where('start_datetime', '>', Carbon::now());
+    
+        // Ajouter le filtre par type seulement si $type est défini
+        if (!empty($type)) {
+            $query->where('activity_type_id', $type);
+        }
+        
+        // Exécuter la requête et récupérer les résultats
+        $activities = $query->get();
+        
+        // Charger la relation 'activityType' et retourner la réponse JSON
+        return response()->json(['activities' => $activities->load('activityType')], 200);
+    }
+
     /**
      * Store a newly created activity in storage.
      */
@@ -32,7 +57,7 @@ class ActivityController extends Controller
             'adress' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'country' => 'nullable|string|max:255',
-            'postal_code' => 'nullable|string|max:20',
+            'postal_code' => ['nullable','string','regex:/^\d{5}$/'],
             'activity_type_id' => 'required|exists:activity_types,id',
             'creator_id' => 'required|exists:users,id',
         ]);
@@ -66,7 +91,7 @@ class ActivityController extends Controller
             'adress' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'country' => 'nullable|string|max:255',
-            'postal_code' => 'nullable|string|max:20',
+            'postal_code' => ['nullable','string','regex:/^\d{5}$/'],
             'activity_type_id' => 'required|exists:activity_types,id',
             'creator_id' => 'required|exists:users,id',
         ]);
@@ -94,5 +119,16 @@ class ActivityController extends Controller
     {
         $user = Auth::user();
         return Activity::where('creator_id', $user->id)->with('activityType')->get();
+    }
+
+    public function participate(Activity $activity)
+    {
+        // if the user is already participating in the activity return an error
+        if ($activity->participants->contains(Auth::user())) {
+            return response()->json(['message' => 'You are already participating in this activity'], 400);
+        }
+        $user = Auth::user();
+        $activity->participants()->attach($user->id);
+        return response()->json(['message' => 'You are now participating in this activity']);
     }
 }

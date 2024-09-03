@@ -26,6 +26,9 @@ import FoodCollectionDetail from './views/volunteer/food_aid/FoodCollectionDetai
 import Donation from './views/donation/Donation';
 import OutreachDetail from './views/volunteer/food_aid/OutreachDetail';
 import DetailActivity from './views/volunteer/Activity/DetailActivity';
+import Activities from './views/Beneficiary/Activities/Activities';
+import BeneficiaryActivityLayout from './components/BeneficiaryActivityLayout';
+import MyActivities from './views/Beneficiary/Activities/MyActivities';
 
 const router = createBrowserRouter([
     {
@@ -122,7 +125,26 @@ const router = createBrowserRouter([
             {
                 path: '/volunteer/Activity/:id',
                 element: <DetailActivity/>
-            }
+            },
+            {
+                path: '/beneficiary/activities',
+                element: <BeneficiaryActivityLayout />,
+                children: [
+                    {
+                        path: '/beneficiary/activities/all',
+                        element: <Activities />
+                    },
+                    {
+                        path: '/beneficiary/activities/myActivities',
+                        element: <MyActivities />
+                    }
+                ]
+            },
+            {
+                path: '/beneficiary',
+                element: <Navigate to='/beneficiary/activities'/>
+            },
+            
                 
             
         ]

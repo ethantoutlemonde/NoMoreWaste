@@ -40,8 +40,9 @@ export default function FoodCollectionDetail() {
     }
     return (
         <div>
-            <h1>Food Collection Detail {id}</h1>
             <p>Number of participants : <span>{foodCollection?.participants?.length}</span></p>
+            <p>Date : <span>{new Date (foodCollection?.date).toLocaleDateString('fr-FR')}</span></p>
+            <p>Start Time : <span>{new Date (foodCollection?.date).toLocaleTimeString('fr-FR')}</span></p>
             <button onClick={handleParticipate} className="bg-blue-400 text-white p-2 rounded-lg border shadow hover:bg-blue-500 hover:shadow-md duration-100">Participate</button>
             {error.message && <p className="text-red-500">{error.message}</p>}
             {successMessage.message && <p className="text-green-500">{successMessage.message}</p>}

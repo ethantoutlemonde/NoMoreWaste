@@ -41,6 +41,8 @@ export default function AddActivity() {
 
     const submit = (e) => {
         e.preventDefault();
+        setError(null)
+        setSuccess(null)
         console.log("submit")
         // set creator_id in activity object
         activity.creator_id = user.id
@@ -51,7 +53,7 @@ export default function AddActivity() {
         })
         .catch(error => {
             console.log(error)
-            setError(error.response.data)
+            setError(error.response.data.errors)
         })
     }
 
@@ -76,6 +78,7 @@ export default function AddActivity() {
                     {error?.description && <p className="text-red-500">{error.description}</p>}
                     <label htmlFor="activity_type">Activity Type</label>
                     <select name="activity_type_id" id="" className="p-2 rounded-lg border bg-white read-only:bg-gray-50" readOnly={false} onChange={handleChange}>
+                        <option value="" disabled selected>Select an option</option>
                         {activityTypes.length > 0 && activityTypes.map(type => (
                             <option value={type.id} key={type.id} selected={activity.activity_type_id === type.id}>{type.name}</option>
                         ))}

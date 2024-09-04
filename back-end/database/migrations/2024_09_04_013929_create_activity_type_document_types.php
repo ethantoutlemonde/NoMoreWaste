@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('activity_type_document_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('activity_type_id')->constrained();
-            $table->foreignId('document_type_id')->constrained();
+            $table->foreignId('activity_type_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('document_type_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

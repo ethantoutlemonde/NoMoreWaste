@@ -141,6 +141,10 @@ const router = createBrowserRouter([
                 element: <BeneficiaryActivityLayout />,
                 children: [
                     {
+                        path: '/beneficiary/activities',
+                        element: <Navigate to='/beneficiary/activities/all'/>
+                    },
+                    {
                         path: '/beneficiary/activities/all',
                         element: <Activities />
                     },

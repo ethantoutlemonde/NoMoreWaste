@@ -17,11 +17,11 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_name' => $this->faker->word(),
-            'quantity' => $this->faker->randomNumber(2),
-            'expiration_date' => $this->faker->date(),
-            'description' => $this->faker->sentence(),
-            'barcode' => $this->faker->randomNumber(8),
+            'product_name' => fake()->word(),
+            'quantity' => fake()->randomNumber(2),
+            'expiration_date' => fake()->date(),
+            'description' => fake()->sentence(),
+            'barcode' => fake()->randomNumber(8),
             'warehouse_id' => \App\Models\Warehouse::factory(),
             'product_type_id' => \App\Models\ProductType::factory(),
         ];

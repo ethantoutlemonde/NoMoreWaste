@@ -17,8 +17,8 @@ class FoodCollectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'date' => fake()->date(),
-            'start_time' => fake()->time(),
+            'date' => fake()->dateTimeBetween("now", "+30 days")->format('Y-m-d'),
+            'start_time' => fake()->time('H:i'),
         ];
     }
 }

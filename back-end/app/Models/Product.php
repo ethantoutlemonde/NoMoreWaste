@@ -23,4 +23,9 @@ class Product extends Model
         return $this->belongsTo(ProductType::class);
     }
 
+    public function outreach()
+    {
+        return $this->belongsToMany(Outreach::class)->withPivot('quantity');
+    }
+
 }

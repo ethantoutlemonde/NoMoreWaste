@@ -16,7 +16,6 @@ import PartnerSupermarketDetail from './views/partner/PartnerSupermarketDetail';
 import PartnerSupermarketAdd from './views/partner/PartnerSupermarketAdd';
 import PartnerSupermarketUpdate from './views/partner/PartnerSupermarketUpdate';
 import DocumentsOutreach from './views/volunteer/documents/DocumentsOutreach';
-import Activity from './components/ActivityLayout';
 import ShowActivity from './views/volunteer/Activity/ShowActivity';
 import AddActivity from './views/volunteer/Activity/AddActivity';
 import ParticipateActivity from './views/volunteer/Activity/ParticipateActivity';
@@ -26,6 +25,11 @@ import Outreach from './views/volunteer/food_aid/Outreach';
 import FoodCollectionDetail from './views/volunteer/food_aid/FoodCollectionDetail';
 import Donation from './views/donation/Donation';
 import Profil from './views/Profil';
+import OutreachDetail from './views/volunteer/food_aid/OutreachDetail';
+import DetailActivity from './views/volunteer/Activity/DetailActivity';
+import Activities from './views/Beneficiary/Activities/Activities';
+import BeneficiaryActivityLayout from './components/BeneficiaryActivityLayout';
+import MyActivities from './views/Beneficiary/Activities/MyActivities';
 
 const router = createBrowserRouter([
     {
@@ -76,7 +80,11 @@ const router = createBrowserRouter([
                     {
                         path: '/volunteer/foodAid/outreach',
                         element: <Outreach />
-                    }
+                    },
+                    {
+                        path: '/volunteer/foodAid/outreach/:id',
+                        element: <OutreachDetail />
+                    },
                 ]
             },
             {
@@ -105,26 +113,45 @@ const router = createBrowserRouter([
             },
             {
                 path: '/volunteer/Activity',
-                element: <Activity />,
+                element: <Navigate to='/volunteer/Activity/show'/>
+            },
+            {
+                path: '/volunteer/Activity/show',
+                element: <ShowActivity/>
+            },
+            {
+                path: '/volunteer/Activity/add',
+                element: <AddActivity/>
+            },
+            {
+                path: '/volunteer/Activity/participate',
+                element: <ParticipateActivity/>
+            },
+            {
+                path: '/volunteer/Activity/:id',
+                element: <DetailActivity/>
+            },
+            {
+                path: '/beneficiary/activities',
+                element: <BeneficiaryActivityLayout />,
                 children: [
                     {
-                        path: '/volunteer/Activity',
-                        element: <Navigate to='/volunteer/Activity/show'/>
+                        path: '/beneficiary/activities/all',
+                        element: <Activities />
                     },
                     {
-                        path: '/volunteer/Activity/show',
-                        element: <ShowActivity/>
-                    },
-                    {
-                        path: '/volunteer/Activity/add',
-                        element: <AddActivity/>
-                    },
-                    {
-                        path: '/volunteer/Activity/participate',
-                        element: <ParticipateActivity/>
+                        path: '/beneficiary/activities/myActivities',
+                        element: <MyActivities />
                     }
                 ]
             },
+            {
+                path: '/beneficiary',
+                element: <Navigate to='/beneficiary/activities'/>
+            },
+            
+                
+            
         ]
         
     },

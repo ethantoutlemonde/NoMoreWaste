@@ -113,11 +113,16 @@ class User extends Authenticatable
 
     public function participeActivity()
     {
-        return $this->belongsToMany(ActivityParticipant::class, 'user_id');
+        return $this->belongsToMany(Activity::class, 'activity_participants', 'user_id', 'activity_id');
     }
 
     public function foodCollections()
     {
         return $this->belongsToMany(FoodCollection::class, 'food_collection_participants', 'volunteer_id', 'food_collection_id');
+    }
+
+    public function outreachs()
+    {
+        return $this->belongsToMany(Outreach::class, 'volunteer_id');
     }
 }

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axiosClient from "../../../axios-client"
+import Badge from '@mui/material/Badge';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import Badge from '@mui/material/Badge';
+import axiosClient from '../axios-client';
 import dayjs, { Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 
-export default function Outreach() {
+export default function OutreachCalendar() {
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [outreachs, setOutreachs] = useState([]);
     const navigate = useNavigate();
@@ -35,7 +37,7 @@ export default function Outreach() {
 
         const handleClick = () => {
             if (outreach) {
-                navigate(`${outreach.id}`);
+                navigate(`/food_aid/outreachs/${outreach.id}`);
             }
         };
 
@@ -49,16 +51,15 @@ export default function Outreach() {
             </Badge>
         );
     };
+
     return (
-        <div>
-            <h1>Food Collection</h1>
-            <DateCalendar
+        <DateCalendar
             value={selectedDate}
             onChange={(newDate) => setSelectedDate(newDate)}
             slots={{
                 day: OutreachDay,
             }}
         />
-        </div>
-    )
+
+    );
 }

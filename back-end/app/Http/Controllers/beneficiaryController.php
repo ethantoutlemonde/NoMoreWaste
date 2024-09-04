@@ -45,6 +45,7 @@ class BeneficiaryController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'type' => 2,
+            'status' => 'approved',
             'password' => Hash::make($request->password),
         ]);
         return response()->json(['success' => 'Volunteer succesfully created' ], 200);

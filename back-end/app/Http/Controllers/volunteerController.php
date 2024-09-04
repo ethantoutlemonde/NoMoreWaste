@@ -79,4 +79,9 @@ class VolunteerController extends Controller
         // return $user;
         return $user->documents->load('type');
     }
+
+    public function myActivities(User $volunteer)
+    {
+        return $volunteer->activities->load('activityType');
+    }
 }

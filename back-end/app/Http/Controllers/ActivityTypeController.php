@@ -14,7 +14,7 @@ class ActivityTypeController extends Controller
     public function index()
     {
         $activityTypes = ActivityType::all();
-        return response()->json(['activityTypes' => $activityTypes], 200);
+        return response()->json(['activityTypes' => $activityTypes->load('requiredDocuments')], 200);
     }
 
     /**
@@ -32,6 +32,12 @@ class ActivityTypeController extends Controller
         ]);
 
         $activityType = ActivityType::create($request->all());
+
+        if ($request->has('documentTypes')) {
+            foreach ($request->documentTypes as $documentType) {
+                $activityType->requiredDocuments()->attach($documentType);
+            }
+        }
         return response()->json(['message' => 'Activity type created successfully', 'activityType' => $activityType], 201);
     }
 
@@ -40,7 +46,7 @@ class ActivityTypeController extends Controller
      */
     public function show(ActivityType $activityType)
     {
-        return response()->json(['activityType' => $activityType], 200);
+        return response()->json(['activityType' => $activityType->load('requiredDocuments')], 200);
     }
 
     /**
@@ -57,8 +63,19 @@ class ActivityTypeController extends Controller
             'name.unique' => 'This type of activity already exists.',
         ]);
 
+        
+
         $activityType = ActivityType::findOrFail($id);
         $activityType->update($request->all());
+
+        // delete all required documents
+        $activityType->requiredDocuments()->detach();
+
+        if ($request->has('documentTypes')) {
+            foreach ($request->documentTypes as $documentType) {
+                $activityType->requiredDocuments()->attach($documentType);
+            }
+        }
         return response()->json(['message' => 'Activity type updated successfully', 'activityType' => $activityType], 200);
     }
 

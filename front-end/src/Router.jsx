@@ -30,6 +30,7 @@ import DetailActivity from './views/volunteer/Activity/DetailActivity';
 import Activities from './views/Beneficiary/Activities/Activities';
 import BeneficiaryActivityLayout from './components/BeneficiaryActivityLayout';
 import MyActivities from './views/Beneficiary/Activities/MyActivities';
+import DocumentsActivity from './views/volunteer/documents/DocumentsActivity';
 
 const router = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
                 path: '/volunteer/documents',
                 element: <VolunteerDocumentsLayout />,
                 children: [
+                    {
+                        path: '/volunteer/documents/:id',
+                        element: <DocumentsActivity />
+                    },
                     {
                         path: '/volunteer/documents/food_collection',
                         element: <DocumentsFoodCollection />

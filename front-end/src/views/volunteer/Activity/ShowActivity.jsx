@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 import axiosClient from "../../../axios-client"
 import { Link } from "react-router-dom"
+import { useAuth } from "../../../hooks/auth";
 
 export default function ShowActivity() {
     const [data, setData] = useState({});
+    const { user } = useAuth({ middleware: 'auth' })
     useEffect(() => {
         fetchActivities();
     }, [])
 
     const fetchActivities = () => {
-        axiosClient.get('/api/myActivities')
+        axiosClient.get(`/api/volunteer/${user.id}/myActivities`)
         .then (response => {
             console.log(response.data)
             setData(response.data)

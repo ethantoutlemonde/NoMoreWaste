@@ -12,7 +12,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        //
+        return DocumentType::all();
     }
 
     /**
@@ -20,7 +20,7 @@ class DocumentTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -28,7 +28,6 @@ class DocumentTypeController extends Controller
      */
     public function show(DocumentType $documentType)
     {
-        //
     }
 
     /**
@@ -36,7 +35,6 @@ class DocumentTypeController extends Controller
      */
     public function update(Request $request, DocumentType $documentType)
     {
-        //
     }
 
     /**
@@ -44,6 +42,5 @@ class DocumentTypeController extends Controller
      */
     public function destroy(DocumentType $documentType)
     {
-        //
     }
 }

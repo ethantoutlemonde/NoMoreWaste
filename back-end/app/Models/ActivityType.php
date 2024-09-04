@@ -17,4 +17,9 @@ class ActivityType extends Model
     {
         return $this->hasMany(Activity::class);
     }
+
+    public function requiredDocuments()
+    {
+        return $this->belongsToMany(DocumentType::class, 'activity_type_document_types');
+    }
 }

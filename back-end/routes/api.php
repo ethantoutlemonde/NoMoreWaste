@@ -15,6 +15,7 @@ use App\Http\Controllers\BeneficiaryAdminController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentAdminController;
+use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\FoodCollectionController;
 use App\Http\Controllers\MessageSupermarketController;
 use App\Http\Controllers\OutreachController;
@@ -118,6 +119,7 @@ Route::middleware(UserMiddleware::class)->resource('partner', PartnerController:
 Route::middleware('guest')->post('/partner', [PartnerController::class, 'store']);
 
 Route::middleware(UserMiddleware::class)->resource('document', DocumentController::class);
+Route::middleware(AdminMiddleware::class)->resource('documentType', DocumentTypeController::class);
 
 
 Route::middleware(UserMiddleware::class)->get('volunteer/{user}/documents', [VolunteerController::class, 'getVolunteerDocuments']);
@@ -163,7 +165,7 @@ route::middleware(['auth:sanctum'])->get('/recipes/warehouse/{warehouse}', [Reci
 
 //Activity
 Route::middleware(['auth:sanctum'])->resource('activity', ActivityController::class);
-Route::middleware(['auth:sanctum'])->get('/volunteer/myActivities', [ActivityController::class, 'myActivities']);
+Route::middleware(['auth:sanctum'])->get('/volunteer/{volunteer}/myActivities', [VolunteerController::class, 'myActivities']);
 Route::middleware(['auth:sanctum'])->get('/beneficiary/{beneficiary}/myActivities', [BeneficiaryController::class, 'myActivities']);
 Route::middleware(['auth:sanctum'])->get('searchActivities', [ActivityController::class, 'searchActivities']);
 

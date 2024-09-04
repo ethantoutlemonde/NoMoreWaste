@@ -89,7 +89,7 @@ Route::middleware(AdminMiddleware::class)->resource('admin', AdminController::cl
 Route::middleware(AdminMiddleware::class)->resource('beneficiaryAdmin', BeneficiaryAdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('volunteerAdmin', VolunteerAdminController::class);
 Route::middleware(AdminMiddleware::class)->resource('partnerAdmin', PartnerAdminController::class);
-Route::middleware(UserMiddleware::class)->resource('users', UserController::class);
+Route::middleware(['auth:sanctum'])->resource('users', UserController::class);
 // Route::patch('users/{user}/ban', [UserController::class, 'ban'])->name('users.ban');
 
 // Food Aid Routes

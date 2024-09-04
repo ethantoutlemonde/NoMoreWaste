@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('supermarket_disponibilities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('supermarket_id');
+            $table->unsignedBigInteger('supermarket_id')->casscadeOnDelete();
             $table->date('date');
             $table->timestamps();
         });

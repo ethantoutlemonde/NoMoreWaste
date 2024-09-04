@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string("city")->nullable();
             $table->string("country")->nullable();
             $table->string("postal_code")->nullable();
-            $table->foreignId("activity_type_id");
-            $table->foreignId("creator_id")->constrained("users");
+            $table->foreignId("activity_type_id")->casscadeOnDelete();
+            $table->foreignId("creator_id")->constrained("users")->cascadeOnDelete();
             $table->timestamps();
         });
     }

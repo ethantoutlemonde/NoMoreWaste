@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from "../hooks/auth";
 import axiosClient from "../axios-client";
+import { useNavigate } from 'react-router-dom';
 
 export default function Profil() {
     const { t } = useTranslation("global");
@@ -14,17 +15,17 @@ export default function Profil() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteConfirmation, setDeleteConfirmation] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [error, setError] = useState({});
+    const [success, setSuccess] = useState({});
 
     // Fonction pour mettre à jour le profil utilisateur
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage('');
-        setSuccessMessage('');
+        setError({});
+        setSuccess({});
 
         if (password !== confirmPassword) {
-            setErrorMessage(t('Passwords do not match!'));
+            setError({'password': t('Passwords do not match!')});
             return;
         }
 
@@ -38,42 +39,50 @@ export default function Profil() {
 
         try {
             const response = await axiosClient.patch(`/api/users/${user.id}`, updatedUser);
-            setSuccessMessage(response.data.success); // Affiche le message de succès du backend
+            setSuccess(response.data.success);
         } catch (error) {
             console.error(error);
-            if (error.response && error.response.data && error.response.data.error) {
-                setErrorMessage(error.response.data.error); // Affiche le message d'erreur du backend
-            } else {
-                setErrorMessage(t('Error updating profile.'));
-            }
+            setError(error.response.data.error);
         }
     };
 
-    // Fonction pour supprimer le compte utilisateur
     const handleDeleteAccount = async () => {
-        setErrorMessage('');
-        setSuccessMessage('');
-
+        setError({});
+        setSuccess({});
+    
         if (deleteConfirmation === `Delete${user.email}`) {
             try {
                 const response = await axiosClient.delete(`/api/users/${user.id}`);
-                setSuccessMessage(response.data.success); // Message de succès après suppression
+                setSuccess(response.data.success ? response.data.success.toString() : 'Account deleted successfully');
                 logout();
+                useNavigate('/');
             } catch (error) {
                 console.error(error);
-                setErrorMessage(t('Error deleting account.'));
+                const errorMessage = error.response?.data?.error;
+    
+                // Handle the error message appropriately depending on its type
+                if (typeof errorMessage === 'string') {
+                    setError(errorMessage);
+                } else if (typeof errorMessage === 'object') {
+                    // Join object values to a string or handle as needed
+                    setError(Object.values(errorMessage).join(', '));
+                } else {
+                    setError('An unexpected error occurred.');
+                }
             }
         } else {
-            setErrorMessage(t('Incorrect confirmation. Please type "Delete {email}"', { email: user.email }));
+            setError(`Incorrect confirmation. Please type "Delete${user.email}" to confirm.`);
         }
     };
+    
 
     return (
         <div className="max-w-md mx-auto mt-10">
             <h1 className="text-2xl font-bold mb-6">{t('Profile')}</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
-                {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-                {successMessage && <div className="text-green-500">{successMessage}</div>}
+            {typeof error.error === 'string' && <div className="text-red-500">{error.error}</div>}
+            {typeof success === 'string' && <div className="text-green-500">{success}</div>}
+
                 <div>
                     <label className="block text-sm font-medium text-gray-700">{t('First Name')}</label>
                     <input 
@@ -82,6 +91,7 @@ export default function Profil() {
                         onChange={(e) => setFirstName(e.target.value)} 
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                     />
+                    {error.first_name && <p className="text-red-500">{error.first_name}</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">{t('Last Name')}</label>
@@ -91,6 +101,7 @@ export default function Profil() {
                         onChange={(e) => setLastName(e.target.value)} 
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                     />
+                    {error.last_name && <p className="text-red-500">{error.last_name}</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">{t('Email')}</label>
@@ -100,6 +111,7 @@ export default function Profil() {
                         onChange={(e) => setEmail(e.target.value)} 
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                     />
+                    {error.email && <p className="text-red-500">{error.email}</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">{t('Phone')}</label>
@@ -109,6 +121,7 @@ export default function Profil() {
                         onChange={(e) => setPhone(e.target.value)} 
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                     />
+                    {error.phone && <p className="text-red-500">{error.phone}</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">{t('New Password')}</label>
@@ -118,6 +131,7 @@ export default function Profil() {
                         onChange={(e) => setPassword(e.target.value)} 
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                     />
+                    {error.password && <p className="text-red-500">{error.password}</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">{t('Confirm New Password')}</label>
@@ -156,7 +170,8 @@ export default function Profil() {
                             onChange={(e) => setDeleteConfirmation(e.target.value)} 
                             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-4"
                         />
-                        {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
+                        {error && typeof error === 'string' && <p className="text-red-500 mb-4">{error}</p>}
+
                         <div className="flex justify-end space-x-2">
                             <button 
                                 onClick={() => setShowDeleteModal(false)} 

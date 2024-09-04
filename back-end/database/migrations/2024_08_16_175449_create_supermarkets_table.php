@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->boolean('banned')->nullable()->default(false);
-            $table->foreignId('user_id')->constrained()->nullOnDelete();
+            $table->foreignId('user_id')->constrained()->casscadeOnDelete();
             $table->timestamps();
         });
     }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('barcode')->nullable();
             // $table->foreignId('food_collection_id')->nullable()->constrained();
-            $table->foreignId('product_type_id')->nullable()->constrained();
-            $table->foreignId('warehouse_id')->nullable()->constrained();
+            $table->foreignId('product_type_id')->nullable()->constrained()->casscadeOnDelete();
+            $table->foreignId('warehouse_id')->nullable()->constrained()->casscadeOnDelete();
             // $table->foreignId('food_aids_id')->nullable()->constrained();
             // $table->integer('Quantity_Maraude')->nullable();
             $table->timestamps();

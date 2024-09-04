@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('food_collection_participants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('food_collection_id')->constrained()->onDelete('cascade');
-            $table->foreignId('volunteer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('food_collection_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('volunteer_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

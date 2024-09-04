@@ -46,7 +46,7 @@ class ActivityTypeController extends Controller
      */
     public function show(ActivityType $activityType)
     {
-        return response()->json(['activityType' => $activityType], 200);
+        return response()->json(['activityType' => $activityType->load('requiredDocuments')], 200);
     }
 
     /**

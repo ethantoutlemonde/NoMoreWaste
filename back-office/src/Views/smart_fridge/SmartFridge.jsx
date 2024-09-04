@@ -38,8 +38,8 @@ const SmartFridge = () => {
         axiosClient.get(`/api/recipes/warehouse/${warehouseId}`)
             .then((response) => {
                 setRecipes(response.data);
-                setFilteredRecipes(response.data); // Initially display all recipes
-                setSelectedRecipe(null); // Reset selected recipe
+                setFilteredRecipes(response.data);
+                setSelectedRecipe(null);
                 console.log('Fetched recipes:', response.data);
             })
             .catch((error) => {

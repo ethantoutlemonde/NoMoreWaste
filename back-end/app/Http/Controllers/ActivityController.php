@@ -50,6 +50,8 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -63,8 +65,26 @@ class ActivityController extends Controller
             'creator_id' => 'required|exists:users,id',
         ]);
 
+
+
         $validated['start_datetime'] = Carbon::parse($validated['start_datetime'])->format('d-m-Y H:i');
         $validated['end_datetime'] = Carbon::parse($validated['end_datetime'])->format('d-m-Y H:i');
+
+        // Verify if the user have the good documents accepted to create an activity
+        $activity = new Activity($validated);
+
+        if ($user->type != 1) {
+            $required_documents = $activity->activityType->requiredDocuments;
+            foreach ($required_documents as $document) {
+                if (!$user->documents->contains('type_id', $document->id)) {
+                    return response()->json(['error' => 'You need to have your '.$document->name.' accepted to create an activity'], 400);
+                }
+            }
+            // if (!$user->documents->contains('type_id', 1) || !$user->documents->contains('type_id', 2)) {
+            //     return response()->json(['error' => 'You need to have your ID and criminal record accepted to create an activity'], 400);
+            // }
+        }
+        
 
         $activity = Activity::create($validated);
 

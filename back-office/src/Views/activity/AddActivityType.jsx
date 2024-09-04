@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axiosClient from '../../axios-client';
 import { useTranslation } from 'react-i18next';
 
@@ -7,15 +7,33 @@ export default function AddActivityType() {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const { t } = useTranslation('global');
+    const [documentTypes, setDocumentTypes] = useState([]);
+    const [selectedDocumentTypes, setSelectedDocumentTypes] = useState([]);
+
+    useEffect(() => {
+        fetchDocumentTypes();
+    }, []);
+
+    const fetchDocumentTypes = async () => {
+        try {
+            const response = await axiosClient.get("/api/documentType");
+            setDocumentTypes(response.data);
+        } catch (error) {
+            setError(error.message || t('An error occurred while fetching document types.'));
+            console.error('Error:', error);
+        }
+    };
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setSuccessMessage('');
+        console.log('selectedDocumentTypes:', selectedDocumentTypes);
         try {
             console.log('name:', name);
             const response = await axiosClient.post("/api/activityType", {
-                name: name // Envoi de 'name' dans la requête
+                name: name,
+                documentTypes: selectedDocumentTypes
             });
 
             if (response.status === 201) { 
@@ -63,6 +81,26 @@ export default function AddActivityType() {
                     <label className="peer-focus:font-medium absolute text-sm text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         {t('Activity Type')}
                     </label>
+                    {documentTypes.map(documentType => (
+                        <div key={documentType.id}>
+                            <input 
+                                type="checkbox" 
+                                id={documentType.id} 
+                                name="documentTypes" 
+                                value={documentType.id} 
+                                className="mr-2"
+                                checked={selectedDocumentTypes.includes(documentType.id)}
+                                onChange={(e) => {
+                                    if (e.target.checked) {
+                                        setSelectedDocumentTypes([...selectedDocumentTypes, documentType.id]);
+                                    } else {
+                                        setSelectedDocumentTypes(selectedDocumentTypes.filter(id => id !== documentType.id));
+                                    }
+                                }}
+                            />
+                            <label htmlFor={documentType.id}>{documentType.name}</label>
+                        </div>
+                    ))}
                 </div>
                 <button 
                     type="submit" 

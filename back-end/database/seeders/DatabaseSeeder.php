@@ -18,6 +18,7 @@ use App\Models\User;
 use App\Models\Warehouse;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -73,13 +74,19 @@ class DatabaseSeeder extends Seeder
 
         Supermarket::factory()->create([
             'name' => 'Auchan',
-            'address' => '23 rue longchamp, 75012, Paris',
+            'address' => '17 rue des suisses',
+            'country' => 'France',
+            'postal_code' => '75014',
+            'city' => 'Paris',
             'email' => 'auchan@example.com',
             'phone' => '0139847387'
         ]);
         Supermarket::factory()->create([
             'name' => 'Carrefour',
-            'address' => '2 rue du paradis, 89000',
+            'address' => '126 rue du point du jour',
+            'country' => 'France',
+            'postal_code' => '92100',
+            'city' => 'Boulogne-Billancourt',
             'email' => 'carrefour@example.com',
             'phone' => '0139847387'
         ]);
@@ -141,6 +148,21 @@ class DatabaseSeeder extends Seeder
 
         FoodCollection::factory(10)->create();
 
+        DB::table('activity_type_document_types')->insert([
+            [
+                'activity_type_id' => 1,
+                'document_type_id' => 1,
+            ],
+            [
+                'activity_type_id' => 1,
+                'document_type_id' => 2,
+            ],
+            [
+                'activity_type_id' => 2,
+                'document_type_id' => 1,
+            ],
+            // Ajoutez plus d'enregistrements ici
+        ]);
 
 
     }

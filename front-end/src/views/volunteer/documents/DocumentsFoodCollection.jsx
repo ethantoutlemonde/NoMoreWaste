@@ -60,7 +60,21 @@ export default function DocumentsFoodCollection() {
                 <h2 className="text-lg font-medium">{t("Driver")}</h2>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type_id === 1) ? <div>🟢</div> : <div>🔴</div>}
+                    {documents.map(doc => {
+                        if (doc.type_id === 1) {
+                            switch (doc.status) {
+                                case 'approved':
+                                    return <div key={doc.id} style={{ color: 'green' }}>🟢</div>;
+                                case 'pending':
+                                    return <div key={doc.id} style={{ color: 'yellow' }}>🟡</div>;
+                                case 'rejected':
+                                    return <div key={doc.id} style={{ color: 'red' }}>🔴</div>;
+                                default:
+                                    return null;
+                            }
+                        }
+                        return null;
+                    })}
                     </div>
                     
                     <div className="col-span-4">{t("Id card")}</div>
@@ -73,7 +87,21 @@ export default function DocumentsFoodCollection() {
                 </div>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type_id === 2) ? <div>🟢</div> : <div>🔴</div>}
+                    {documents.map(doc => {
+                        if (doc.type_id === 2) {
+                            switch (doc.status) {
+                                case 'approved':
+                                    return <div key={doc.id} style={{ color: 'green' }}>🟢</div>;
+                                case 'pending':
+                                    return <div key={doc.id} style={{ color: 'yellow' }}>🟡</div>;
+                                case 'rejected':
+                                    return <div key={doc.id} style={{ color: 'red' }}>🔴</div>;
+                                default:
+                                    return null;
+                            }
+                        }
+                        return null;
+                    })}
                     </div>
                     
                     <div className="col-span-4">{t("Driving license")}</div>
@@ -86,7 +114,21 @@ export default function DocumentsFoodCollection() {
                 </div>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type_id === 3) ? <div>🟢</div> : <div>🔴</div>}
+                    {documents.map(doc => {
+                        if (doc.type_id === 3) {
+                            switch (doc.status) {
+                                case 'approved':
+                                    return <div key={doc.id} style={{ color: 'green' }}>🟢</div>;
+                                case 'pending':
+                                    return <div key={doc.id} style={{ color: 'yellow' }}>🟡</div>;
+                                case 'rejected':
+                                    return <div key={doc.id} style={{ color: 'red' }}>🔴</div>;
+                                default:
+                                    return null;
+                            }
+                        }
+                        return null;
+                    })}
                     </div>
                     
                     <div className="col-span-4">{t("Criminal record")}</div>
@@ -102,7 +144,21 @@ export default function DocumentsFoodCollection() {
                 <h2 className="text-lg font-medium">{t("Volunteer")}</h2>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type_id === 1) ? <div>🟢</div> : <div>🔴</div>}
+                    {documents.map(doc => {
+                        if (doc.type_id === 1) {
+                            switch (doc.status) {
+                                case 'approved':
+                                    return <div key={doc.id} style={{ color: 'green' }}>🟢</div>;
+                                case 'pending':
+                                    return <div key={doc.id} style={{ color: 'yellow' }}>🟡</div>;
+                                case 'rejected':
+                                    return <div key={doc.id} style={{ color: 'red' }}>🔴</div>;
+                                default:
+                                    return null;
+                            }
+                        }
+                        return null;
+                    })}
                     </div>
                     
                     <div className="col-span-4">{t("Id card")}</div>
@@ -115,7 +171,21 @@ export default function DocumentsFoodCollection() {
                 </div>
                 <div className="w-full bg-gray-50 rounded-md p-2 grid grid-cols-6">
                     <div className="col-span-1">
-                        {documents.some(doc => doc.type_id === 3) ? <div>🟢</div> : <div>🔴</div>}
+                    {documents.map(doc => {
+                        if (doc.type_id === 3) {
+                            switch (doc.status) {
+                                case 'approved':
+                                    return <div key={doc.id} style={{ color: 'green' }}>🟢</div>;
+                                case 'pending':
+                                    return <div key={doc.id} style={{ color: 'yellow' }}>🟡</div>;
+                                case 'rejected':
+                                    return <div key={doc.id} style={{ color: 'red' }}>🔴</div>;
+                                default:
+                                    return null;
+                            }
+                        }
+                        return null;
+                    })}
                     </div>
                     
                     <div className="col-span-4">{t("Criminal record")}</div>

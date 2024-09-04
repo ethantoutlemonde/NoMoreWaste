@@ -51,7 +51,6 @@ export default function ParticipateActivity() {
                         <p>{activity?.description}</p>
                         <div className="flex justify-between">
                             <div ><p className="bg-pink-200 p-1 rounded text-white">{activity.activity_type.name}</p></div>
-                            <button className="bg-blue-500 text-white rounded p-2">Participate</button>
                         </div>
                     </div>
                 ))}

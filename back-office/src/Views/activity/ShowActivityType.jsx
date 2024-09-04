@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosClient from '../../axios-client'; // Utilisation de axiosClient
+import axiosClient from '../../axios-client';
 import { useTranslation } from 'react-i18next';
 
 export default function ActivityTypeShow() {
@@ -10,6 +10,7 @@ export default function ActivityTypeShow() {
     const [formData, setFormData] = useState({});
     const [filter, setFilter] = useState('');
     const { t } = useTranslation('global');
+    const [documentTypes, setDocumentTypes] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -23,7 +24,18 @@ export default function ActivityTypeShow() {
         }
 
         fetchData();
+        fetchDocumentTypes();
     }, [t]);
+
+    const fetchDocumentTypes = async () => {
+        try {
+            const response = await axiosClient.get("/api/documentType");
+            setDocumentTypes(response.data);
+        } catch (error) {
+            setError(error.message || t('An error occurred while fetching document types.'));
+            console.error('Error:', error);
+        }
+    };
 
     const handleDelete = async (id) => {
         setError('');
@@ -31,9 +43,9 @@ export default function ActivityTypeShow() {
         const confirmDelete = window.confirm(t('Are you sure you want to delete this activity type?'));
         if (confirmDelete) {
             try {
-                const response = await axiosClient.delete(`/api/activityType/${id}`);
+                await axiosClient.delete(`/api/activityType/${id}`);
                 setActivityTypes(activityTypes.filter(activityType => activityType.id !== id));
-                setSuccessMessage(t(response.data.message));
+                setSuccessMessage(t('Activity type deleted successfully.'));
             } catch (error) {
                 setError(error.message || t('An error occurred while deleting the activity type.'));
                 console.error('Error:', error);
@@ -45,8 +57,9 @@ export default function ActivityTypeShow() {
     };
 
     const handleEdit = (activityType) => {
+        const documentIds = activityType.required_documents.map(doc => doc.id);
         setEditingActivityType(activityType);
-        setFormData({ ...activityType });
+        setFormData({ ...activityType, documentTypes: documentIds });
     };
 
     const handleCloseModal = () => {
@@ -58,6 +71,21 @@ export default function ActivityTypeShow() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleDocumentChange = (e) => {
+        const documentId = parseInt(e.target.value);
+        if (e.target.checked) {
+            setFormData({
+                ...formData,
+                documentTypes: [...(formData.documentTypes || []), documentId],
+            });
+        } else {
+            setFormData({
+                ...formData,
+                documentTypes: formData.documentTypes.filter(id => id !== documentId),
+            });
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -67,13 +95,14 @@ export default function ActivityTypeShow() {
             const response = await axiosClient.put(`/api/activityType/${editingActivityType.id}`, formData);
 
             if (response.status === 200) {
-                setSuccessMessage(t(response.data.message));
+                setSuccessMessage(t('Activity type updated successfully.'));
                 setEditingActivityType(null);
                 const updatedActivityTypes = activityTypes.map(activityType => {
                     if (activityType.id === editingActivityType.id) {
                         return {
                             ...activityType,
-                            name: formData.name
+                            name: formData.name,
+                            required_documents: documentTypes.filter(doc => formData.documentTypes.includes(doc.id)),
                         };
                     } else {
                         return activityType;
@@ -155,6 +184,20 @@ export default function ActivityTypeShow() {
                                 onChange={handleChange}
                                 className="block w-full p-2 border border-gray-300 rounded mt-2 mb-4"
                             />
+                            <label htmlFor="">Documents Required</label>
+                            {documentTypes.map(documentType => (
+                                <div key={documentType.id} className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        id={documentType.id}
+                                        name="documentTypes"
+                                        value={documentType.id}
+                                        checked={formData.documentTypes?.includes(documentType.id) || false}
+                                        onChange={handleDocumentChange}
+                                    />
+                                    <label htmlFor={documentType.id} className="ml-2">{documentType.name}</label>
+                                </div>
+                            ))}
                             <button type="submit" className="m-2 bg-rose-400 hover:bg-rose-500 text-white px-4 py-2 rounded mt-2">
                                 {t('Validate')}
                             </button>

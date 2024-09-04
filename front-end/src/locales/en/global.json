@@ -83,7 +83,19 @@
     "logistic" : "logistic",
     "evenmential" : "evenmential",
     "academic support" : "academic support",
-    "My Activities": "My Activities"
+    "My Activities": "My Activities",
+
+    "Passwords do not match!": "Passwords do not match!",
+    "password" : "password",
+    "Profile" : "Profile",
+    "New Password" : "New Password",
+    "Confirm New Password" : "Confirm New Password",
+    "Update Profile" : "Update Profile",
+    "Delete Account" : "Delete Account",
+    "Confirm Account Deletion" : "Confirm Account Deletion",
+    "Please type Delete" : "Please type Delete",
+    "to confirm." : "to confirm."
+
 
 
 

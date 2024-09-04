@@ -83,5 +83,16 @@
     "logistic" : "logistique",
     "evenmential" : "événementiel",
     "academic support" : "soutien scolaire",
-    "My Activities": "Mes activités"
+    "My Activities": "Mes activités",
+
+    "Passwords do not match!": "Les mots de passe ne correspondent pas!",
+    "password" : "mot de passe",
+    "Profile" : "Profil",
+    "New Password" : "Nouveau mot de passe",
+    "Confirm New Password" : "Confirmer le nouveau mot de passe",
+    "Update Profile" : "Mettre à jour le profil",
+    "Delete Account" : "Supprimer le compte",
+    "Confirm Account Deletion" : "Confirmer la suppression du compte",
+    "Please type Delete" : "Veuillez taper Supprimer",
+    "to confirm." : "pour confirmer."
 }

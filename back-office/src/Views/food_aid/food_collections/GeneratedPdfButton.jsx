@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 export default function GeneratePdfButton() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [pdfUrl, setPdfUrl] = useState('');
+    const { t } = useTranslation('global');
 
     const handleGeneratePdf = async () => {
         setLoading(true);

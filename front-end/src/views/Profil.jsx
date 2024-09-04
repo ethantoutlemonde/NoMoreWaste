@@ -67,7 +67,7 @@ export default function Profil() {
                     // Join object values to a string or handle as needed
                     setError(Object.values(errorMessage).join(', '));
                 } else {
-                    setError('An unexpected error occurred.');
+                    setError('Bye!');
                 }
             }
         } else {
@@ -163,7 +163,7 @@ export default function Profil() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                         <h2 className="text-xl font-bold mb-4">{t('Confirm Account Deletion')}</h2>
-                        <p className="mb-4">{t('Please type "Delete')}{ user.email} {t('to confirm.')}</p>
+                        <p className="mb-4">{t('Please type Delete')}{ user.email} {t('to confirm.')}</p>
                         <input 
                             type="text" 
                             value={deleteConfirmation} 
